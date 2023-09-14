@@ -114,11 +114,16 @@ class FeatureUtilsImpl(context: Context) : FeatureUtils, DeviceConfig.OnProperti
             if (!properties.namespace.equals(HEALTH_FITNESS_FLAGS_NAMESPACE)) {
                 return
             }
+
             for (name in properties.keyset) {
                 when (name) {
                     PROPERTY_EXERCISE_ROUTE_ENABLED ->
                         isExerciseRouteEnabled =
                             properties.getBoolean(PROPERTY_EXERCISE_ROUTE_ENABLED, true)
+                    PROPERTY_EXERCISE_ROUTE_READ_ALL_ENABLED -> {
+                        isExerciseRouteReadAllEnabled =
+                            properties.getBoolean(PROPERTY_EXERCISE_ROUTE_READ_ALL_ENABLED, true)
+                    }
                     PROPERTY_SESSIONS_TYPE_ENABLED ->
                         isSessionTypesEnabled =
                             properties.getBoolean(PROPERTY_SESSIONS_TYPE_ENABLED, true)

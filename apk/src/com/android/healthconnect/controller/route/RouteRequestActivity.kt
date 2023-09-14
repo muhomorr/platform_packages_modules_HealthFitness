@@ -19,8 +19,11 @@ import android.app.Activity
 import android.content.Intent
 import android.health.connect.HealthConnectManager.EXTRA_EXERCISE_ROUTE
 import android.health.connect.HealthConnectManager.EXTRA_SESSION_ID
+import android.health.connect.datatypes.ExerciseRoute
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -55,13 +58,18 @@ class RouteRequestActivity : Hilt_RouteRequestActivity() {
     }
 
     @Inject lateinit var appInfoReader: AppInfoReader
+
     @Inject lateinit var featureUtils: FeatureUtils
 
     @VisibleForTesting var dialog: AlertDialog? = null
+
     @VisibleForTesting lateinit var infoDialog: AlertDialog
 
     private val viewModel: ExerciseRouteViewModel by viewModels()
     private val migrationViewModel: MigrationViewModel by viewModels()
+
+    private val sessionIdExtra: String?
+        get() = intent.getStringExtra(EXTRA_SESSION_ID)
 
     private var requester: String? = null
     private var migrationState = MigrationState.UNKNOWN
@@ -72,25 +80,29 @@ class RouteRequestActivity : Hilt_RouteRequestActivity() {
 
         if (!featureUtils.isExerciseRouteEnabled()) {
             Log.e(TAG, "Exercise routes not available, finishing.")
-            setResult(Activity.RESULT_CANCELED, Intent())
-            finish()
+            finishCancelled()
             return
         }
 
-        if (!intent.hasExtra(EXTRA_SESSION_ID) ||
-            intent.getStringExtra(EXTRA_SESSION_ID) == null ||
-            callingPackage == null) {
+        if (sessionIdExtra == null || callingPackage == null) {
             Log.e(TAG, "Invalid Intent Extras, finishing.")
-            setResult(Activity.RESULT_CANCELED, Intent())
-            finish()
+            finishCancelled()
             return
         }
 
-        viewModel.getExerciseWithRoute(intent.getStringExtra(EXTRA_SESSION_ID)!!)
-        runBlocking { requester = appInfoReader.getAppMetadata(callingPackage!!).appName }
+        val callingPackageName = callingPackage!!
+
+        if (!viewModel.isReadRoutesPermissionDeclared(callingPackageName)) {
+            Log.e(TAG, "Read permission not declared")
+            finishCancelled()
+            return
+        }
+
+        viewModel.getExerciseWithRoute(sessionIdExtra!!)
+        runBlocking { requester = appInfoReader.getAppMetadata(callingPackageName).appName }
         viewModel.exerciseSession.observe(this) { session ->
             this.sessionWithAttribution = session
-            setupRequestDialog(session)
+            setupRequestDialog(session, callingPackageName)
         }
 
         migrationViewModel.migrationState.observe(this) { migrationState ->
@@ -106,20 +118,39 @@ class RouteRequestActivity : Hilt_RouteRequestActivity() {
         }
     }
 
-    private fun setupRequestDialog(data: SessionWithAttribution?) {
-        if ((data == null) ||
-            (data.session?.route == null) ||
-            data.session?.route!!.routeLocations.isEmpty()) {
+    private fun setupRequestDialog(data: SessionWithAttribution?, callingPackage: String) {
+        if (data == null ||
+            data.session.route == null ||
+            data.session.route?.routeLocations.isNullOrEmpty()) {
             Log.e(TAG, "No route or empty route, finishing.")
-            val result = Intent()
-            result.putExtra(EXTRA_SESSION_ID, intent.getStringExtra(EXTRA_SESSION_ID))
-            setResult(Activity.RESULT_CANCELED, result)
-            finish()
+            finishCancelled()
             return
         }
 
-        val session = data.session!!
-        val sessionId = intent.getStringExtra(EXTRA_SESSION_ID)
+        val session = data.session
+        val route = session.route!!
+
+        if (session.metadata.dataOrigin.packageName == callingPackage) {
+            finishWithResult(route)
+            return
+        }
+
+        if (viewModel.isSessionInaccessible(callingPackage, session)) {
+            Log.i(TAG, "Requested exercise session is inaccessible.")
+            finishCancelled()
+            return
+        }
+
+        if (viewModel.isReadRoutesPermissionGranted(callingPackage)) {
+            finishWithResult(route)
+            return
+        }
+
+        if (viewModel.isReadRoutesPermissionUserFixed(callingPackage)) {
+            finishCancelled()
+            return
+        }
+
         val sessionDetails =
             applicationContext.getString(
                 R.string.date_owner_format,
@@ -145,18 +176,27 @@ class RouteRequestActivity : Hilt_RouteRequestActivity() {
         }
 
         view.findViewById<Button>(R.id.route_dont_allow_button).setOnClickListener {
-            val result = Intent()
-            result.putExtra(EXTRA_SESSION_ID, sessionId)
-            setResult(Activity.RESULT_CANCELED, result)
-            finish()
+            finishCancelled()
         }
 
+        val allowAllButton: Button = view.findViewById<Button>(R.id.route_allow_all_button)
+
+        allowAllButton.setOnClickListener {
+            viewModel.grantReadRoutesPermission(callingPackage)
+            finishWithResult(route)
+        }
+
+        val shouldShowAllowAllRoutesButton = featureUtils.isExerciseRouteReadAllEnabled()
+
+        allowAllButton.visibility =
+            if (shouldShowAllowAllRoutesButton) {
+                VISIBLE
+            } else {
+                GONE
+            }
+
         view.findViewById<Button>(R.id.route_allow_button).setOnClickListener {
-            val result = Intent()
-            result.putExtra(EXTRA_SESSION_ID, intent.getStringExtra(EXTRA_SESSION_ID))
-            result.putExtra(EXTRA_EXERCISE_ROUTE, session.route)
-            setResult(Activity.RESULT_OK, result)
-            finish()
+            finishWithResult(route)
         }
 
         dialog =
@@ -213,12 +253,7 @@ class RouteRequestActivity : Hilt_RouteRequestActivity() {
                     applicationContext.getString(
                         R.string.migration_pending_permissions_dialog_content, requester),
                     positiveButtonAction = { _, _ -> dialog?.show() },
-                    negativeButtonAction = { _, _ ->
-                        val result = Intent()
-                        result.putExtra(EXTRA_SESSION_ID, intent.getStringExtra(EXTRA_SESSION_ID))
-                        setResult(Activity.RESULT_CANCELED, result)
-                        finish()
-                    })
+                    negativeButtonAction = { _, _ -> finishCancelled() })
             }
             MigrationState.COMPLETE -> {
                 maybeShowWhatsNewDialog(this) { _, _ -> dialog?.show() }
@@ -233,5 +268,20 @@ class RouteRequestActivity : Hilt_RouteRequestActivity() {
     override fun onDestroy() {
         dialog?.dismiss()
         super.onDestroy()
+    }
+
+    private fun finishWithResult(route: ExerciseRoute) {
+        val result = Intent()
+        result.putExtra(EXTRA_SESSION_ID, sessionIdExtra)
+        result.putExtra(EXTRA_EXERCISE_ROUTE, route)
+        setResult(Activity.RESULT_OK, result)
+        finish()
+    }
+
+    private fun finishCancelled() {
+        val result = Intent()
+        sessionIdExtra?.let { result.putExtra(EXTRA_SESSION_ID, it) }
+        setResult(Activity.RESULT_CANCELED, result)
+        finish()
     }
 }

@@ -29,6 +29,7 @@ import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.test.core.app.ActivityScenario.launchActivityForResult
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -120,6 +121,10 @@ class RouteRequestActivityTest {
         whenever(migrationViewModel.migrationState).then {
             MutableLiveData(WithData(MigrationState.IDLE))
         }
+
+        whenever(viewModel.isReadRoutesPermissionDeclared(context.packageName)).thenReturn(true)
+        whenever(viewModel.isSessionInaccessible(context.packageName, TEST_SESSION))
+            .thenReturn(false)
     }
 
     @Test
@@ -224,12 +229,11 @@ class RouteRequestActivityTest {
 
         launchActivityForResult<RouteRequestActivity>(startActivityIntent)
 
-        onView(withText("Don\'t allow")).inRoot(isDialog()).check(matches(isDisplayed()))
-        onView(withText("Allow")).inRoot(isDialog()).check(matches(isDisplayed()))
-        onView(withText("Allow Health Connect to access this exercise route in Health Connect?"))
+        onView(withText("This app will be able to read your past location in the route"))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
-        onView(withText("This app will be able to read your past location in the route"))
+        onView(withText("Allow this route")).inRoot(isDialog()).check(matches(isDisplayed()))
+        onView(withText("Allow Health Connect to access this exercise route in Health Connect?"))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
         onView(withText("Session title")).inRoot(isDialog()).check(matches(isDisplayed()))
@@ -237,6 +241,10 @@ class RouteRequestActivityTest {
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
         onView(withId(R.id.map_view)).inRoot(isDialog()).check(matches(isDisplayed()))
+        onView(withText("Don\'t allow"))
+            .inRoot(isDialog())
+            .perform(scrollTo())
+            .check(matches(isDisplayed()))
     }
 
     @Test
@@ -270,8 +278,7 @@ class RouteRequestActivityTest {
 
         launchActivityForResult<RouteRequestActivity>(startActivityIntent)
 
-        onView(withText("Don\'t allow")).inRoot(isDialog()).check(matches(isDisplayed()))
-        onView(withText("Allow")).inRoot(isDialog()).check(matches(isDisplayed()))
+        onView(withText("Allow this route")).inRoot(isDialog()).check(matches(isDisplayed()))
         onView(withText("Allow Health Connect to access this exercise route in Health Connect?"))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
@@ -283,6 +290,10 @@ class RouteRequestActivityTest {
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
         onView(withId(R.id.map_view)).inRoot(isDialog()).check(matches(isDisplayed()))
+        onView(withText("Don\'t allow"))
+            .inRoot(isDialog())
+            .perform(scrollTo())
+            .check(matches(isDisplayed()))
     }
 
     @Test

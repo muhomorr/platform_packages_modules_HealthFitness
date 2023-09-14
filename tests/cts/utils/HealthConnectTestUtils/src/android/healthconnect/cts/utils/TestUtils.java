@@ -16,6 +16,8 @@
 
 package android.healthconnect.cts.utils;
 
+import static android.Manifest.permission.READ_DEVICE_CONFIG;
+import static android.Manifest.permission.WRITE_ALLOWLISTED_DEVICE_CONFIG;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.health.connect.HealthDataCategory.ACTIVITY;
 import static android.health.connect.HealthDataCategory.BODY_MEASUREMENTS;
@@ -131,6 +133,7 @@ import android.os.Bundle;
 import android.os.OutcomeReceiver;
 import android.os.ParcelFileDescriptor;
 import android.os.UserHandle;
+import android.provider.DeviceConfig;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -1320,6 +1323,12 @@ public final class TestUtils {
     }
 
     /** Revokes permission for the package for the duration of the supplier. */
+    public static <T> T runWithRevokedPermission(
+            String packageName, String permission, ThrowingSupplier<T> supplier) throws Exception {
+        return runWithRevokedPermissions(supplier, packageName, permission);
+    }
+
+    /** Revokes permission for the package for the duration of the supplier. */
     public static <T> T runWithRevokedPermissions(
             ThrowingSupplier<T> supplier, String packageName, String... permissions)
             throws Exception {
@@ -1343,6 +1352,42 @@ public final class TestUtils {
         } finally {
             grantedPermissions.forEach(
                     permission -> uiAutomation.grantRuntimePermission(packageName, permission));
+        }
+    }
+
+    /** Flags the permission as USER_FIXED for the duration of the supplier. */
+    public static <T> T runWithUserFixedPermission(
+            String packageName, String permission, ThrowingSupplier<T> supplier) throws Exception {
+        SystemUtil.runShellCommand(
+                String.format("pm set-permission-flags %s %s user-fixed", packageName, permission));
+        try {
+            return supplier.get();
+        } finally {
+            SystemUtil.runShellCommand(
+                    String.format(
+                            "pm clear-permission-flags %s %s user-fixed", packageName, permission));
+        }
+    }
+
+    /**
+     * Sets the device config value for the duration of the supplier.
+     *
+     * <p>Kills the HC controller after each device config update as the most reliable way of making
+     * sure the controller picks up the updated value. Otherwise the callback which the controller
+     * uses to listen to device config changes might arrive late (and usually does).
+     */
+    public static <T> T runWithDeviceConfigForController(
+            String key, String value, ThrowingSupplier<T> supplier) throws Exception {
+        DeviceConfigRule rule = new DeviceConfigRule(key, value);
+        try {
+            rule.before();
+            killHealthConnectController();
+            return supplier.get();
+        } catch (Throwable e) {
+            throw new Exception(e);
+        } finally {
+            rule.after();
+            killHealthConnectController();
         }
     }
 
@@ -1393,6 +1438,20 @@ public final class TestUtils {
         }
 
         return permissions;
+    }
+
+    /** Returns permissions declared in the Manifest of the given package. */
+    public static List<String> getDeclaredHealthPermissions(String pkgName) {
+        final PackageInfo pi = getAppPackageInfo(pkgName);
+        final String[] requestedPermissions = pi.requestedPermissions;
+
+        if (requestedPermissions == null) {
+            return List.of();
+        }
+
+        return Arrays.stream(requestedPermissions)
+                .filter(permission -> permission.startsWith(HEALTH_PERMISSION_PREFIX))
+                .toList();
     }
 
     private static PackageInfo getAppPackageInfo(String pkgName) {
@@ -1466,11 +1525,17 @@ public final class TestUtils {
     }
 
     public static String getDeviceConfigValue(String key) {
-        return SystemUtil.runShellCommand("device_config get health_fitness " + key);
+        return runWithShellPermissionIdentity(
+                () -> DeviceConfig.getProperty(DeviceConfig.NAMESPACE_HEALTH_FITNESS, key),
+                READ_DEVICE_CONFIG);
     }
 
     public static void setDeviceConfigValue(String key, String value) {
-        SystemUtil.runShellCommand("device_config put health_fitness " + key + " " + value);
+        runWithShellPermissionIdentity(
+                () ->
+                        DeviceConfig.setProperty(
+                                DeviceConfig.NAMESPACE_HEALTH_FITNESS, key, value, false),
+                WRITE_ALLOWLISTED_DEVICE_CONFIG);
     }
 
     public static void sendCommandToTestAppReceiver(Context context, String action) {
@@ -1484,6 +1549,12 @@ public final class TestUtils {
             intent.putExtras(extras);
         }
         context.sendBroadcast(intent);
+    }
+
+    /** Kills Health Connect controller. */
+    public static void killHealthConnectController() {
+        SystemUtil.runShellCommandOrThrow(
+                "am force-stop com.google.android.healthconnect.controller");
     }
 
     /** Sets up the priority list for aggregation tests. */

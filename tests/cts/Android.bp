@@ -166,7 +166,8 @@ android_test {
             ":HealthFitnessCtsTestApp",
             ":HealthFitnessCtsTestApp2",
             ":CtsHealthConnectTestAppAWithNormalReadWritePermission",
-            ":CtsHealthConnectTestAppBWithNormalReadWritePermission"
+            ":CtsHealthConnectTestAppBWithNormalReadWritePermission",
+            ":CtsExerciseRouteTestRouteReaderWriterApp",
         ],
 }
 

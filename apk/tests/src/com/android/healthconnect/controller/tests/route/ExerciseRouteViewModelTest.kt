@@ -24,6 +24,11 @@ import android.health.connect.datatypes.ExerciseSessionRecord
 import android.health.connect.datatypes.ExerciseSessionType
 import android.os.OutcomeReceiver
 import androidx.test.platform.app.InstrumentationRegistry
+import com.android.healthconnect.controller.permissions.api.GetGrantedHealthPermissionsUseCase
+import com.android.healthconnect.controller.permissions.api.GetHealthPermissionsFlagsUseCase
+import com.android.healthconnect.controller.permissions.api.GrantHealthPermissionUseCase
+import com.android.healthconnect.controller.permissions.api.HealthPermissionManager
+import com.android.healthconnect.controller.permissions.api.LoadAccessDateUseCase
 import com.android.healthconnect.controller.route.ExerciseRouteViewModel
 import com.android.healthconnect.controller.route.LoadExerciseRouteUseCase
 import com.android.healthconnect.controller.shared.app.AppInfoReader
@@ -36,6 +41,9 @@ import com.android.healthconnect.controller.tests.utils.setLocale
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import java.time.Instant
+import java.util.Locale
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -52,9 +60,6 @@ import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.invocation.InvocationOnMock
-import java.time.Instant
-import java.util.Locale
-import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
@@ -68,6 +73,7 @@ class ExerciseRouteViewModelTest {
     @Inject lateinit var appInfoReader: AppInfoReader
 
     var manager: HealthConnectManager = mock(HealthConnectManager::class.java)
+    private val healthPermissionManager = mock(HealthPermissionManager::class.java)
 
     private lateinit var viewModel: ExerciseRouteViewModel
     private lateinit var context: Context
@@ -81,7 +87,13 @@ class ExerciseRouteViewModelTest {
         Dispatchers.setMain(testDispatcher)
         viewModel =
             ExerciseRouteViewModel(
-                LoadExerciseRouteUseCase(manager, Dispatchers.Main), appInfoReader)
+                context,
+                LoadExerciseRouteUseCase(manager, Dispatchers.Main),
+                GetGrantedHealthPermissionsUseCase(healthPermissionManager),
+                GetHealthPermissionsFlagsUseCase(healthPermissionManager),
+                GrantHealthPermissionUseCase(healthPermissionManager),
+                LoadAccessDateUseCase(healthPermissionManager),
+                appInfoReader)
     }
 
     @After

@@ -989,6 +989,9 @@
     <string name="request_route_info_who_can_see_data_summary" description="Summary of the section explaining in more detail what it means to give permissions to an app to access a route for an exercise session and who will have access to the data. [CHAR_LIMIT=NONE]">Only apps you allow to access your exercise routes</string>
     <string name="request_route_info_access_management_title" description="Title for the section explaining in more detail what it means to give permissions to an app to access a route for an exercise session and how to manage the access. [CHAR_LIMIT=NONE]">How can I manage access?</string>
     <string name="request_route_info_access_management_summary" description="Summary of the section explaining in more detail what it means to give permissions to an app to access a route for an exercise session and and how to manage the access. Note: Health Connect is the brand. [CHAR_LIMIT=NONE]">You can manage app access to exercise routes in Health&#160;Connect settings</string>
+    <string name="request_route_allow" description="Label for button in the route request dialog to allow an app access the requested exercise route [CHAR_LIMIT=30]">Allow this route</string>
+    <string name="request_route_allow_all" description="Label for button in the route request dialog to allow an app access all exercise routes from now on [CHAR_LIMIT=30]">Allow all routes</string>
+    <string name="request_route_dont_allow" description="Label for button in the route request dialog to deny an app access to the requested route [CHAR_LIMIT=20]">Don\'t allow</string>
     <string name="back_button" description="Label on the back button. [CHAR_LIMIT=20]">Back</string>
     <!--  endregion-->
 

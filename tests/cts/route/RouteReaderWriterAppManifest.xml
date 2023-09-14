@@ -39,6 +39,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="android.healthconnect.cts.utils.ProxyActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.healthconnect.cts.ACTION_START_ACTIVITY_FOR_RESULT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
         <receiver android:name="android.healthconnect.cts.testhelper.TestAppReceiver"
             android:exported="true"/>
     </application>
