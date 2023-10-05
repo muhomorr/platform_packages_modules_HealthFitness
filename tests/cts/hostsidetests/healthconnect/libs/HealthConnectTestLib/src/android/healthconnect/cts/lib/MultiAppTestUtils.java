@@ -16,29 +16,17 @@
 
 package android.healthconnect.cts.lib;
 
-import static androidx.test.InstrumentationRegistry.getContext;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.health.connect.datatypes.DataOrigin;
 import android.healthconnect.cts.utils.TestUtils;
 import android.os.Bundle;
 
 import com.android.cts.install.lib.TestApp;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MultiAppTestUtils {
-    static final String TAG = "HealthConnectTest";
     public static final String QUERY_TYPE = "android.healthconnect.cts.queryType";
     public static final String INTENT_EXTRA_CALLING_PKG = "android.healthconnect.cts.calling_pkg";
     public static final String APP_PKG_NAME_USED_IN_DATA_ORIGIN =
@@ -76,61 +64,41 @@ public class MultiAppTestUtils {
     public static final String PAUSE_START = "android.healthconnect.cts.pauseStart";
     public static final String PAUSE_END = "android.healthconnect.cts.pauseEnd";
     public static final String INTENT_EXCEPTION = "android.healthconnect.cts.exception";
-    private static final long POLLING_TIMEOUT_MILLIS = TimeUnit.SECONDS.toMillis(20);
 
     public static Bundle insertRecordAs(TestApp testApp) throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-
-        return getFromTestApp(testApp, bundle);
+        return TestAppProxy.forApp(testApp).insertRecord();
     }
 
     public static Bundle deleteRecordsAs(
             TestApp testApp, List<TestUtils.RecordTypeAndRecordIds> listOfRecordIdsAndClass)
             throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, DELETE_RECORDS_QUERY);
-        bundle.putSerializable(RECORD_IDS, (Serializable) listOfRecordIdsAndClass);
-
-        return getFromTestApp(testApp, bundle);
+        return TestAppProxy.forApp(testApp).deleteRecords(listOfRecordIdsAndClass);
     }
 
     public static Bundle updateRecordsAs(
             TestApp testAppToUpdateData,
             List<TestUtils.RecordTypeAndRecordIds> listOfRecordIdsAndClass)
             throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, UPDATE_RECORDS_QUERY);
-        bundle.putSerializable(RECORD_IDS, (Serializable) listOfRecordIdsAndClass);
-
-        return getFromTestApp(testAppToUpdateData, bundle);
+        return TestAppProxy.forApp(testAppToUpdateData).updateRecords(listOfRecordIdsAndClass);
     }
 
     public static Bundle updateRouteAs(TestApp testAppToUpdateData) throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, UPDATE_EXERCISE_ROUTE);
-        return getFromTestApp(testAppToUpdateData, bundle);
+        return TestAppProxy.forApp(testAppToUpdateData).updateRoute();
     }
 
     public static Bundle insertSessionNoRouteAs(TestApp testAppToUpdateData) throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, UPSERT_EXERCISE_ROUTE);
-        return getFromTestApp(testAppToUpdateData, bundle);
+        return TestAppProxy.forApp(testAppToUpdateData).insertSessionNoRoute();
     }
 
     public static Bundle insertRecordWithAnotherAppPackageName(
             TestApp testAppToInsertData, TestApp testAppPkgNameUsed) throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-        bundle.putString(APP_PKG_NAME_USED_IN_DATA_ORIGIN, testAppPkgNameUsed.getPackageName());
-
-        return getFromTestApp(testAppToInsertData, bundle);
+        return TestAppProxy.forApp(testAppToInsertData)
+                .insertRecordWithAnotherAppPackageName(testAppPkgNameUsed);
     }
 
     public static Bundle readRecordsAs(TestApp testApp, ArrayList<String> recordClassesToRead)
             throws Exception {
-        return readRecordsAs(
-                testApp, recordClassesToRead, /* dataOriginFilterPackageNames= */ Optional.empty());
+        return TestAppProxy.forApp(testApp).readRecords(recordClassesToRead);
     }
 
     public static Bundle readRecordsAs(
@@ -138,70 +106,34 @@ public class MultiAppTestUtils {
             ArrayList<String> recordClassesToRead,
             Optional<List<String>> dataOriginFilterPackageNames)
             throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, READ_RECORDS_QUERY);
-        bundle.putStringArrayList(READ_RECORD_CLASS_NAME, recordClassesToRead);
-        if (!dataOriginFilterPackageNames.isEmpty()) {
-            ArrayList<String> dataOrigins = new ArrayList<>();
-            dataOrigins.addAll(dataOriginFilterPackageNames.get());
-            bundle.putBoolean(READ_USING_DATA_ORIGIN_FILTERS, true);
-            bundle.putStringArrayList(DATA_ORIGIN_FILTER_PACKAGE_NAMES, dataOrigins);
-        }
-        return getFromTestApp(testApp, bundle);
+        return TestAppProxy.forApp(testApp)
+                .readRecords(recordClassesToRead, dataOriginFilterPackageNames);
     }
 
     public static Bundle insertRecordWithGivenClientId(TestApp testApp, double clientId)
             throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-        bundle.putDouble(CLIENT_ID, clientId);
-
-        return getFromTestApp(testApp, bundle);
+        return TestAppProxy.forApp(testApp).insertRecordWithGivenClientId(clientId);
     }
 
     public static Bundle readRecordsUsingDataOriginFiltersAs(
             TestApp testApp, ArrayList<String> recordClassesToRead) throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, READ_RECORDS_QUERY);
-        bundle.putStringArrayList(READ_RECORD_CLASS_NAME, recordClassesToRead);
-        bundle.putBoolean(READ_USING_DATA_ORIGIN_FILTERS, true);
-
-        return getFromTestApp(testApp, bundle);
+        return TestAppProxy.forApp(testApp).readRecordsUsingDataOriginFilters(recordClassesToRead);
     }
 
     public static Bundle readChangeLogsUsingDataOriginFiltersAs(
             TestApp testApp, String changeLogToken) throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, READ_CHANGE_LOGS_QUERY);
-        bundle.putString(CHANGE_LOG_TOKEN, changeLogToken);
-        bundle.putBoolean(READ_USING_DATA_ORIGIN_FILTERS, true);
-
-        return getFromTestApp(testApp, bundle);
+        return TestAppProxy.forApp(testApp).readChangeLogsUsingDataOriginFilters(changeLogToken);
     }
 
     public static Bundle getChangeLogTokenAs(
             TestApp testApp, String pkgName, ArrayList<String> recordClassesToRead)
             throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, GET_CHANGE_LOG_TOKEN_QUERY);
-        bundle.putString(APP_PKG_NAME_USED_IN_DATA_ORIGIN, pkgName);
-
-        if (recordClassesToRead != null) {
-            bundle.putStringArrayList(READ_RECORD_CLASS_NAME, recordClassesToRead);
-        }
-        return getFromTestApp(testApp, bundle);
+        return TestAppProxy.forApp(testApp).getChangeLogToken(pkgName, recordClassesToRead);
     }
 
     public static Bundle insertStepsRecordAs(
             TestApp testApp, String startTime, String endTime, int stepsCount) throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-        bundle.putString(RECORD_TYPE, STEPS_RECORD);
-        bundle.putString(START_TIME, startTime);
-        bundle.putString(END_TIME, endTime);
-        bundle.putInt(STEPS_COUNT, stepsCount);
-
-        return getFromTestApp(testApp, bundle);
+        return TestAppProxy.forApp(testApp).insertStepsRecord(startTime, endTime, stepsCount);
     }
 
     public static Bundle insertExerciseSessionAs(
@@ -211,77 +143,8 @@ public class MultiAppTestUtils {
             String pauseStart,
             String pauseEnd)
             throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-        bundle.putString(RECORD_TYPE, EXERCISE_SESSION);
-        bundle.putString(START_TIME, sessionStartTime);
-        bundle.putString(END_TIME, sessionEndTime);
-        bundle.putString(PAUSE_START, pauseStart);
-        bundle.putString(PAUSE_END, pauseEnd);
-
-        return getFromTestApp(testApp, bundle);
-    }
-
-    private static Bundle getFromTestApp(TestApp testApp, Bundle bundleToCreateIntent)
-            throws Exception {
-        final CountDownLatch latch = new CountDownLatch(1);
-        AtomicReference<Bundle> response = new AtomicReference<>();
-        AtomicReference<Exception> exceptionAtomicReference = new AtomicReference<>();
-        BroadcastReceiver broadcastReceiver =
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        if (intent.hasExtra(INTENT_EXCEPTION)) {
-                            exceptionAtomicReference.set(
-                                    (Exception) (intent.getSerializableExtra(INTENT_EXCEPTION)));
-                        } else {
-                            response.set(intent.getExtras());
-                        }
-                        latch.countDown();
-                    }
-                };
-
-        launchTestApp(testApp, bundleToCreateIntent, broadcastReceiver, latch);
-        if (exceptionAtomicReference.get() != null) {
-            throw exceptionAtomicReference.get();
-        }
-        return response.get();
-    }
-
-    private static void launchTestApp(
-            TestApp testApp,
-            Bundle bundleToCreateIntent,
-            BroadcastReceiver broadcastReceiver,
-            CountDownLatch latch)
-            throws Exception {
-
-        // Register broadcast receiver
-        final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(bundleToCreateIntent.getString(QUERY_TYPE));
-        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        getContext().registerReceiver(broadcastReceiver, intentFilter, Context.RECEIVER_EXPORTED);
-
-        // Launch the test app.
-        final Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setPackage(testApp.getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(INTENT_EXTRA_CALLING_PKG, getContext().getPackageName());
-        intent.putExtras(bundleToCreateIntent);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.putExtras(bundleToCreateIntent);
-
-        Thread.sleep(500);
-        getContext().startActivity(intent);
-        if (!latch.await(POLLING_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)) {
-            final String errorMessage =
-                    "Timed out while waiting to receive "
-                            + bundleToCreateIntent.getString(QUERY_TYPE)
-                            + " intent from "
-                            + testApp.getPackageName();
-            throw new TimeoutException(errorMessage);
-        }
-        getContext().unregisterReceiver(broadcastReceiver);
+        return TestAppProxy.forApp(testApp)
+                .insertExerciseSession(sessionStartTime, sessionEndTime, pauseStart, pauseEnd);
     }
 
     public static List<DataOrigin> getDataOriginPriorityOrder(TestApp testAppA, TestApp testAppB) {

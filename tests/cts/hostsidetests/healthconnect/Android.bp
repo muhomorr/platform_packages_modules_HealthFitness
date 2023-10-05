@@ -37,46 +37,41 @@ android_test_helper_app {
 android_test_helper_app {
     name: "CtsHealthConnectTestAppAWithNormalReadWritePermission",
     manifest: "HealthConnectTestHelper/CtsHealthConnectTestAppAWithNormalReadWritePermission.xml",
-    static_libs: ["cts-healthconnect-lib"],
+    static_libs: ["cts-healthconnect-lib", "cts-healthconnect-test-helper"],
     sdk_version: "test_current",
     min_sdk_version: "34",
-    srcs: ["HealthConnectTestHelper/src/**/*.java"],
 }
 
 android_test_helper_app {
     name: "CtsHealthConnectTestAppBWithNormalReadWritePermission",
     manifest: "HealthConnectTestHelper/CtsHealthConnectTestAppBWithNormalReadWritePermission.xml",
-    static_libs: ["cts-healthconnect-lib"],
+    static_libs: ["cts-healthconnect-lib", "cts-healthconnect-test-helper"],
     sdk_version: "test_current",
     min_sdk_version: "34",
-    srcs: ["HealthConnectTestHelper/src/**/*.java"],
 }
 
 android_test_helper_app {
     name: "CtsHealthConnectTestAppWithDataManagePermission",
     manifest: "HealthConnectTestHelper/CtsHealthConnectTestAppWithDataManagePermission.xml",
-    static_libs: ["cts-healthconnect-lib"],
+    static_libs: ["cts-healthconnect-lib", "cts-healthconnect-test-helper"],
     sdk_version: "test_current",
     min_sdk_version: "34",
-    srcs: ["HealthConnectTestHelper/src/**/*.java"],
 }
 
 android_test_helper_app {
     name: "CtsHealthConnectTestAppWithNoPermission",
     manifest: "HealthConnectTestHelper/CtsHealthConnectTestAppWithNoPermission.xml",
-    static_libs: ["cts-healthconnect-lib"],
+    static_libs: ["cts-healthconnect-lib", "cts-healthconnect-test-helper"],
     sdk_version: "test_current",
     min_sdk_version: "34",
-    srcs: ["HealthConnectTestHelper/src/**/*.java"],
 }
 
 android_test_helper_app {
     name: "CtsHealthConnectTestAppWithWritePermissionsOnly",
     manifest: "HealthConnectTestHelper/CtsHealthConnectTestAppWithWritePermissionsOnly.xml",
-    static_libs: ["cts-healthconnect-lib"],
+    static_libs: ["cts-healthconnect-lib", "cts-healthconnect-test-helper"],
     sdk_version: "test_current",
     min_sdk_version: "34",
-    srcs: ["HealthConnectTestHelper/src/**/*.java"],
 }
 
 android_test {

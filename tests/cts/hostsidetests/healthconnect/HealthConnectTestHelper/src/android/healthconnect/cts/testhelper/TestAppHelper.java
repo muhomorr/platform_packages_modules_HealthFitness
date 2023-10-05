@@ -55,7 +55,6 @@ import static android.healthconnect.cts.utils.TestUtils.readRecords;
 import static android.healthconnect.cts.utils.TestUtils.updateRecords;
 import static android.healthconnect.cts.utils.TestUtils.verifyDeleteRecords;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.health.connect.ReadRecordsRequestUsingFilters;
@@ -76,14 +75,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HealthConnectTestHelper extends Activity {
-    private static final String TAG = "HealthConnectTestHelper";
+final class TestAppHelper {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final Context context = getApplicationContext();
-        Bundle bundle = getIntent().getExtras();
+    static Intent handleRequest(Context context, Bundle bundle) {
         String queryType = bundle.getString(QUERY_TYPE);
         Intent returnIntent;
         try {
@@ -136,14 +130,14 @@ public class HealthConnectTestHelper extends Activity {
                                     context);
                     break;
                 case UPDATE_EXERCISE_ROUTE:
-                    returnIntent = updateRouteAs(queryType, context);
+                    returnIntent = updateRoute(queryType, context);
                     break;
                 case UPSERT_EXERCISE_ROUTE:
-                    returnIntent = upsertRouteAs(queryType, context);
+                    returnIntent = upsertRoute(queryType, context);
                     break;
                 case UPDATE_RECORDS_QUERY:
                     returnIntent =
-                            updateRecordsAs(
+                            updateRecords(
                                     queryType,
                                     (List<TestUtils.RecordTypeAndRecordIds>)
                                             bundle.getSerializable(RECORD_IDS),
@@ -168,7 +162,7 @@ public class HealthConnectTestHelper extends Activity {
                         break;
                     }
                     returnIntent =
-                            readRecordsAs(
+                            readRecords(
                                     queryType,
                                     bundle.getStringArrayList(READ_RECORD_CLASS_NAME),
                                     context);
@@ -203,8 +197,7 @@ public class HealthConnectTestHelper extends Activity {
             returnIntent.putExtra(INTENT_EXCEPTION, e);
         }
 
-        sendBroadcast(returnIntent);
-        this.finish();
+        return returnIntent;
     }
 
     /**
@@ -215,7 +208,7 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent insertRecord(String queryType, Context context) {
+    private static Intent insertRecord(String queryType, Context context) {
         List<Record> records = getTestRecords(context.getPackageName());
         final Intent intent = new Intent(queryType);
         try {
@@ -243,7 +236,7 @@ public class HealthConnectTestHelper extends Activity {
      * @throws ClassNotFoundException if a record category class is not found for any class name
      *     present in the list @listOfRecordIdsAndClassName
      */
-    private Intent deleteRecords(
+    private static Intent deleteRecords(
             String queryType,
             List<TestUtils.RecordTypeAndRecordIds> listOfRecordIdsAndClassName,
             Context context)
@@ -280,7 +273,7 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent updateRecordsAs(
+    private static Intent updateRecords(
             String queryType,
             List<TestUtils.RecordTypeAndRecordIds> listOfRecordIdsAndClassName,
             Context context) {
@@ -290,7 +283,7 @@ public class HealthConnectTestHelper extends Activity {
             for (TestUtils.RecordTypeAndRecordIds recordTypeAndRecordIds :
                     listOfRecordIdsAndClassName) {
                 List<? extends Record> recordsToBeUpdated =
-                        readRecords(
+                        TestUtils.readRecords(
                                 new ReadRecordsRequestUsingFilters.Builder<>(
                                                 (Class<? extends Record>)
                                                         Class.forName(
@@ -298,7 +291,7 @@ public class HealthConnectTestHelper extends Activity {
                                                                         .getRecordType()))
                                         .build(),
                                 context);
-                updateRecords((List<Record>) recordsToBeUpdated, context);
+                TestUtils.updateRecords((List<Record>) recordsToBeUpdated, context);
             }
             intent.putExtra(SUCCESS, true);
         } catch (Exception e) {
@@ -317,17 +310,17 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent updateRouteAs(String queryType, Context context) {
+    private static Intent updateRoute(String queryType, Context context) {
         final Intent intent = new Intent(queryType);
         try {
             ExerciseSessionRecord existingSession =
-                    readRecords(
+                    TestUtils.readRecords(
                                     new ReadRecordsRequestUsingFilters.Builder<>(
                                                     ExerciseSessionRecord.class)
                                             .build(),
                                     context)
                             .get(0);
-            updateRecords(
+            TestUtils.updateRecords(
                     List.of(
                             getExerciseSessionRecord(
                                     context.getPackageName(),
@@ -352,11 +345,11 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent upsertRouteAs(String queryType, Context context) {
+    private static Intent upsertRoute(String queryType, Context context) {
         final Intent intent = new Intent(queryType);
         try {
             ExerciseSessionRecord existingSession =
-                    readRecords(
+                    TestUtils.readRecords(
                                     new ReadRecordsRequestUsingFilters.Builder<>(
                                                     ExerciseSessionRecord.class)
                                             .build(),
@@ -389,7 +382,7 @@ public class HealthConnectTestHelper extends Activity {
      * @return Intent to send back to the main app which is running the tests
      * @throws InterruptedException
      */
-    private Intent insertRecordsWithDifferentPkgName(
+    private static Intent insertRecordsWithDifferentPkgName(
             String queryType, String pkgNameUsedInDataOrigin, Context context)
             throws InterruptedException {
         final Intent intent = new Intent(queryType);
@@ -411,14 +404,14 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent readRecordsAs(
+    private static Intent readRecords(
             String queryType, ArrayList<String> recordClassesToRead, Context context) {
         final Intent intent = new Intent(queryType);
         int recordsSize = 0;
         try {
             for (String recordClass : recordClassesToRead) {
                 List<? extends Record> recordsRead =
-                        readRecords(
+                        TestUtils.readRecords(
                                 new ReadRecordsRequestUsingFilters.Builder<>(
                                                 (Class<? extends Record>)
                                                         Class.forName(recordClass))
@@ -447,7 +440,7 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent insertRecordsWithGivenClientId(
+    private static Intent insertRecordsWithGivenClientId(
             String queryType, double clientId, Context context) {
         final Intent intent = new Intent(queryType);
 
@@ -471,7 +464,7 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent readRecordsUsingDataOriginFilters(
+    private static Intent readRecordsUsingDataOriginFilters(
             String queryType,
             ArrayList<String> recordClassesToRead,
             List<String> dataOriginPackageNames,
@@ -490,7 +483,8 @@ public class HealthConnectTestHelper extends Activity {
                                         new DataOrigin.Builder()
                                                 .setPackageName(packageName)
                                                 .build()));
-                List<? extends Record> recordsRead = readRecords(requestBuilder.build(), context);
+                List<? extends Record> recordsRead =
+                        TestUtils.readRecords(requestBuilder.build(), context);
                 recordsSize += recordsRead.size();
             }
         } catch (Exception e) {
@@ -512,7 +506,7 @@ public class HealthConnectTestHelper extends Activity {
      * @param changeLogToken - Token corresponding to which changeLogs have to be read
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent readChangeLogsUsingDataOriginFilters(
+    private static Intent readChangeLogsUsingDataOriginFilters(
             String queryType, String changeLogToken, Context context) {
         final Intent intent = new Intent(queryType);
 
@@ -536,7 +530,7 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return - Intent to send back to the main app which is running the tests
      */
-    private Intent getChangeLogToken(String queryType, String pkgName, Context context)
+    private static Intent getChangeLogToken(String queryType, String pkgName, Context context)
             throws Exception {
         final Intent intent = new Intent(queryType);
 
@@ -562,7 +556,7 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return - Intent to send back to the main app which is running the tests
      */
-    private Intent getChangeLogToken(
+    private static Intent getChangeLogToken(
             String queryType,
             String pkgName,
             ArrayList<String> recordClassesToRead,
@@ -595,7 +589,7 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent insertStepsRecord(
+    private static Intent insertStepsRecord(
             String queryType, String startTime, String endTime, int stepsCount, Context context) {
         final Intent intent = new Intent(queryType);
         try {
@@ -629,7 +623,7 @@ public class HealthConnectTestHelper extends Activity {
      * @param context - application context
      * @return Intent to send back to the main app which is running the tests
      */
-    private Intent insertExerciseSession(
+    private static Intent insertExerciseSession(
             String queryType,
             String sessionStartTime,
             String sessionEndTime,
@@ -660,4 +654,6 @@ public class HealthConnectTestHelper extends Activity {
         }
         return intent;
     }
+
+    private TestAppHelper() {}
 }

@@ -24,7 +24,7 @@
 
 
     <application android:label="CtsHealthConnectTestAppWithDataManagePermission">
-        <activity android:name="android.healthconnect.cts.testhelper.HealthConnectTestHelper"
+        <activity android:name="android.healthconnect.cts.testhelper.TestAppActivity"
                   android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -35,5 +35,7 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name="android.healthconnect.cts.testhelper.TestAppReceiver"
+            android:exported="true"/>
     </application>
 </manifest>
