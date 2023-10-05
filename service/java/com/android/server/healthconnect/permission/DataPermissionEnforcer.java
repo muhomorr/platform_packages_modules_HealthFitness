@@ -19,7 +19,7 @@ package com.android.server.healthconnect.permission;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.health.connect.HealthPermissions.READ_HEALTH_DATA_IN_BACKGROUND;
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
 
 import android.annotation.NonNull;
 import android.content.AttributionSource;
@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 /**
  * Helper class to force caller of data apis to hold api required permissions.
@@ -189,20 +188,19 @@ public class DataPermissionEnforcer {
     }
 
     /**
-     * Collects extra read permissions to its grant state. Used to not expose extra data if caller
-     * doesn't have corresponding permission.
+     * Returns granted extra read permissions.
+     *
+     * <p>Used to not expose extra data if caller doesn't have corresponding permission.
      */
-    public Map<String, Boolean> collectExtraReadPermissionToStateMapping(
+    public Set<String> collectGrantedExtraReadPermissions(
             Set<Integer> recordTypeIds, AttributionSource attributionSource) {
         RecordHelperProvider recordHelperProvider = RecordHelperProvider.getInstance();
         return recordTypeIds.stream()
                 .map(recordHelperProvider::getRecordHelper)
                 .flatMap(recordHelper -> recordHelper.getExtraReadPermissions().stream())
                 .distinct()
-                .collect(
-                        toMap(
-                                Function.identity(),
-                                permission -> isPermissionGranted(permission, attributionSource)));
+                .filter(permission -> isPermissionGranted(permission, attributionSource))
+                .collect(toSet());
     }
 
     public Map<String, Boolean> collectExtraWritePermissionStateMapping(

@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.health.connect.ReadRecordsRequestUsingFilters;
+import android.health.connect.ReadRecordsRequestUsingIds;
 import android.health.connect.RecordIdFilter;
 import android.health.connect.changelog.ChangeLogTokenRequest;
 import android.health.connect.changelog.ChangeLogsRequest;
@@ -117,6 +118,14 @@ public class TestAppProxy {
     public <T extends Record> List<T> readRecords(ReadRecordsRequestUsingFilters<T> request)
             throws Exception {
         Bundle requestBundle = BundleHelper.fromReadRecordsRequestUsingFilters(request);
+        Bundle responseBundle = getFromTestApp(requestBundle);
+        return BundleHelper.toReadRecordsResponse(responseBundle);
+    }
+
+    /** Read records from HC on behalf of the app. */
+    public <T extends Record> List<T> readRecords(ReadRecordsRequestUsingIds<T> request)
+            throws Exception {
+        Bundle requestBundle = BundleHelper.fromReadRecordsRequestUsingIds(request);
         Bundle responseBundle = getFromTestApp(requestBundle);
         return BundleHelper.toReadRecordsResponse(responseBundle);
     }

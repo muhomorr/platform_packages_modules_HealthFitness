@@ -17,6 +17,7 @@
 package android.healthconnect.cts.lib;
 
 import android.health.connect.ReadRecordsRequestUsingFilters;
+import android.health.connect.ReadRecordsRequestUsingIds;
 import android.health.connect.RecordIdFilter;
 import android.health.connect.TimeInstantRangeFilter;
 import android.health.connect.changelog.ChangeLogTokenRequest;
@@ -33,9 +34,11 @@ import android.health.connect.datatypes.IntervalRecord;
 import android.health.connect.datatypes.Metadata;
 import android.health.connect.datatypes.Record;
 import android.health.connect.datatypes.StepsRecord;
+import android.health.connect.datatypes.units.Length;
 import android.health.connect.datatypes.units.Power;
 import android.os.Bundle;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,8 @@ public final class BundleHelper {
     public static final String QUERY_TYPE = PREFIX + "QUERY_TYPE";
     public static final String INSERT_RECORDS_QUERY = PREFIX + "INSERT_RECORDS_QUERY";
     public static final String READ_RECORDS_QUERY = PREFIX + "READ_RECORDS_QUERY";
+    public static final String READ_RECORDS_USING_IDS_QUERY =
+            PREFIX + "READ_RECORDS_USING_IDS_QUERY";
     public static final String READ_CHANGE_LOGS_QUERY = PREFIX + "READ_CHANGE_LOGS_QUERY";
     public static final String DELETE_RECORDS_QUERY = PREFIX + "DELETE_RECORDS_QUERY";
     public static final String UPDATE_RECORDS_QUERY = PREFIX + "UPDATE_RECORDS_QUERY";
@@ -74,6 +79,10 @@ public final class BundleHelper {
     private static final String EXERCISE_ROUTE_TIMESTAMPS = PREFIX + "EXERCISE_ROUTE_TIMESTAMPS";
     private static final String EXERCISE_ROUTE_LATITUDES = PREFIX + "EXERCISE_ROUTE_LATITUDES";
     private static final String EXERCISE_ROUTE_LONGITUDES = PREFIX + "EXERCISE_ROUTE_LONGITUDES";
+    private static final String EXERCISE_ROUTE_ALTITUDES = PREFIX + "EXERCISE_ROUTE_ALTITUDES";
+    private static final String EXERCISE_ROUTE_HACCS = PREFIX + "EXERCISE_ROUTE_HACCS";
+    private static final String EXERCISE_ROUTE_VACCS = PREFIX + "EXERCISE_ROUTE_VACCS";
+    private static final String EXERCISE_HAS_ROUTE = PREFIX + "EXERCISE_HAS_ROUTE";
     private static final String POWER_WATTS = PREFIX + "POWER_WATTS";
     private static final String TIME_INSTANT_RANGE_FILTER = PREFIX + "TIME_INSTANT_RANGE_FILTER";
     private static final String CHANGE_LOGS_REQUEST = PREFIX + "CHANGE_LOGS_REQUEST";
@@ -181,6 +190,33 @@ public final class BundleHelper {
                 request.addDataOrigins(
                         new DataOrigin.Builder().setPackageName(packageName).build());
             }
+        }
+
+        return request.build();
+    }
+
+    /** Converts a ReadRecordsRequestUsingFilters to a bundle. */
+    public static <T extends Record> Bundle fromReadRecordsRequestUsingIds(
+            ReadRecordsRequestUsingIds<T> request) {
+        Bundle bundle = new Bundle();
+        bundle.putString(QUERY_TYPE, READ_RECORDS_USING_IDS_QUERY);
+        bundle.putString(RECORD_CLASS_NAME, request.getRecordType().getName());
+
+        var recordIdFilters = request.getRecordIdFilters();
+        List<String> recordIds = recordIdFilters.stream().map(RecordIdFilter::getId).toList();
+        bundle.putStringArrayList(RECORD_ID, new ArrayList<>(recordIds));
+
+        return bundle;
+    }
+
+    /** Converts a bundle to a ReadRecordsRequestUsingFilters. */
+    public static ReadRecordsRequestUsingIds<? extends Record> toReadRecordsRequestUsingIds(
+            Bundle bundle) {
+        String recordClassName = bundle.getString(RECORD_CLASS_NAME);
+        var request = new ReadRecordsRequestUsingIds.Builder<>(recordClassForName(recordClassName));
+        var recordIds = bundle.getStringArrayList(RECORD_ID);
+        for (String id : recordIds) {
+            request.addId(id);
         }
 
         return request.build();
@@ -389,10 +425,31 @@ public final class BundleHelper {
                     route.getRouteLocations().stream()
                             .mapToDouble(ExerciseRoute.Location::getLongitude)
                             .toArray();
+            List<Double> altitudes =
+                    route.getRouteLocations().stream()
+                            .map(ExerciseRoute.Location::getAltitude)
+                            .map(alt -> transformOrNull(alt, Length::getInMeters))
+                            .toList();
+            List<Double> hAccs =
+                    route.getRouteLocations().stream()
+                            .map(ExerciseRoute.Location::getHorizontalAccuracy)
+                            .map(hAcc -> transformOrNull(hAcc, Length::getInMeters))
+                            .toList();
+            List<Double> vAccs =
+                    route.getRouteLocations().stream()
+                            .map(ExerciseRoute.Location::getVerticalAccuracy)
+                            .map(vAcc -> transformOrNull(vAcc, Length::getInMeters))
+                            .toList();
+
             values.putLongArray(EXERCISE_ROUTE_TIMESTAMPS, timestamps);
             values.putDoubleArray(EXERCISE_ROUTE_LATITUDES, latitudes);
             values.putDoubleArray(EXERCISE_ROUTE_LONGITUDES, longitudes);
+            values.putSerializable(EXERCISE_ROUTE_ALTITUDES, new ArrayList<>(altitudes));
+            values.putSerializable(EXERCISE_ROUTE_HACCS, new ArrayList<>(hAccs));
+            values.putSerializable(EXERCISE_ROUTE_VACCS, new ArrayList<>(vAccs));
         }
+
+        values.putBoolean(EXERCISE_HAS_ROUTE, record.hasRoute());
 
         long[] segmentStartTimes =
                 record.getSegments().stream()
@@ -428,6 +485,10 @@ public final class BundleHelper {
         if (locationCount > 0) {
             double[] latitudes = values.getDoubleArray(EXERCISE_ROUTE_LATITUDES);
             double[] longitudes = values.getDoubleArray(EXERCISE_ROUTE_LONGITUDES);
+            List<Double> altitudes =
+                    values.getSerializable(EXERCISE_ROUTE_ALTITUDES, ArrayList.class);
+            List<Double> hAccs = values.getSerializable(EXERCISE_ROUTE_HACCS, ArrayList.class);
+            List<Double> vAccs = values.getSerializable(EXERCISE_ROUTE_VACCS, ArrayList.class);
             List<ExerciseRoute.Location> locations =
                     IntStream.range(0, locationCount)
                             .mapToObj(
@@ -435,14 +496,38 @@ public final class BundleHelper {
                                         Instant time = Instant.ofEpochMilli(routeTimestamps[i]);
                                         double latitude = latitudes[i];
                                         double longitude = longitudes[i];
+                                        Double altitude = altitudes.get(i);
+                                        Double hAcc = hAccs.get(i);
+                                        Double vAcc = vAccs.get(i);
 
-                                        return new ExerciseRoute.Location.Builder(
-                                                        time, latitude, longitude)
-                                                .build();
+                                        var location =
+                                                new ExerciseRoute.Location.Builder(
+                                                        time, latitude, longitude);
+
+                                        if (altitude != null) {
+                                            location.setAltitude(Length.fromMeters(altitude));
+                                        }
+
+                                        if (hAcc != null) {
+                                            location.setHorizontalAccuracy(Length.fromMeters(hAcc));
+                                        }
+
+                                        if (vAcc != null) {
+                                            location.setVerticalAccuracy(Length.fromMeters(vAcc));
+                                        }
+
+                                        return location.build();
                                     })
                             .toList();
 
             record.setRoute(new ExerciseRoute(locations));
+        }
+
+        boolean hasRoute = values.getBoolean(EXERCISE_HAS_ROUTE);
+
+        if (hasRoute && locationCount == 0) {
+            // Handle the `route == null && hasRoute == true` case which is a valid state.
+            setHasRoute(record, hasRoute);
         }
 
         long[] segmentStartTimes = values.getLongArray(EXERCISE_SEGMENT_START_TIMES);
@@ -558,6 +643,24 @@ public final class BundleHelper {
             return (Class<? extends Record>) Class.forName(className);
         } catch (ClassNotFoundException e) {
             throw new IllegalArgumentException(e);
+        }
+    }
+
+    /**
+     * Calls {@code ExerciseSessionRecord.Builder.setHasRoute} using reflection as the method is
+     * hidden.
+     */
+    private static void setHasRoute(ExerciseSessionRecord.Builder record, boolean hasRoute) {
+        // Getting a hidden method by its signature using getMethod() throws an exception in test
+        // apps, but iterating throw all the methods and getting the needed one works.
+        for (var method : record.getClass().getMethods()) {
+            if (method.getName().equals("setHasRoute")) {
+                try {
+                    method.invoke(record, hasRoute);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    throw new IllegalArgumentException(e);
+                }
+            }
         }
     }
 

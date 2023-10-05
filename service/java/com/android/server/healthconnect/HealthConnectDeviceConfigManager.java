@@ -44,6 +44,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class HealthConnectDeviceConfigManager implements DeviceConfig.OnPropertiesChangedListener {
     private static Set<String> sFlagsToTrack = new ArraySet<>();
     private static final String EXERCISE_ROUTE_FEATURE_FLAG = "exercise_routes_enable";
+    private static final String EXERCISE_ROUTES_READ_ALL_FEATURE_FLAG =
+            "exercise_routes_read_all_enable";
     public static final String ENABLE_RATE_LIMITER_FLAG = "enable_rate_limiter";
     private static final String MAX_READ_REQUESTS_PER_24H_FOREGROUND_FLAG =
             "max_read_requests_per_24h_foreground";
@@ -124,6 +126,7 @@ public class HealthConnectDeviceConfigManager implements DeviceConfig.OnProperti
 
     private static final boolean SESSION_DATATYPE_DEFAULT_FLAG_VALUE = true;
     private static final boolean EXERCISE_ROUTE_DEFAULT_FLAG_VALUE = true;
+    private static final boolean EXERCISE_ROUTES_READ_ALL_DEFAULT_FLAG_VALUE = true;
     public static final boolean ENABLE_RATE_LIMITER_DEFAULT_FLAG_VALUE = true;
     public static final int QUOTA_BUCKET_READS_PER_15M_FOREGROUND_DEFAULT_FLAG_VALUE = 2000;
     public static final int QUOTA_BUCKET_READS_PER_24H_FOREGROUND_DEFAULT_FLAG_VALUE = 16000;
@@ -184,6 +187,13 @@ public class HealthConnectDeviceConfigManager implements DeviceConfig.OnProperti
                     HEALTH_FITNESS_NAMESPACE,
                     EXERCISE_ROUTE_FEATURE_FLAG,
                     EXERCISE_ROUTE_DEFAULT_FLAG_VALUE);
+
+    @GuardedBy("mLock")
+    private boolean mExerciseRoutesReadAllEnabled =
+            DeviceConfig.getBoolean(
+                    HEALTH_FITNESS_NAMESPACE,
+                    EXERCISE_ROUTES_READ_ALL_FEATURE_FLAG,
+                    EXERCISE_ROUTES_READ_ALL_DEFAULT_FLAG_VALUE);
 
     @GuardedBy("mLock")
     private boolean mSessionDatatypeEnabled =
@@ -308,6 +318,7 @@ public class HealthConnectDeviceConfigManager implements DeviceConfig.OnProperti
     /** Adds flags that need to be updated if their values are changed on the server. */
     private static void addFlagsToTrack() {
         sFlagsToTrack.add(EXERCISE_ROUTE_FEATURE_FLAG);
+        sFlagsToTrack.add(EXERCISE_ROUTES_READ_ALL_FEATURE_FLAG);
         sFlagsToTrack.add(SESSION_DATATYPE_FEATURE_FLAG);
         sFlagsToTrack.add(ENABLE_RATE_LIMITER_FLAG);
         sFlagsToTrack.add(COUNT_MIGRATION_STATE_IN_PROGRESS_FLAG);
@@ -331,6 +342,16 @@ public class HealthConnectDeviceConfigManager implements DeviceConfig.OnProperti
         mLock.readLock().lock();
         try {
             return mExerciseRouteEnabled;
+        } finally {
+            mLock.readLock().unlock();
+        }
+    }
+
+    /** Returns true if READ_EXERCISE_ROUTES_ALL permission is effective. */
+    public boolean isExerciseRoutesReadAllFeatureEnabled() {
+        mLock.readLock().lock();
+        try {
+            return mExerciseRoutesReadAllEnabled;
         } finally {
             mLock.readLock().unlock();
         }
@@ -609,6 +630,12 @@ public class HealthConnectDeviceConfigManager implements DeviceConfig.OnProperti
                                 properties.getBoolean(
                                         EXERCISE_ROUTE_FEATURE_FLAG,
                                         EXERCISE_ROUTE_DEFAULT_FLAG_VALUE);
+                        break;
+                    case EXERCISE_ROUTES_READ_ALL_FEATURE_FLAG:
+                        mExerciseRoutesReadAllEnabled =
+                                properties.getBoolean(
+                                        EXERCISE_ROUTES_READ_ALL_FEATURE_FLAG,
+                                        EXERCISE_ROUTES_READ_ALL_DEFAULT_FLAG_VALUE);
                         break;
                     case SESSION_DATATYPE_FEATURE_FLAG:
                         mSessionDatatypeEnabled =

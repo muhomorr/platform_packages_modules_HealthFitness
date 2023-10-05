@@ -1078,11 +1078,8 @@ public final class BackupRestore {
                         .setPageToken(requestToken.encode())
                         .build();
 
-        Map<String, Boolean> extraReadPermsMapping = new ArrayMap<>();
-        List<String> extraReadPerms = recordHelper.getExtraReadPermissions();
-        for (var extraReadPerm : extraReadPerms) {
-            extraReadPermsMapping.put(extraReadPerm, true);
-        }
+        Set<String> grantedExtraReadPermissions =
+                Set.copyOf(recordHelper.getExtraReadPermissions());
 
         // Working with startDateAccess of -1 as we don't want to have time based filtering in the
         // query.
@@ -1091,9 +1088,12 @@ public final class BackupRestore {
                 new ReadTransactionRequest(
                         null,
                         readRecordsRequest.toReadRecordsRequestParcel(),
-                        DEFAULT_LONG /* startDateAccessMillis */,
-                        false,
-                        extraReadPermsMapping);
+                        // Avoid time based filtering.
+                        /* startDateAccessMillis= */ DEFAULT_LONG,
+                        /* enforceSelfRead= */ false,
+                        grantedExtraReadPermissions,
+                        // Make sure foreground only types get included in the response.
+                        /* isInForeground= */ true);
 
         List<RecordInternal<?>> recordInternalList;
         PageTokenWrapper token;

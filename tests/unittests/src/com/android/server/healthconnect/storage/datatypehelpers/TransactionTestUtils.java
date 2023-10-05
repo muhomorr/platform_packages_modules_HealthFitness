@@ -45,12 +45,13 @@ import com.android.server.healthconnect.storage.request.UpsertTransactionRequest
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
 /** Util class provides shared functionality for db transaction testing. */
 public final class TransactionTestUtils {
-    private static final Map<String, Boolean> NO_EXTRA_PERMS = Map.of();
+    private static final Set<String> NO_EXTRA_PERMS = Set.of();
     private static final String TEST_PACKAGE_NAME = "package.name";
     private final TransactionManager mTransactionManager;
     private final Context mContext;
@@ -90,7 +91,11 @@ public final class TransactionTestUtils {
     public static ReadTransactionRequest getReadTransactionRequest(
             Map<Integer, List<UUID>> recordTypeToUuids) {
         return new ReadTransactionRequest(
-                TEST_PACKAGE_NAME, recordTypeToUuids, /* startDateAccess= */ 0, NO_EXTRA_PERMS);
+                TEST_PACKAGE_NAME,
+                recordTypeToUuids,
+                /* startDateAccessMillis= */ 0,
+                NO_EXTRA_PERMS,
+                /* isInForeground= */ true);
     }
 
     public static ReadTransactionRequest getReadTransactionRequest(
@@ -100,7 +105,8 @@ public final class TransactionTestUtils {
                 request,
                 /* startDateAccessMillis= */ 0,
                 /* enforceSelfRead= */ false,
-                NO_EXTRA_PERMS);
+                NO_EXTRA_PERMS,
+                /* isInForeground= */ true);
     }
 
     public static RecordInternal<StepsRecord> createStepsRecord(

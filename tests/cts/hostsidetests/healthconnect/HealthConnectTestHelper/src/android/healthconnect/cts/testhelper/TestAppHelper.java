@@ -23,11 +23,13 @@ import static android.healthconnect.cts.lib.BundleHelper.INTENT_EXCEPTION;
 import static android.healthconnect.cts.lib.BundleHelper.QUERY_TYPE;
 import static android.healthconnect.cts.lib.BundleHelper.READ_CHANGE_LOGS_QUERY;
 import static android.healthconnect.cts.lib.BundleHelper.READ_RECORDS_QUERY;
+import static android.healthconnect.cts.lib.BundleHelper.READ_RECORDS_USING_IDS_QUERY;
 import static android.healthconnect.cts.lib.BundleHelper.UPDATE_RECORDS_QUERY;
 
 import android.content.Context;
 import android.content.Intent;
 import android.health.connect.ReadRecordsRequestUsingFilters;
+import android.health.connect.ReadRecordsRequestUsingIds;
 import android.health.connect.RecordIdFilter;
 import android.health.connect.changelog.ChangeLogTokenRequest;
 import android.health.connect.changelog.ChangeLogTokenResponse;
@@ -62,6 +64,7 @@ final class TestAppHelper {
             case DELETE_RECORDS_QUERY -> handleDeleteRecords(context, bundle);
             case UPDATE_RECORDS_QUERY -> handleUpdateRecords(context, bundle);
             case READ_RECORDS_QUERY -> handleReadRecords(context, bundle);
+            case READ_RECORDS_USING_IDS_QUERY -> handleReadRecordsUsingIds(context, bundle);
             case READ_CHANGE_LOGS_QUERY -> handleGetChangeLogs(context, bundle);
             case GET_CHANGE_LOG_TOKEN_QUERY -> handleGetChangeLogToken(context, bundle);
             default -> throw new IllegalStateException(
@@ -80,6 +83,14 @@ final class TestAppHelper {
     private static Bundle handleReadRecords(Context context, Bundle bundle) throws Exception {
         ReadRecordsRequestUsingFilters<? extends Record> request =
                 BundleHelper.toReadRecordsRequestUsingFilters(bundle);
+        List<? extends Record> records = TestUtils.readRecords(request, context);
+        return BundleHelper.fromReadRecordsResponse(records);
+    }
+
+    private static Bundle handleReadRecordsUsingIds(Context context, Bundle bundle)
+            throws Exception {
+        ReadRecordsRequestUsingIds<? extends Record> request =
+                BundleHelper.toReadRecordsRequestUsingIds(bundle);
         List<? extends Record> records = TestUtils.readRecords(request, context);
         return BundleHelper.fromReadRecordsResponse(records);
     }

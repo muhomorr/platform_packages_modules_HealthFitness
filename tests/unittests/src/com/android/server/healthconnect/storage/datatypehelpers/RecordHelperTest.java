@@ -54,6 +54,7 @@ import org.junit.runner.RunWith;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RunWith(AndroidJUnit4.class)
@@ -306,6 +307,7 @@ public class RecordHelperTest {
                 TEST_PACKAGE_NAME,
                 /* enforceSelfRead= */ false,
                 /* startDateAccess= */ 0,
-                /* extraPermsState= */ null);
+                /* grantedExtraReadPermissions= */ Set.of(),
+                /* isInForeground= */ true);
     }
 }

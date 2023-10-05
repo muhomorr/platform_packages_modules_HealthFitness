@@ -37,6 +37,7 @@ import static com.android.compatibility.common.util.FeatureUtil.AUTOMOTIVE_FEATU
 import static com.android.compatibility.common.util.FeatureUtil.hasSystemFeature;
 import static com.android.compatibility.common.util.SystemUtil.runWithShellPermissionIdentity;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.truth.Truth.assertThat;
 
 import static java.util.Collections.unmodifiableList;
@@ -138,6 +139,10 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.android.compatibility.common.util.SystemUtil;
+import com.android.compatibility.common.util.ThrowingRunnable;
+import com.android.compatibility.common.util.ThrowingSupplier;
+
+import com.google.common.collect.Sets;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -178,6 +183,12 @@ public final class TestUtils {
             HealthPermissions.MANAGE_HEALTH_PERMISSIONS;
     public static final String READ_EXERCISE_ROUTE_PERMISSION =
             "android.permission.health.READ_EXERCISE_ROUTE";
+
+    public static final String READ_HEALTH_DATA_IN_BACKGROUND =
+            "android.permission.health.READ_HEALTH_DATA_IN_BACKGROUND";
+
+    public static final String READ_EXERCISE_ROUTES_ALL =
+            "android.permission.health.READ_EXERCISE_ROUTES_ALL";
     private static final String HEALTH_PERMISSION_PREFIX = "android.permission.health.";
     public static final String MANAGE_HEALTH_DATA = HealthPermissions.MANAGE_HEALTH_DATA_PERMISSION;
     public static final Instant SESSION_START_TIME = Instant.now().minus(10, ChronoUnit.DAYS);
@@ -1295,6 +1306,46 @@ public final class TestUtils {
                         MANAGE_HEALTH_PERMISSIONS);
     }
 
+    /** Revokes permission for the package for the duration of the runnable. */
+    public static void runWithRevokedPermissions(
+            String packageName, String permission, ThrowingRunnable runnable) throws Exception {
+        runWithRevokedPermissions(
+                (ThrowingSupplier<Void>)
+                        () -> {
+                            runnable.run();
+                            return null;
+                        },
+                packageName,
+                permission);
+    }
+
+    /** Revokes permission for the package for the duration of the supplier. */
+    public static <T> T runWithRevokedPermissions(
+            ThrowingSupplier<T> supplier, String packageName, String... permissions)
+            throws Exception {
+        Context context = androidx.test.InstrumentationRegistry.getTargetContext();
+        checkArgument(
+                !context.getPackageName().equals(packageName),
+                "Can not be called on self, only on other apps");
+
+        UiAutomation uiAutomation =
+                androidx.test.platform.app.InstrumentationRegistry.getInstrumentation()
+                        .getUiAutomation();
+
+        var grantedPermissions =
+                Sets.intersection(
+                        Set.copyOf(getGrantedHealthPermissions(packageName)), Set.of(permissions));
+
+        try {
+            grantedPermissions.forEach(
+                    permission -> uiAutomation.revokeRuntimePermission(packageName, permission));
+            return supplier.get();
+        } finally {
+            grantedPermissions.forEach(
+                    permission -> uiAutomation.grantRuntimePermission(packageName, permission));
+        }
+    }
+
     public static void revokeHealthPermissions(String packageName) {
         runWithShellPermissionIdentity(() -> revokeHealthPermissionsPrivileged(packageName));
     }
@@ -1599,6 +1650,24 @@ public final class TestUtils {
         return response.get();
     }
 
+    /**
+     * Marks apps with any granted health permissions as connected to HC.
+     *
+     * <p>Test apps in CTS get their permissions auto granted without going through the HC
+     * connection flow which prevents the HC service from recording the app info in the database.
+     *
+     * <p>This method calls "getCurrentPriority" API behind the scenes which has a side effect of
+     * adding all the apps on the device with at least one health permission granted to the
+     * database.
+     */
+    public static void connectAppsWithGrantedPermissions() {
+        try {
+            getPriorityWithManageHealthDataPermission(1);
+        } catch (InterruptedException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
     /** Zips given id and records lists to create a list of {@link RecordIdFilter}. */
     public static List<RecordIdFilter> getRecordIdFilters(
             List<String> recordIds, List<Record> records) {
@@ -1629,6 +1698,14 @@ public final class TestUtils {
     /** Creates a {@link Metadata} with the given client record id. */
     public static Metadata getMetadataForClientId(String clientId) {
         return new Metadata.Builder().setClientRecordId(clientId).build();
+    }
+
+    /** Creates a {@link Metadata} with the given client record id. */
+    public static Metadata getMetadataForClientIdAndVersion(String clientId, long clientVersion) {
+        return new Metadata.Builder()
+                .setClientRecordId(clientId)
+                .setClientRecordVersion(clientVersion)
+                .build();
     }
 
     /** Creates a {@link Metadata} with the given client record id and data origin. */
