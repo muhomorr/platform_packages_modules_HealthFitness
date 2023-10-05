@@ -16,32 +16,8 @@
 
 package android.healthconnect.cts.lib;
 
-import static android.healthconnect.cts.lib.MultiAppTestUtils.APP_PKG_NAME_USED_IN_DATA_ORIGIN;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.CHANGE_LOG_TOKEN;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.CLIENT_ID;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.DATA_ORIGIN_FILTER_PACKAGE_NAMES;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.DELETE_RECORDS_QUERY;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.END_TIME;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.EXERCISE_SESSION;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.GET_CHANGE_LOG_TOKEN_QUERY;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.INSERT_RECORD_QUERY;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.INTENT_EXCEPTION;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.INTENT_EXTRA_CALLING_PKG;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.PAUSE_END;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.PAUSE_START;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.QUERY_TYPE;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.READ_CHANGE_LOGS_QUERY;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.READ_RECORDS_QUERY;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.READ_RECORD_CLASS_NAME;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.READ_USING_DATA_ORIGIN_FILTERS;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.RECORD_IDS;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.RECORD_TYPE;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.START_TIME;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.STEPS_COUNT;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.STEPS_RECORD;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.UPDATE_EXERCISE_ROUTE;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.UPDATE_RECORDS_QUERY;
-import static android.healthconnect.cts.lib.MultiAppTestUtils.UPSERT_EXERCISE_ROUTE;
+import static android.healthconnect.cts.lib.BundleHelper.INTENT_EXCEPTION;
+import static android.healthconnect.cts.lib.BundleHelper.QUERY_TYPE;
 
 import static androidx.test.InstrumentationRegistry.getContext;
 
@@ -49,16 +25,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.health.connect.ReadRecordsRequestUsingFilters;
+import android.health.connect.RecordIdFilter;
+import android.health.connect.changelog.ChangeLogTokenRequest;
+import android.health.connect.changelog.ChangeLogsRequest;
+import android.health.connect.changelog.ChangeLogsResponse;
 import android.health.connect.datatypes.Record;
-import android.healthconnect.cts.utils.TestUtils;
 import android.os.Bundle;
 
 import com.android.cts.install.lib.TestApp;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -96,157 +74,65 @@ public class TestAppProxy {
         return new TestAppProxy(packageName, true);
     }
 
-    /** Insert a few hardcoded records on behalf of the app. */
-    public Bundle insertRecord() throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-
-        return getFromTestApp(bundle);
+    /** Returns the package name of the app. */
+    public String getPackageName() {
+        return mPackageName;
     }
 
-    /** Delete records on behalf of the app. */
-    public Bundle deleteRecords(List<TestUtils.RecordTypeAndRecordIds> listOfRecordIdsAndClass)
+    /** Inserts records to HC on behalf of the app. */
+    public List<String> insertRecords(Record... records) throws Exception {
+        return insertRecords(Arrays.asList(records));
+    }
+
+    /** Inserts records to HC on behalf of the app. */
+    public List<String> insertRecords(List<Record> records) throws Exception {
+        Bundle requestBundle = BundleHelper.fromInsertRecordsRequest(records);
+        Bundle responseBundle = getFromTestApp(requestBundle);
+        return BundleHelper.toInsertRecordsResponse(responseBundle);
+    }
+
+    /** Deletes records from HC on behalf of the app. */
+    public void deleteRecords(RecordIdFilter... recordIdFilters) throws Exception {
+        deleteRecords(Arrays.asList(recordIdFilters));
+    }
+
+    /** Deletes records from HC on behalf of the app. */
+    public void deleteRecords(List<RecordIdFilter> recordIdFilters) throws Exception {
+        Bundle requestBundle = BundleHelper.fromDeleteRecordsByIdsRequest(recordIdFilters);
+        getFromTestApp(requestBundle);
+    }
+
+    /** Updates records in HC on behalf of the app. */
+    public void updateRecords(Record... records) throws Exception {
+        updateRecords(Arrays.asList(records));
+    }
+
+    /** Updates records in HC on behalf of the app. */
+    public void updateRecords(List<Record> records) throws Exception {
+        Bundle requestBundle = BundleHelper.fromUpdateRecordsRequest(records);
+        getFromTestApp(requestBundle);
+    }
+
+    /** Read records from HC on behalf of the app. */
+    public <T extends Record> List<T> readRecords(ReadRecordsRequestUsingFilters<T> request)
             throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, DELETE_RECORDS_QUERY);
-        bundle.putSerializable(RECORD_IDS, (Serializable) listOfRecordIdsAndClass);
-
-        return getFromTestApp(bundle);
+        Bundle requestBundle = BundleHelper.fromReadRecordsRequestUsingFilters(request);
+        Bundle responseBundle = getFromTestApp(requestBundle);
+        return BundleHelper.toReadRecordsResponse(responseBundle);
     }
 
-    /** Update records on behalf of the app. */
-    public Bundle updateRecords(List<TestUtils.RecordTypeAndRecordIds> listOfRecordIdsAndClass)
-            throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, UPDATE_RECORDS_QUERY);
-        bundle.putSerializable(RECORD_IDS, (Serializable) listOfRecordIdsAndClass);
-
-        return getFromTestApp(bundle);
+    /** Gets changelogs from HC on behalf of the app. */
+    public ChangeLogsResponse getChangeLogs(ChangeLogsRequest request) throws Exception {
+        Bundle requestBundle = BundleHelper.fromChangeLogsRequest(request);
+        Bundle responseBundle = getFromTestApp(requestBundle);
+        return BundleHelper.toChangeLogsResponse(responseBundle);
     }
 
-    /** Update exercise route on behalf of the app. */
-    public Bundle updateRoute() throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, UPDATE_EXERCISE_ROUTE);
-        return getFromTestApp(bundle);
-    }
-
-    /** Insert an exercise session with a route on behalf of the app. */
-    public Bundle insertSessionNoRoute() throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, UPSERT_EXERCISE_ROUTE);
-        return getFromTestApp(bundle);
-    }
-
-    /** Insert a record with data origin set to given other app on behalf of the app. */
-    public Bundle insertRecordWithAnotherAppPackageName(TestApp testAppPkgNameUsed)
-            throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-        bundle.putString(APP_PKG_NAME_USED_IN_DATA_ORIGIN, testAppPkgNameUsed.getPackageName());
-
-        return getFromTestApp(bundle);
-    }
-
-    /** Read records on behalf of the app. */
-    public Bundle readRecords(ArrayList<String> recordClassesToRead) throws Exception {
-        return readRecords(
-                recordClassesToRead, /* dataOriginFilterPackageNames= */ Optional.empty());
-    }
-
-    /** Read records on behalf of the app. */
-    public Bundle readRecords(Class<? extends Record> recordClassToRead) throws Exception {
-        return readRecords(
-                new ArrayList<>(List.of(recordClassToRead.getName())),
-                /* dataOriginFilterPackageNames= */ Optional.empty());
-    }
-
-    /** Read records on behalf of the app. */
-    public Bundle readRecords(
-            ArrayList<String> recordClassesToRead,
-            Optional<List<String>> dataOriginFilterPackageNames)
-            throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, READ_RECORDS_QUERY);
-        bundle.putStringArrayList(READ_RECORD_CLASS_NAME, recordClassesToRead);
-        if (!dataOriginFilterPackageNames.isEmpty()) {
-            ArrayList<String> dataOrigins = new ArrayList<>();
-            dataOrigins.addAll(dataOriginFilterPackageNames.get());
-            bundle.putBoolean(READ_USING_DATA_ORIGIN_FILTERS, true);
-            bundle.putStringArrayList(DATA_ORIGIN_FILTER_PACKAGE_NAMES, dataOrigins);
-        }
-        return getFromTestApp(bundle);
-    }
-
-    /** Insert a record with a given client id on behalf of the app. */
-    public Bundle insertRecordWithGivenClientId(double clientId) throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-        bundle.putDouble(CLIENT_ID, clientId);
-
-        return getFromTestApp(bundle);
-    }
-
-    /** Read records using data origin filters on behalf of the app. */
-    public Bundle readRecordsUsingDataOriginFilters(ArrayList<String> recordClassesToRead)
-            throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, READ_RECORDS_QUERY);
-        bundle.putStringArrayList(READ_RECORD_CLASS_NAME, recordClassesToRead);
-        bundle.putBoolean(READ_USING_DATA_ORIGIN_FILTERS, true);
-
-        return getFromTestApp(bundle);
-    }
-
-    /** Read changelogs using data origin filters on behalf of the app. */
-    public Bundle readChangeLogsUsingDataOriginFilters(String changeLogToken) throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, READ_CHANGE_LOGS_QUERY);
-        bundle.putString(CHANGE_LOG_TOKEN, changeLogToken);
-        bundle.putBoolean(READ_USING_DATA_ORIGIN_FILTERS, true);
-
-        return getFromTestApp(bundle);
-    }
-
-    /** Get a changelogs token on behalf of the app. */
-    public Bundle getChangeLogToken(String pkgName, ArrayList<String> recordClassesToRead)
-            throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, GET_CHANGE_LOG_TOKEN_QUERY);
-        bundle.putString(APP_PKG_NAME_USED_IN_DATA_ORIGIN, pkgName);
-
-        if (recordClassesToRead != null) {
-            bundle.putStringArrayList(READ_RECORD_CLASS_NAME, recordClassesToRead);
-        }
-        return getFromTestApp(bundle);
-    }
-
-    /** Insert a steps record on behalf of the app. */
-    public Bundle insertStepsRecord(String startTime, String endTime, int stepsCount)
-            throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-        bundle.putString(RECORD_TYPE, STEPS_RECORD);
-        bundle.putString(START_TIME, startTime);
-        bundle.putString(END_TIME, endTime);
-        bundle.putInt(STEPS_COUNT, stepsCount);
-
-        return getFromTestApp(bundle);
-    }
-
-    /** Insert an exercise session on behalf of the app. */
-    public Bundle insertExerciseSession(
-            String sessionStartTime, String sessionEndTime, String pauseStart, String pauseEnd)
-            throws Exception {
-        Bundle bundle = new Bundle();
-        bundle.putString(QUERY_TYPE, INSERT_RECORD_QUERY);
-        bundle.putString(RECORD_TYPE, EXERCISE_SESSION);
-        bundle.putString(START_TIME, sessionStartTime);
-        bundle.putString(END_TIME, sessionEndTime);
-        bundle.putString(PAUSE_START, pauseStart);
-        bundle.putString(PAUSE_END, pauseEnd);
-
-        return getFromTestApp(bundle);
+    /** Gets a change log token from HC on behalf of the app. */
+    public String getChangeLogToken(ChangeLogTokenRequest request) throws Exception {
+        Bundle requestBundle = BundleHelper.fromChangeLogTokenRequest(request);
+        Bundle responseBundle = getFromTestApp(requestBundle);
+        return BundleHelper.toChangeLogTokenResponse(responseBundle);
     }
 
     private Bundle getFromTestApp(Bundle bundleToCreateIntent) throws Exception {
@@ -297,7 +183,6 @@ public class TestAppProxy {
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
         }
 
-        intent.putExtra(INTENT_EXTRA_CALLING_PKG, getContext().getPackageName());
         intent.putExtras(bundleToCreateIntent);
 
         Thread.sleep(500);

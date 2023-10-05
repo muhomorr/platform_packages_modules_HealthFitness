@@ -138,7 +138,6 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.android.compatibility.common.util.SystemUtil;
-import com.android.cts.install.lib.TestApp;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -150,6 +149,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -168,6 +168,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class TestUtils {
     public static final String MANAGE_HEALTH_PERMISSIONS =
@@ -270,11 +271,13 @@ public final class TestUtils {
         updateRecords(records, ApplicationProvider.getApplicationContext());
     }
 
-    public static void updateRecords(List<Record> records, Context context)
+    /** Synchronously updates records in HC. */
+    public static void updateRecords(List<? extends Record> records, Context context)
             throws InterruptedException {
         HealthConnectReceiver<Void> receiver = new HealthConnectReceiver<>();
         getHealthConnectManager(context)
-                .updateRecords(records, Executors.newSingleThreadExecutor(), receiver);
+                .updateRecords(
+                        unmodifiableList(records), Executors.newSingleThreadExecutor(), receiver);
         receiver.verifyNoExceptionOrThrow();
     }
 
@@ -316,11 +319,6 @@ public final class TestUtils {
                 getHeartRateRecord(),
                 getBasalMetabolicRateRecord(),
                 buildExerciseSession());
-    }
-
-    public static List<Record> getTestRecords(String packageName) {
-        double clientId = Math.random();
-        return getTestRecords(packageName, clientId);
     }
 
     public static List<Record> getTestRecords(String packageName, Double clientId) {
@@ -1349,13 +1347,14 @@ public final class TestUtils {
                         .build());
     }
 
-    public static void revokeAndThenGrantHealthPermissions(TestApp testApp) {
-        List<String> healthPerms = getGrantedHealthPermissions(testApp.getPackageName());
+    /** Revokes all granted Health permissions and re-grants them back. */
+    public static void revokeAndThenGrantHealthPermissions(String packageName) {
+        List<String> healthPerms = getGrantedHealthPermissions(packageName);
 
-        revokeHealthPermissions(testApp.getPackageName());
+        revokeHealthPermissions(packageName);
 
         for (String perm : healthPerms) {
-            grantPermission(testApp.getPackageName(), perm);
+            grantPermission(packageName, perm);
         }
     }
 
@@ -1562,6 +1561,76 @@ public final class TestUtils {
         }
 
         return response.get();
+    }
+
+    /** Zips given id and records lists to create a list of {@link RecordIdFilter}. */
+    public static List<RecordIdFilter> getRecordIdFilters(
+            List<String> recordIds, List<Record> records) {
+        return IntStream.range(0, recordIds.size())
+                .mapToObj(
+                        i -> {
+                            Class<? extends Record> recordClass = records.get(i).getClass();
+                            String id = recordIds.get(i);
+                            return RecordIdFilter.fromId(recordClass, id);
+                        })
+                .toList();
+    }
+
+    public static Metadata getEmptyMetadata() {
+        return new Metadata.Builder().build();
+    }
+
+    /** Creates a {@link Metadata} with the given record id. */
+    public static Metadata getMetadataForId(String id) {
+        return new Metadata.Builder().setId(id).build();
+    }
+
+    /** Creates a {@link Metadata} with the given record id and data origin. */
+    public static Metadata getMetadataForId(String id, DataOrigin dataOrigin) {
+        return new Metadata.Builder().setId(id).setDataOrigin(dataOrigin).build();
+    }
+
+    /** Creates a {@link Metadata} with the given client record id. */
+    public static Metadata getMetadataForClientId(String clientId) {
+        return new Metadata.Builder().setClientRecordId(clientId).build();
+    }
+
+    /** Creates a {@link Metadata} with the given client record id and data origin. */
+    public static Metadata getMetadataForClientId(String clientId, DataOrigin dataOrigin) {
+        return new Metadata.Builder().setClientRecordId(clientId).setDataOrigin(dataOrigin).build();
+    }
+
+    /** Creates a {@link Metadata} with the given data origin. */
+    public static Metadata getMetadata(DataOrigin dataOrigin) {
+        return new Metadata.Builder().setDataOrigin(dataOrigin).build();
+    }
+
+    /** Creates a {@link DataOrigin} with the given package name. */
+    public static DataOrigin getDataOrigin(String packageName) {
+        return new DataOrigin.Builder().setPackageName(packageName).build();
+    }
+
+    /** Creates a list of {@link DataOrigin} from a list of package names. */
+    public static List<DataOrigin> getDataOrigins(String... packageNames) {
+        return Arrays.stream(packageNames).map(TestUtils::getDataOrigin).toList();
+    }
+
+    /** Creates a {@link ExerciseRoute.Location}. */
+    public static ExerciseRoute.Location getLocation(
+            Instant time, double latitude, double longitude) {
+        return new ExerciseRoute.Location.Builder(time, latitude, longitude).build();
+    }
+
+    /** Creates a {@link ExerciseRoute} with given locations. */
+    public static ExerciseRoute getExerciseRoute(ExerciseRoute.Location... locations) {
+        return new ExerciseRoute(Arrays.asList(locations));
+    }
+
+    /** Creates an {@link Instant} representing the given local time yesterday at UTC. */
+    public static Instant yesterdayAt(String localTime) {
+        return LocalTime.parse(localTime)
+                .atDate(LocalDate.now().minusDays(1))
+                .toInstant(ZoneOffset.UTC);
     }
 
     public static final class RecordAndIdentifier {

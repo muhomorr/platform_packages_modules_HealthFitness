@@ -19,14 +19,15 @@ import android.health.connect.TimeInstantRangeFilter
 import android.health.connect.datatypes.BasalMetabolicRateRecord
 import android.health.connect.datatypes.HeartRateRecord
 import android.health.connect.datatypes.StepsRecord
-import android.healthconnect.cts.utils.TestUtils.verifyDeleteRecords
 import android.healthconnect.cts.lib.ActivityLauncher.launchDataActivity
-import android.healthconnect.cts.lib.MultiAppTestUtils.insertRecordAs
+import android.healthconnect.cts.lib.TestAppProxy
 import android.healthconnect.cts.lib.UiTestUtils.clickOnText
 import android.healthconnect.cts.lib.UiTestUtils.waitDisplayed
+import android.healthconnect.cts.utils.TestUtils
+import android.healthconnect.cts.utils.TestUtils.verifyDeleteRecords
 import androidx.test.uiautomator.By
-import com.android.cts.install.lib.TestApp
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Test
@@ -35,31 +36,21 @@ import org.junit.Test
 class PermissionTypesFragmentTest : HealthConnectBaseTest() {
 
     companion object {
-        private const val TAG = "PermissionTypesFragmentTest"
-
-        private const val VERSION_CODE: Long = 1
-
-        private val APP_A_WITH_READ_WRITE_PERMS: TestApp =
-            TestApp(
-                "TestAppA",
-                "android.healthconnect.cts.testapp.readWritePerms.A",
-                VERSION_CODE,
-                false,
-                "CtsHealthConnectTestAppA.apk")
-
-        private val APP_B_WITH_READ_WRITE_PERMS: TestApp =
-            TestApp(
-                "TestAppB",
-                "android.healthconnect.cts.testapp.readWritePerms.B",
-                VERSION_CODE,
-                false,
-                "CtsHealthConnectTestAppB.apk")
+        private val APP_A_WITH_READ_WRITE_PERMS: TestAppProxy =
+            TestAppProxy.forPackageName("android.healthconnect.cts.testapp.readWritePerms.A")
+        private val APP_B_WITH_READ_WRITE_PERMS: TestAppProxy =
+            TestAppProxy.forPackageName("android.healthconnect.cts.testapp.readWritePerms.B")
 
         @JvmStatic
         @BeforeClass
         fun setup() {
-            insertRecordAs(APP_A_WITH_READ_WRITE_PERMS)
-            insertRecordAs(APP_B_WITH_READ_WRITE_PERMS)
+            val now = Instant.now().truncatedTo(ChronoUnit.MILLIS)
+            val record =
+                StepsRecord.Builder(TestUtils.getEmptyMetadata(), now.minusSeconds(30), now, 43)
+                    .build()
+            APP_A_WITH_READ_WRITE_PERMS.insertRecords(record)
+
+            APP_B_WITH_READ_WRITE_PERMS.insertRecords(record)
         }
 
         @JvmStatic

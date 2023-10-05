@@ -16,17 +16,16 @@
 package android.healthconnect.cts.ui
 
 import android.health.connect.TimeInstantRangeFilter
-import android.health.connect.datatypes.BasalMetabolicRateRecord
-import android.health.connect.datatypes.HeartRateRecord
 import android.health.connect.datatypes.StepsRecord
 import android.healthconnect.cts.lib.ActivityLauncher.launchMainActivity
-import android.healthconnect.cts.lib.MultiAppTestUtils.insertRecordAs
+import android.healthconnect.cts.lib.TestAppProxy
 import android.healthconnect.cts.lib.UiTestUtils.clickOnText
 import android.healthconnect.cts.lib.UiTestUtils.waitDisplayed
+import android.healthconnect.cts.utils.TestUtils.getEmptyMetadata
 import android.healthconnect.cts.utils.TestUtils.verifyDeleteRecords
 import androidx.test.uiautomator.By
-import com.android.cts.install.lib.TestApp
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Test
@@ -36,22 +35,15 @@ class HomeFragmentTest : HealthConnectBaseTest() {
 
     companion object {
 
-        private const val TAG = "HomeFragmentTest"
-
-        private const val VERSION_CODE: Long = 1
-
-        private val APP_A_WITH_READ_WRITE_PERMS: TestApp =
-            TestApp(
-                "TestAppA",
-                "android.healthconnect.cts.testapp.readWritePerms.A",
-                VERSION_CODE,
-                false,
-                "CtsHealthConnectTestAppA.apk")
+        private val APP_A_WITH_READ_WRITE_PERMS: TestAppProxy =
+            TestAppProxy.forPackageName("android.healthconnect.cts.testapp.readWritePerms.A")
 
         @JvmStatic
         @BeforeClass
         fun setup() {
-            insertRecordAs(APP_A_WITH_READ_WRITE_PERMS)
+            val now = Instant.now().truncatedTo(ChronoUnit.MILLIS)
+            APP_A_WITH_READ_WRITE_PERMS.insertRecords(
+                StepsRecord.Builder(getEmptyMetadata(), now.minusSeconds(30), now, 43).build())
         }
 
         @JvmStatic
@@ -59,18 +51,6 @@ class HomeFragmentTest : HealthConnectBaseTest() {
         fun teardown() {
             verifyDeleteRecords(
                 StepsRecord::class.java,
-                TimeInstantRangeFilter.Builder()
-                    .setStartTime(Instant.EPOCH)
-                    .setEndTime(Instant.now())
-                    .build())
-            verifyDeleteRecords(
-                HeartRateRecord::class.java,
-                TimeInstantRangeFilter.Builder()
-                    .setStartTime(Instant.EPOCH)
-                    .setEndTime(Instant.now())
-                    .build())
-            verifyDeleteRecords(
-                BasalMetabolicRateRecord::class.java,
                 TimeInstantRangeFilter.Builder()
                     .setStartTime(Instant.EPOCH)
                     .setEndTime(Instant.now())
