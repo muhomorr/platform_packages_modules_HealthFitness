@@ -23,6 +23,7 @@ import static android.health.connect.Constants.MAXIMUM_PAGE_SIZE;
 
 import static com.android.server.healthconnect.storage.datatypehelpers.IntervalRecordHelper.END_TIME_COLUMN_NAME;
 import static com.android.server.healthconnect.storage.request.ReadTransactionRequest.TYPE_NOT_PRESENT_PACKAGE_NAME;
+import static com.android.server.healthconnect.storage.utils.PageTokenWrapper.EMPTY_PAGE_TOKEN;
 import static com.android.server.healthconnect.storage.utils.StorageUtils.BLOB_UNIQUE_NON_NULL;
 import static com.android.server.healthconnect.storage.utils.StorageUtils.BLOB_UNIQUE_NULL;
 import static com.android.server.healthconnect.storage.utils.StorageUtils.INTEGER;
@@ -61,7 +62,6 @@ import com.android.server.healthconnect.storage.request.DeleteTableRequest;
 import com.android.server.healthconnect.storage.request.ReadTableRequest;
 import com.android.server.healthconnect.storage.request.UpsertTableRequest;
 import com.android.server.healthconnect.storage.utils.OrderByClause;
-import com.android.server.healthconnect.storage.utils.PageTokenUtil;
 import com.android.server.healthconnect.storage.utils.PageTokenWrapper;
 import com.android.server.healthconnect.storage.utils.SqlJoin;
 import com.android.server.healthconnect.storage.utils.StorageUtils;
@@ -451,7 +451,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
      *
      * @see #getNextInternalRecordsPageAndToken(Cursor, int, PageTokenWrapper, Map)
      */
-    public Pair<List<RecordInternal<?>>, Long> getNextInternalRecordsPageAndToken(
+    public Pair<List<RecordInternal<?>>, PageTokenWrapper> getNextInternalRecordsPageAndToken(
             Cursor cursor, int requestSize, PageTokenWrapper pageToken) {
         return getNextInternalRecordsPageAndToken(
                 cursor, requestSize, pageToken, /* packageNamesByAppIds= */ null);
@@ -479,7 +479,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
      *
      * @see #getLimitSize(ReadRecordsRequestParcel)
      */
-    public Pair<List<RecordInternal<?>>, Long> getNextInternalRecordsPageAndToken(
+    public Pair<List<RecordInternal<?>>, PageTokenWrapper> getNextInternalRecordsPageAndToken(
             Cursor cursor,
             int requestSize,
             PageTokenWrapper prevPageToken,
@@ -510,7 +510,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
         currentStartTime = DEFAULT_LONG;
         int offset = 0;
         List<RecordInternal<?>> recordInternalList = new ArrayList<>();
-        long nextToken = DEFAULT_LONG;
+        PageTokenWrapper nextPageToken = EMPTY_PAGE_TOKEN;
         while (cursor.moveToNext()) {
             prevStartTime = currentStartTime;
             currentStartTime = getCursorLong(cursor, getStartTimeColumnName());
@@ -519,9 +519,8 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
             }
 
             if (recordInternalList.size() >= requestSize) {
-                PageTokenWrapper nextPageToken =
+                nextPageToken =
                         PageTokenWrapper.of(prevPageToken.isAscending(), currentStartTime, offset);
-                nextToken = PageTokenUtil.encode(nextPageToken);
                 break;
             } else {
                 T record = getRecord(cursor, packageNamesByAppIds);
@@ -531,7 +530,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
         }
 
         Trace.traceEnd(TRACE_TAG_RECORD_HELPER);
-        return Pair.create(recordInternalList, nextToken);
+        return Pair.create(recordInternalList, nextPageToken);
     }
 
     @SuppressWarnings("unchecked") // uncheck cast to T
@@ -685,7 +684,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
         //      available to return for the next read.
         if (request.getRecordIdFiltersParcel() == null) {
             int pageOffset =
-                    PageTokenUtil.decode(request.getPageToken(), request.isAscending()).offset();
+                    PageTokenWrapper.from(request.getPageToken(), request.isAscending()).offset();
             return request.getPageSize() + pageOffset + 1;
         } else {
             return MAXIMUM_PAGE_SIZE;
@@ -720,7 +719,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
 
             // page token filter
             PageTokenWrapper pageToken =
-                    PageTokenUtil.decode(request.getPageToken(), request.isAscending());
+                    PageTokenWrapper.from(request.getPageToken(), request.isAscending());
             if (pageToken.isTimestampSet()) {
                 long timestamp = pageToken.timeMillis();
                 if (pageToken.isAscending()) {
@@ -806,7 +805,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
             return new OrderByClause();
         }
         PageTokenWrapper pageToken =
-                PageTokenUtil.decode(request.getPageToken(), request.isAscending());
+                PageTokenWrapper.from(request.getPageToken(), request.isAscending());
         return new OrderByClause()
                 .addOrderByClause(getStartTimeColumnName(), pageToken.isAscending())
                 .addOrderByClause(PRIMARY_COLUMN_NAME, /* isAscending= */ true);

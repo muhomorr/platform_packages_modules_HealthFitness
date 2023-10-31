@@ -40,7 +40,6 @@ import com.android.server.healthconnect.storage.datatypehelpers.DatabaseHelper;
 import com.android.server.healthconnect.storage.datatypehelpers.HealthConnectDatabaseTestRule;
 import com.android.server.healthconnect.storage.datatypehelpers.TransactionTestUtils;
 import com.android.server.healthconnect.storage.request.ReadTransactionRequest;
-import com.android.server.healthconnect.storage.utils.PageTokenUtil;
 import com.android.server.healthconnect.storage.utils.PageTokenWrapper;
 
 import com.google.common.collect.ImmutableList;
@@ -165,14 +164,13 @@ public class TransactionManagerTest {
                                         .build())
                         .setPageSize(1)
                         .build();
-        long expectedToken =
-                PageTokenUtil.encode(
-                        PageTokenWrapper.of(
-                                /* isAscending= */ true, /* timeMillis= */ 500, /* offset= */ 0));
+        PageTokenWrapper expectedToken =
+                PageTokenWrapper.of(
+                        /* isAscending= */ true, /* timeMillis= */ 500, /* offset= */ 0);
 
         ReadTransactionRequest readTransactionRequest =
                 getReadTransactionRequest(request.toReadRecordsRequestParcel());
-        Pair<List<RecordInternal<?>>, Long> result =
+        Pair<List<RecordInternal<?>>, PageTokenWrapper> result =
                 mTransactionManager.readRecordsAndPageToken(readTransactionRequest);
         List<RecordInternal<?>> records = result.first;
         assertThat(records).hasSize(1);

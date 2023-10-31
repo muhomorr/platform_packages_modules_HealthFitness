@@ -144,6 +144,7 @@ import com.android.server.healthconnect.storage.request.AggregateTransactionRequ
 import com.android.server.healthconnect.storage.request.DeleteTransactionRequest;
 import com.android.server.healthconnect.storage.request.ReadTransactionRequest;
 import com.android.server.healthconnect.storage.request.UpsertTransactionRequest;
+import com.android.server.healthconnect.storage.utils.PageTokenWrapper;
 import com.android.server.healthconnect.storage.utils.RecordHelperProvider;
 
 import java.io.IOException;
@@ -698,11 +699,12 @@ final class HealthConnectServiceImpl extends IHealthConnectService.Stub {
                                                 readTransactionRequest);
                                 pageToken = DEFAULT_LONG;
                             } else {
-                                Pair<List<RecordInternal<?>>, Long> readRecordsResponse =
-                                        mTransactionManager.readRecordsAndPageToken(
-                                                readTransactionRequest);
+                                Pair<List<RecordInternal<?>>, PageTokenWrapper>
+                                        readRecordsResponse =
+                                                mTransactionManager.readRecordsAndPageToken(
+                                                        readTransactionRequest);
                                 records = readRecordsResponse.first;
-                                pageToken = readRecordsResponse.second;
+                                pageToken = readRecordsResponse.second.encode();
                             }
                             logger.setNumberOfRecords(records.size());
 

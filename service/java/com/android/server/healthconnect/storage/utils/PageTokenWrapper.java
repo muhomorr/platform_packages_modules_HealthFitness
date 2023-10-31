@@ -16,9 +16,9 @@
 
 package com.android.server.healthconnect.storage.utils;
 
+import static android.health.connect.Constants.DEFAULT_LONG;
+
 import static com.android.internal.util.Preconditions.checkArgument;
-import static com.android.server.healthconnect.storage.utils.PageTokenUtil.MAX_ALLOWED_OFFSET;
-import static com.android.server.healthconnect.storage.utils.PageTokenUtil.MAX_ALLOWED_TIME_MILLIS;
 
 import static java.lang.Integer.min;
 
@@ -29,11 +29,29 @@ import java.util.Objects;
  *
  * @hide
  */
+// TODO(b/296846629): Move this util to under framework/, so we can use this on client side, and use
+//  this in {@link ReadRecordsRequestUsingFilters}
 public final class PageTokenWrapper {
+    /**
+     * This constant represents an empty token returned by the last read request, meaning no more
+     * pages are available.
+     *
+     * <p>We do not use this for read requests where page token is passed. The API design is
+     * asymmetry, when page token is passed in, it always contains {@code isAscending} information;
+     * the information is not available when it's returned.
+     */
+    public static final PageTokenWrapper EMPTY_PAGE_TOKEN = new PageTokenWrapper();
+
+    static final long MAX_ALLOWED_TIME_MILLIS = (1L << 44) - 1;
+    static final long MAX_ALLOWED_OFFSET = (1 << 18) - 1;
+    private static final int OFFSET_START_BIT = 45;
+    private static final int TIMESTAMP_START_BIT = 1;
+
     private final boolean mIsAscending;
     private final long mTimeMillis;
     private final int mOffset;
     private final boolean mIsTimestampSet;
+    private final boolean mIsEmpty;
 
     /** isAscending stored in the page token. */
     public boolean isAscending() {
@@ -55,6 +73,11 @@ public final class PageTokenWrapper {
         return mIsTimestampSet;
     }
 
+    /** Whether or not the page token contains meaningful values. */
+    public boolean isEmpty() {
+        return mIsEmpty;
+    }
+
     /**
      * Both {@code timeMillis} and {@code offset} have to be non-negative; {@code timeMillis} cannot
      * exceed 2^44-1.
@@ -69,8 +92,7 @@ public final class PageTokenWrapper {
         checkArgument(timeMillis <= MAX_ALLOWED_TIME_MILLIS, "timestamp too large");
         checkArgument(offset >= 0, "offset can not be negative");
         int boundedOffset = min((int) MAX_ALLOWED_OFFSET, offset);
-        return new PageTokenWrapper(
-                isAscending, timeMillis, boundedOffset, /* isTimestampSet= */ true);
+        return new PageTokenWrapper(isAscending, timeMillis, boundedOffset);
     }
 
     /**
@@ -78,20 +100,78 @@ public final class PageTokenWrapper {
      * offset are not set.
      */
     public static PageTokenWrapper ofAscending(boolean isAscending) {
-        return new PageTokenWrapper(
-                isAscending, /* timeMillis= */ 0, /* offset= */ 0, /* isTimestampSet= */ false);
+        return new PageTokenWrapper(isAscending);
+    }
+
+    /**
+     * Construct a {@link PageTokenWrapper} from {@code pageToken} and {@code defaultIsAscending}.
+     *
+     * <p>When {@code pageToken} is not set, in which case we can not get {@code isAscending} from
+     * the token, it falls back to {@code defaultIsAscending}.
+     *
+     * <p>{@code pageToken} must be a non-negative long number (except for using the sentinel value
+     * {@code DEFAULT_LONG}, whose current value is {@code -1}, which represents page token not set)
+     */
+    public static PageTokenWrapper from(long pageToken, boolean defaultIsAscending) {
+        if (pageToken == DEFAULT_LONG) {
+            return PageTokenWrapper.ofAscending(defaultIsAscending);
+        }
+        checkArgument(pageToken >= 0, "pageToken cannot be negative");
+        return PageTokenWrapper.of(
+                getIsAscending(pageToken), getTimestamp(pageToken), getOffset(pageToken));
+    }
+
+    /**
+     * Take the least significant bit in the given {@code pageToken} to retrieve isAscending
+     * information.
+     *
+     * <p>If the last bit of the token is 1, isAscending is false; otherwise isAscending is true.
+     */
+    private static boolean getIsAscending(long pageToken) {
+        return (pageToken & 1) == 0;
+    }
+
+    /** Shifts bits in the given {@code pageToken} to retrieve timestamp information. */
+    private static long getTimestamp(long pageToken) {
+        long mask = MAX_ALLOWED_TIME_MILLIS << TIMESTAMP_START_BIT;
+        return (pageToken & mask) >> TIMESTAMP_START_BIT;
+    }
+
+    /** Shifts bits in the given {@code pageToken} to retrieve offset information. */
+    private static int getOffset(long pageToken) {
+        return (int) (pageToken >> OFFSET_START_BIT);
+    }
+
+    /**
+     * Encodes a {@link PageTokenWrapper} to a long value.
+     *
+     * <p>Page token is structured as following from right (least significant bit) to left (most
+     * significant bit):
+     * <li>Least significant bit: 0 = isAscending true, 1 = isAscending false
+     * <li>Next 44 bits: timestamp, represents epoch time millis
+     * <li>Next 18 bits: offset, represents number of records processed in the previous page
+     * <li>Sign bit: not used for encoding, page token is a signed long
+     */
+    public long encode() {
+        return mIsTimestampSet
+                ? ((long) mOffset << OFFSET_START_BIT)
+                        | (mTimeMillis << TIMESTAMP_START_BIT)
+                        | (mIsAscending ? 0 : 1)
+                : DEFAULT_LONG;
     }
 
     @Override
     public String toString() {
-        return "PageTokenWrapper{"
-                + "isAscending = "
-                + mIsAscending
-                + ", timeMillis = "
-                + mTimeMillis
-                + ", offset = "
-                + mOffset
-                + "}";
+        if (mIsEmpty) {
+            return "PageTokenWrapper{}";
+        }
+        StringBuilder builder = new StringBuilder("PageTokenWrapper{");
+        builder.append("isAscending = ").append(mIsAscending);
+        if (mIsTimestampSet) {
+            builder.append(", timeMillis = ").append(mTimeMillis);
+            builder.append(", offset = ").append(mOffset);
+        }
+        return builder.append("}").toString();
     }
 
     @Override
@@ -100,19 +180,37 @@ public final class PageTokenWrapper {
         if (!(o instanceof PageTokenWrapper that)) return false;
         return mIsAscending == that.mIsAscending
                 && mTimeMillis == that.mTimeMillis
-                && mOffset == that.mOffset;
+                && mOffset == that.mOffset
+                && mIsTimestampSet == that.mIsTimestampSet
+                && mIsEmpty == that.mIsEmpty;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mIsAscending, mOffset, mTimeMillis);
+        return Objects.hash(mIsAscending, mOffset, mTimeMillis, mIsTimestampSet, mIsEmpty);
     }
 
-    private PageTokenWrapper(
-            boolean isAscending, long timeMillis, int offset, boolean isTimestampSet) {
+    private PageTokenWrapper(boolean isAscending, long timeMillis, int offset) {
         this.mIsAscending = isAscending;
         this.mTimeMillis = timeMillis;
         this.mOffset = offset;
-        this.mIsTimestampSet = isTimestampSet;
+        this.mIsTimestampSet = true;
+        this.mIsEmpty = false;
+    }
+
+    private PageTokenWrapper(boolean isAscending) {
+        this.mIsAscending = isAscending;
+        this.mTimeMillis = 0;
+        this.mOffset = 0;
+        this.mIsTimestampSet = false;
+        this.mIsEmpty = false;
+    }
+
+    private PageTokenWrapper() {
+        this.mIsAscending = true;
+        this.mTimeMillis = 0;
+        this.mOffset = 0;
+        this.mIsTimestampSet = false;
+        this.mIsEmpty = true;
     }
 }

@@ -16,11 +16,11 @@
 
 package com.android.server.healthconnect.storage.datatypehelpers;
 
-import static android.health.connect.Constants.DEFAULT_LONG;
 import static android.health.connect.Constants.MAXIMUM_ALLOWED_CURSOR_COUNT;
 
 import static com.android.server.healthconnect.storage.datatypehelpers.StepsRecordHelper.STEPS_TABLE_NAME;
 import static com.android.server.healthconnect.storage.datatypehelpers.TransactionTestUtils.createStepsRecord;
+import static com.android.server.healthconnect.storage.utils.PageTokenWrapper.EMPTY_PAGE_TOKEN;
 import static com.android.server.healthconnect.storage.utils.WhereClauses.LogicalOperator.AND;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -42,7 +42,6 @@ import com.android.server.healthconnect.HealthConnectUserContext;
 import com.android.server.healthconnect.storage.TransactionManager;
 import com.android.server.healthconnect.storage.request.ReadTableRequest;
 import com.android.server.healthconnect.storage.utils.OrderByClause;
-import com.android.server.healthconnect.storage.utils.PageTokenUtil;
 import com.android.server.healthconnect.storage.utils.PageTokenWrapper;
 import com.android.server.healthconnect.storage.utils.WhereClauses;
 
@@ -167,12 +166,12 @@ public class RecordHelperTest {
                         .setOrderBy(orderByStartTime)
                         .setLimit(pageSize + 1);
         try (Cursor cursor = mTransactionManager.read(request1)) {
-            Pair<List<RecordInternal<?>>, Long> page1 =
+            Pair<List<RecordInternal<?>>, PageTokenWrapper> page1 =
                     helper.getNextInternalRecordsPageAndToken(
                             cursor, pageSize, PageTokenWrapper.ofAscending(isAscending));
             assertThat(page1.first).hasSize(pageSize);
             assertThat(page1.first.get(0).getClientRecordId()).isEqualTo("client.id2");
-            assertThat(page1.second).isEqualTo(PageTokenUtil.encode(expectedPageToken));
+            assertThat(page1.second).isEqualTo(expectedPageToken);
         }
 
         WhereClauses whereClause =
@@ -185,11 +184,11 @@ public class RecordHelperTest {
                         .setWhereClause(whereClause)
                         .setLimit(pageSize + 1 + expectedOffset);
         try (Cursor cursor = mTransactionManager.read(request2)) {
-            Pair<List<RecordInternal<?>>, Long> page2 =
+            Pair<List<RecordInternal<?>>, PageTokenWrapper> page2 =
                     helper.getNextInternalRecordsPageAndToken(cursor, pageSize, expectedPageToken);
             assertThat(page2.first).hasSize(pageSize);
             assertThat(page2.first.get(0).getClientRecordId()).isEqualTo("client.id1");
-            assertThat(page2.second).isEqualTo(DEFAULT_LONG);
+            assertThat(page2.second).isEqualTo(EMPTY_PAGE_TOKEN);
         }
     }
 
@@ -251,32 +250,32 @@ public class RecordHelperTest {
         ReadTableRequest request1 =
                 getReadTableRequest(helper, readRequest1.toReadRecordsRequestParcel());
         try (Cursor cursor = mTransactionManager.read(request1)) {
-            Pair<List<RecordInternal<?>>, Long> page1 =
+            Pair<List<RecordInternal<?>>, PageTokenWrapper> page1 =
                     helper.getNextInternalRecordsPageAndToken(
                             cursor, pageSize, PageTokenWrapper.ofAscending(isAscending));
             assertThat(page1.first).hasSize(3);
             assertThat(page1.first.get(0).getClientRecordId()).isEqualTo("id1");
             assertThat(page1.first.get(1).getClientRecordId()).isEqualTo("id2");
             assertThat(page1.first.get(2).getClientRecordId()).isEqualTo("id3");
-            assertThat(page1.second).isEqualTo(PageTokenUtil.encode(expectedPageToken));
+            assertThat(page1.second).isEqualTo(expectedPageToken);
         }
 
         ReadRecordsRequestUsingFilters<StepsRecord> readRequest2 =
                 new ReadRecordsRequestUsingFilters.Builder<>(StepsRecord.class)
                         .setTimeRangeFilter(filter)
                         .setPageSize(pageSize)
-                        .setPageToken(PageTokenUtil.encode(expectedPageToken))
+                        .setPageToken(expectedPageToken.encode())
                         .build();
         ReadTableRequest request2 =
                 getReadTableRequest(helper, readRequest2.toReadRecordsRequestParcel());
         try (Cursor cursor = mTransactionManager.read(request2)) {
-            Pair<List<RecordInternal<?>>, Long> page2 =
+            Pair<List<RecordInternal<?>>, PageTokenWrapper> page2 =
                     helper.getNextInternalRecordsPageAndToken(cursor, pageSize, expectedPageToken);
             assertThat(page2.first).hasSize(pageSize);
             assertThat(page2.first.get(0).getClientRecordId()).isEqualTo("id4");
             assertThat(page2.first.get(1).getClientRecordId()).isEqualTo("id5");
             assertThat(page2.first.get(2).getClientRecordId()).isEqualTo("id6");
-            assertThat(page2.second).isEqualTo(DEFAULT_LONG);
+            assertThat(page2.second).isEqualTo(EMPTY_PAGE_TOKEN);
         }
     }
 
@@ -290,13 +289,13 @@ public class RecordHelperTest {
         PageTokenWrapper incorrectToken = PageTokenWrapper.of(true, 4000, 2);
         ReadTableRequest request = new ReadTableRequest(STEPS_TABLE_NAME);
         try (Cursor cursor = mTransactionManager.read(request)) {
-            Pair<List<RecordInternal<?>>, Long> result =
+            Pair<List<RecordInternal<?>>, PageTokenWrapper> result =
                     helper.getNextInternalRecordsPageAndToken(
                             cursor, /* requestSize= */ 2, incorrectToken);
             // skip the first record, but preserve the second because start time is different
             assertThat(result.first).hasSize(1);
             assertThat(result.first.get(0).getClientRecordId()).isEqualTo("id2");
-            assertThat(result.second).isEqualTo(DEFAULT_LONG);
+            assertThat(result.second).isEqualTo(EMPTY_PAGE_TOKEN);
         }
     }
 
