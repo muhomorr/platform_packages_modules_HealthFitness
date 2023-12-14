@@ -17,7 +17,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_label" msgid="4768580772453324183">"Health Connect"</string>
+    <string name="app_label" msgid="4768580772453324183">"健康数据共享"</string>
     <string name="health_connect_summary" msgid="6401520186678972547">"管理应用对健康数据的访问权限"</string>
     <string name="permissions_and_data_header" msgid="4406105506837487805">"权限和数据"</string>
     <string name="home_subtitle" msgid="1750033322147357163">"管理手机上的健康与健身数据，并控制哪些应用可以访问这些数据"</string>
@@ -36,7 +36,7 @@
     <string name="data_sources_and_priority_title" msgid="2360222350913604558">"数据源和优先级"</string>
     <string name="set_units_title" msgid="2657822539603758029">"设置单位"</string>
     <string name="recent_access_header" msgid="7623497371790225888">"近期数据访问情况"</string>
-    <string name="no_recent_access" msgid="4724297929902441784">"最近没有任何应用访问 Health Connect"</string>
+    <string name="no_recent_access" msgid="4724297929902441784">"最近没有任何应用访问健康数据共享"</string>
     <string name="show_recent_access_entries_button_title" msgid="3483460066767350419">"查看近期的所有数据访问情况"</string>
     <string name="recent_access_screen_description" msgid="331101209889185402">"查看过去 24 小时内哪些应用访问过您的数据"</string>
     <string name="today_header" msgid="1006837293203834373">"今天"</string>
@@ -61,7 +61,7 @@
     <string name="manage_data_section" msgid="5859629270946511903">"管理数据"</string>
     <string name="export_data_button" msgid="7783329820434117744">"导出数据"</string>
     <string name="delete_all_data_button" msgid="7238755635416521487">"删除所有数据"</string>
-    <string name="no_categories" msgid="2636778482437506241">"您在 Health Connect 中没有任何数据"</string>
+    <string name="no_categories" msgid="2636778482437506241">"您在健康数据共享中没有任何数据"</string>
     <string name="permission_types_title" msgid="7698058200557389436">"您的数据"</string>
     <string name="app_priority_button" msgid="3126133977893705098">"应用优先级"</string>
     <string name="delete_category_data_button" msgid="2324773398768267043">"删除<xliff:g id="CATEGORY">%s</xliff:g>数据"</string>
@@ -69,13 +69,13 @@
     <string name="can_read" msgid="4568261079308309564">"可以读取<xliff:g id="PERMISSION_TYPE">%s</xliff:g>"</string>
     <string name="can_write" msgid="5082414937218423823">"可以写入<xliff:g id="PERMISSION_TYPE">%s</xliff:g>"</string>
     <string name="inactive_apps" msgid="8956546286760797760">"非活跃应用"</string>
-    <string name="inactive_apps_message" msgid="4666501359079362486">"这些应用无法继续写入<xliff:g id="DATA_TYPE">%s</xliff:g>数据，但仍有数据存储在 Health Connect 中"</string>
-    <string name="data_access_empty_message" msgid="9084350402254264452">"应用无法再读取或写入<xliff:g id="DATA_TYPE_0">%1$s</xliff:g>数据，并且 Health Connect 中没有存储任何<xliff:g id="DATA_TYPE_2">%2$s</xliff:g>数据"</string>
+    <string name="inactive_apps_message" msgid="4666501359079362486">"这些应用无法继续写入<xliff:g id="DATA_TYPE">%s</xliff:g>数据，但仍有数据存储在健康数据共享中"</string>
+    <string name="data_access_empty_message" msgid="9084350402254264452">"应用无法再读取或写入<xliff:g id="DATA_TYPE_0">%1$s</xliff:g>数据，并且健康数据共享中没有存储任何<xliff:g id="DATA_TYPE_2">%2$s</xliff:g>数据"</string>
     <string name="data_access_exercise_description" msgid="6868583522699443570">"此数据包含运动时间、锻炼类型、趟数、重复次数、时段或游泳动作等信息"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"此数据包含睡眠阶段和睡眠时段等信息"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"查看所有条目"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"删除此数据"</string>
-    <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
+    <string name="permgrouplab_health" msgid="468961137496587966">"健康数据共享"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"访问您的健康数据"</string>
     <string name="permlab_readCaloriesBurned" msgid="8998140381590624692">"读取消耗的卡路里数"</string>
     <string name="permdesc_readCaloriesBurned" msgid="9012595355389868570">"允许该应用读取消耗的卡路里数"</string>
@@ -245,21 +245,21 @@
     <string name="request_permissions_allow" msgid="4201324235711040631">"允许"</string>
     <string name="request_permissions_allow_all" msgid="3419414351406638770">"全部允许"</string>
     <string name="request_permissions_dont_allow" msgid="6375307410951549030">"不允许"</string>
-    <string name="request_permissions_header_desc" msgid="5561173070722750153">"选择允许此应用对 Health Connect 读取或写入数据"</string>
+    <string name="request_permissions_header_desc" msgid="5561173070722750153">"选择允许此应用对健康数据共享读取或写入数据"</string>
     <string name="request_permissions_header_time_frame_desc" msgid="4617392728203291453">"如果你授予读取权限，此应用可以读取新数据和过去 30 天的数据"</string>
-    <string name="request_permissions_header_title" msgid="4264236128614363479">"要允许<xliff:g id="APP_NAME">%1$s</xliff:g>访问 Health Connect 吗？"</string>
+    <string name="request_permissions_header_title" msgid="4264236128614363479">"要允许<xliff:g id="APP_NAME">%1$s</xliff:g>访问健康数据共享吗？"</string>
     <string name="request_permissions_rationale" msgid="6154280355215802538">"你可以参阅开发者的<xliff:g id="PRIVACY_POLICY_LINK">%2$s</xliff:g>，了解<xliff:g id="APP_NAME">%1$s</xliff:g>如何处理你的数据"</string>
     <string name="request_permissions_privacy_policy" msgid="228503452643555737">"隐私权政策"</string>
     <string name="permissions_disconnect_dialog_title" msgid="7355211540619034695">"要撤消所有权限吗？"</string>
     <string name="permissions_disconnect_dialog_disconnect" msgid="8854787587948224752">"全部移除"</string>
-    <string name="permissions_disconnect_dialog_message" msgid="8679363015400954541">"“<xliff:g id="APP_NAME">%1$s</xliff:g>”将无法继续在 Health Connect 中读取或写入任何数据。\n\n这不会影响此应用可能拥有的其他权限，例如位置信息、摄像头或麦克风权限。"</string>
-    <string name="permissions_disconnect_dialog_checkbox" msgid="8646951566431872823">"同时删除 Health Connect 中的“<xliff:g id="APP_NAME">%1$s</xliff:g>”数据"</string>
+    <string name="permissions_disconnect_dialog_message" msgid="8679363015400954541">"“<xliff:g id="APP_NAME">%1$s</xliff:g>”将无法继续在健康数据共享中读取或写入任何数据。\n\n这不会影响此应用可能拥有的其他权限，例如位置信息、摄像头或麦克风权限。"</string>
+    <string name="permissions_disconnect_dialog_checkbox" msgid="8646951566431872823">"同时删除健康数据共享中的“<xliff:g id="APP_NAME">%1$s</xliff:g>”数据"</string>
     <string name="navigation_next_day" msgid="8853443471183944219">"后一天"</string>
     <string name="navigation_selected_day" msgid="2510843479734091348">"选定的日期"</string>
     <string name="navigation_previous_day" msgid="718353386484938584">"前一天"</string>
     <string name="default_error" msgid="7966868260616403475">"出了点问题。请重试。"</string>
     <string name="health_permission_header_description" msgid="7497601695462373927">"具有此权限的应用可以读写您的健康与健身数据。"</string>
-    <string name="connected_apps_text" msgid="1177626440966855831">"控制哪些应用可以访问存储在 Health Connect 中的数据。点按应用即可查看其可以读取或写入的数据。"</string>
+    <string name="connected_apps_text" msgid="1177626440966855831">"控制哪些应用可以访问存储在健康数据共享中的数据。点按应用即可查看其可以读取或写入的数据。"</string>
     <string name="connected_apps_section_title" msgid="2415288099612126258">"允许访问"</string>
     <string name="not_connected_apps_section_title" msgid="452718769894103039">"不允许访问"</string>
     <string name="settings_and_help_header" msgid="5749710693017621168">"设置和帮助"</string>
@@ -269,13 +269,13 @@
     <string name="no_apps_allowed" msgid="5794833581324128108">"未允许任何应用"</string>
     <string name="no_apps_denied" msgid="743327680286446017">"未拒绝任何应用"</string>
     <string name="permissions_disconnect_all_dialog_title" msgid="27474286046207122">"要撤销所有应用的访问权限吗？"</string>
-    <string name="permissions_disconnect_all_dialog_message" msgid="3151109627457270499">"您的应用都将无法访问 Health Connect 中的数据，也不能向其中添加新数据。这不会删除任何现有数据。\n\n也不会影响此应用可能拥有的其他权限，例如位置信息、相机或麦克风权限。"</string>
+    <string name="permissions_disconnect_all_dialog_message" msgid="3151109627457270499">"您的应用都将无法访问健康数据共享中的数据，也不能向其中添加新数据。这不会删除任何现有数据。\n\n也不会影响此应用可能拥有的其他权限，例如位置信息、相机或麦克风权限。"</string>
     <string name="permissions_disconnect_all_dialog_disconnect" msgid="2134136493310257746">"全部移除"</string>
     <string name="manage_permissions_manage_app_header" msgid="6356348062088358761">"管理应用"</string>
     <string name="see_app_data" msgid="3951030076195119476">"查看应用数据"</string>
     <string name="delete_app_data" msgid="6890357774873859952">"删除应用数据"</string>
     <string name="inactive_apps_section_title" msgid="7492812973696378690">"非活跃应用"</string>
-    <string name="inactive_apps_section_message" msgid="2610789262055974739">"这些应用已经没有访问权限，但仍有数据存储在 Health Connect 中"</string>
+    <string name="inactive_apps_section_message" msgid="2610789262055974739">"这些应用已经没有访问权限，但仍有数据存储在健康数据共享中"</string>
     <string name="manage_permissions_time_frame" msgid="1299483940842401923">"“<xliff:g id="APP_NAME">%1$s</xliff:g>”可以读取 <xliff:g id="DATA_ACCESS_DATE">%2$s</xliff:g>之后添加的数据"</string>
     <string name="other_android_permissions" msgid="8051485761573324702">"如需管理此应用可以访问的其他 Android 权限，请依次进入“设置”&gt;“应用”"</string>
     <string name="manage_permissions_rationale" msgid="9183689798847740274">"您与“<xliff:g id="APP_NAME">%1$s</xliff:g>”共享的数据受其隐私权政策约束"</string>
@@ -285,18 +285,18 @@
     <string name="app_access_title" msgid="7137018424885371763">"应用访问权限"</string>
     <string name="connected_apps_empty_list_section_title" msgid="6821215432694207342">"您目前没有安装任何兼容应用"</string>
     <string name="denied_apps_banner_title" msgid="1997745063608657965">"已撤消应用权限"</string>
-    <string name="denied_apps_banner_message_one_app" msgid="17659513485678315">"Health Connect 已撤消“<xliff:g id="APP_DATA">%s</xliff:g>”的权限"</string>
-    <string name="denied_apps_banner_message_two_apps" msgid="1147216810892373640">"Health Connect 已撤消“<xliff:g id="APP_DATA_0">%1$s</xliff:g>”和“<xliff:g id="APP_DATA_TWO">%2$s</xliff:g>”的权限"</string>
-    <string name="denied_apps_banner_message_three_apps" msgid="7978499051473471633">"Health Connect 已撤消“<xliff:g id="APP_DATA_0">%1$s</xliff:g>”“<xliff:g id="APP_DATA_TWO">%2$s</xliff:g>”和“<xliff:g id="APP_DATA_THREE">%3$s</xliff:g>”的权限"</string>
-    <string name="denied_apps_banner_message_many_apps" msgid="7249805432604650982">"Health Connect 已撤消“<xliff:g id="APP_DATA_0">%1$s</xliff:g>”“<xliff:g id="APP_DATA_TWO">%2$s</xliff:g>”“<xliff:g id="APP_DATA_THREE">%3$s</xliff:g>”和其他应用的权限"</string>
+    <string name="denied_apps_banner_message_one_app" msgid="17659513485678315">"健康数据共享已撤消“<xliff:g id="APP_DATA">%s</xliff:g>”的权限"</string>
+    <string name="denied_apps_banner_message_two_apps" msgid="1147216810892373640">"健康数据共享已撤消“<xliff:g id="APP_DATA_0">%1$s</xliff:g>”和“<xliff:g id="APP_DATA_TWO">%2$s</xliff:g>”的权限"</string>
+    <string name="denied_apps_banner_message_three_apps" msgid="7978499051473471633">"健康数据共享已撤消“<xliff:g id="APP_DATA_0">%1$s</xliff:g>”“<xliff:g id="APP_DATA_TWO">%2$s</xliff:g>”和“<xliff:g id="APP_DATA_THREE">%3$s</xliff:g>”的权限"</string>
+    <string name="denied_apps_banner_message_many_apps" msgid="7249805432604650982">"健康数据共享已撤消“<xliff:g id="APP_DATA_0">%1$s</xliff:g>”“<xliff:g id="APP_DATA_TWO">%2$s</xliff:g>”“<xliff:g id="APP_DATA_THREE">%3$s</xliff:g>”和其他应用的权限"</string>
     <string name="denied_apps_banner_button" msgid="4438480389769298412">"查看详情"</string>
-    <string name="denied_apps_dialog_title" msgid="7470227827315635099">"Health Connect 为何会撤消应用权限"</string>
-    <string name="denied_apps_dialog_message" msgid="7876664965504466099">"如果应用在 Google Play 中被暂停或下架，Health Connect 将自动撤消其权限。\n\n这表示此应用无法再访问 Health Connect 中存储的数据。此应用如果之前写入过数据，则会列在已停用应用列表中。"</string>
+    <string name="denied_apps_dialog_title" msgid="7470227827315635099">"健康数据共享为何会撤消应用权限"</string>
+    <string name="denied_apps_dialog_message" msgid="7876664965504466099">"如果应用在 Google Play 中被暂停或下架，健康数据共享将自动撤消其权限。\n\n这表示此应用无法再访问健康数据共享中存储的数据。此应用如果之前写入过数据，则会列在已停用应用的列表中。"</string>
     <string name="denied_apps_dialog_got_it_button" msgid="4698003516923683959">"知道了"</string>
-    <string name="onboarding_title" msgid="8550656211291180188">"开始使用 Health Connect"</string>
-    <string name="onboarding_description" msgid="4873129122057931161">"Health Connect 会存储您的健康与健身数据，让您可以轻松同步手机上的不同应用"</string>
+    <string name="onboarding_title" msgid="8550656211291180188">"开始使用健康数据共享"</string>
+    <string name="onboarding_description" msgid="4873129122057931161">"健康数据共享会存储您的健康与健身数据，让您可以轻松同步手机上的不同应用"</string>
     <string name="share_data" msgid="3481932156368883946">"与应用分享数据"</string>
-    <string name="share_data_description" msgid="2919871301634375092">"选择每个应用可以从 Health Connect 读取或向其中写入的数据"</string>
+    <string name="share_data_description" msgid="2919871301634375092">"选择每个应用可以从健康数据共享中读取或向其中写入的数据"</string>
     <string name="manage_your_settings" msgid="7391184508015127137">"管理设置和隐私"</string>
     <string name="manage_your_settings_description" msgid="557943168930365334">"随时更改应用权限并管理您的数据"</string>
     <string name="onboarding_go_back_button_text" msgid="5020083846511184625">"返回"</string>
@@ -304,10 +304,10 @@
     <string name="delete_button_content_description" msgid="9125115327455379618">"删除数据"</string>
     <string name="time_range_title" msgid="6831605283322600165">"选择要删除的数据"</string>
     <string name="time_range_next_button" msgid="5849096934896557888">"继续"</string>
-    <string name="time_range_message_all" msgid="7280888587242744729">"这会永久删除在所选时间段内添加到 Health Connect 的所有数据"</string>
-    <string name="time_range_message_data_type" msgid="1896125004829258195">"这会永久删除在所选时间段内添加到 Health Connect 的<xliff:g id="DATA_TYPE">%s</xliff:g>数据"</string>
-    <string name="time_range_message_category" msgid="1136451418397326356">"这会永久删除在所选时间段内添加到 Health Connect 的<xliff:g id="CATEGORY">%s</xliff:g>数据"</string>
-    <string name="time_range_message_app_data" msgid="2590800457710603556">"这会永久删除在所选时间段内添加到 Health Connect 的<xliff:g id="APP_DATA">%s</xliff:g>数据"</string>
+    <string name="time_range_message_all" msgid="7280888587242744729">"这会永久删除在所选时间段内添加到健康数据共享的所有数据"</string>
+    <string name="time_range_message_data_type" msgid="1896125004829258195">"这会永久删除在所选时间段内添加到健康数据共享的<xliff:g id="DATA_TYPE">%s</xliff:g>数据"</string>
+    <string name="time_range_message_category" msgid="1136451418397326356">"这会永久删除在所选时间段内添加到健康数据共享的<xliff:g id="CATEGORY">%s</xliff:g>数据"</string>
+    <string name="time_range_message_app_data" msgid="2590800457710603556">"这会永久删除在所选时间段内添加到健康数据共享的<xliff:g id="APP_DATA">%s</xliff:g>数据"</string>
     <string name="time_range_one_day" msgid="7162709826595446727">"删除过去 24 小时的数据"</string>
     <string name="time_range_one_week" msgid="8754523384275645434">"删除过去 7 天的数据"</string>
     <string name="time_range_one_month" msgid="3034747870231999766">"删除过去 30 天的数据"</string>
@@ -328,23 +328,23 @@
     <string name="confirming_question_app_data_one_day" msgid="444028969015975031">"要永久删除过去 24 小时的<xliff:g id="APP_DATA">%s</xliff:g>数据吗？"</string>
     <string name="confirming_question_app_data_one_week" msgid="2096555081811730496">"要永久删除过去 7 天的<xliff:g id="APP_DATA">%s</xliff:g>数据吗？"</string>
     <string name="confirming_question_app_data_one_month" msgid="6438241250825892892">"要永久删除过去 30 天的<xliff:g id="APP_DATA">%s</xliff:g>数据吗？"</string>
-    <string name="confirming_question_app_remove_all_permissions" msgid="4170343072352701421">"同时从 Health Connect 中移除全部<xliff:g id="APP_WITH_PERMISSIONS">%s</xliff:g>权限"</string>
+    <string name="confirming_question_app_remove_all_permissions" msgid="4170343072352701421">"同时从健康数据共享中移除全部<xliff:g id="APP_WITH_PERMISSIONS">%s</xliff:g>权限"</string>
     <string name="confirming_question_data_type_from_app_all" msgid="8361163993548510509">"要永久删除<xliff:g id="APP_DATA">%2$s</xliff:g>添加的所有<xliff:g id="DATA_TYPE">%1$s</xliff:g>数据吗？"</string>
     <string name="confirming_question_single_entry" msgid="330919962071369305">"要永久删除这条数据吗？"</string>
-    <string name="confirming_question_message" msgid="2934249835529079545">"关联的应用将不再能够从 Health Connect 中访问这些数据"</string>
+    <string name="confirming_question_message" msgid="2934249835529079545">"关联的应用将不再能够从健康数据共享中访问这些数据"</string>
     <string name="confirming_question_message_menstruation" msgid="5286956266565962430">"这将删除从 <xliff:g id="START_DATE">%1$s</xliff:g>至 <xliff:g id="END_DATE">%2$s</xliff:g>的所有经期记录。"</string>
     <string name="confirming_question_delete_button" msgid="1999996759507959985">"删除"</string>
     <string name="confirming_question_go_back_button" msgid="9037523726124648221">"返回"</string>
     <string name="delete_dialog_success_got_it_button" msgid="8047812840310612293">"完成"</string>
     <string name="delete_dialog_failure_close_button" msgid="4376647579348193224">"关闭"</string>
     <string name="delete_dialog_success_title" msgid="5009733262743173477">"数据已删除"</string>
-    <string name="delete_dialog_success_message" msgid="2451953113522118128">"Health Connect 中已没有这些数据。"</string>
+    <string name="delete_dialog_success_message" msgid="2451953113522118128">"健康数据共享中已没有这些数据。"</string>
     <string name="delete_progress_indicator" msgid="5799502879065833417">"正在删除数据"</string>
     <string name="delete_dialog_failure_title" msgid="1959020721355789496">"无法删除数据"</string>
-    <string name="delete_dialog_failure_message" msgid="7473241488471319963">"出了点问题，Health Connect 无法删除您的数据"</string>
+    <string name="delete_dialog_failure_message" msgid="7473241488471319963">"出了点问题，健康数据共享无法删除您的数据"</string>
     <string name="delete_dialog_failure_try_again_button" msgid="4323865124609424838">"重试"</string>
-    <string name="delete_data_notification_title" msgid="7740230240986343347">"正在删除 Health Connect 数据"</string>
-    <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"正在删除 Health Connect 数据"</string>
+    <string name="delete_data_notification_title" msgid="7740230240986343347">"正在删除健康数据共享中的数据"</string>
+    <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"正在删除健康数据共享中的数据"</string>
     <string name="delete_data_notification_channel_name" msgid="4499713830012802095">"数据删除"</string>
     <string name="data_point_action_content_description" msgid="7872439279343967754">"删除数据记录"</string>
     <string name="delete_data_point" msgid="4234569507133768630">"删除条目"</string>
@@ -677,33 +677,33 @@
     <string name="temperature_unit_fahrenheit_label" msgid="6590261955872562854">"华氏度"</string>
     <string name="temperature_unit_kelvin_label" msgid="3786210768294615821">"开尔文"</string>
     <string name="help_and_feedback" msgid="4772169905005369871">"帮助和反馈"</string>
-    <string name="cant_see_all_your_apps_description" msgid="7344859063463536472">"如果您看不到某个已安装的应用，可能是因为该应用与 Health Connect 尚不兼容"</string>
+    <string name="cant_see_all_your_apps_description" msgid="7344859063463536472">"如果您看不到某个已安装的应用，可能是因为该应用与健康数据共享尚不兼容"</string>
     <string name="things_to_try" msgid="8200374691546152703">"可以尝试的操作"</string>
     <string name="check_for_updates" msgid="3841090978657783101">"检查是否有更新"</string>
     <string name="check_for_updates_description" msgid="1347667778199095160">"确保安装的应用是最新版本"</string>
     <string name="see_all_compatible_apps" msgid="6791146164535475726">"查看所有兼容应用"</string>
     <string name="see_all_compatible_apps_description" msgid="2092325337403254491">"在 Google Play 上查找应用"</string>
     <string name="send_feedback" msgid="7756927746070096780">"发送反馈"</string>
-    <string name="send_feedback_description" msgid="2887207112856240778">"告诉我们您想将哪些健康与健身应用和 Health Connect 搭配使用"</string>
+    <string name="send_feedback_description" msgid="2887207112856240778">"告诉我们您想将哪些健康与健身应用和健康数据共享搭配使用"</string>
     <string name="playstore_app_title" msgid="4138464328693481809">"Play 商店"</string>
     <string name="auto_delete_button" msgid="8536451792268513619">"自动删除"</string>
     <string name="auto_delete_title" msgid="8761742828224207826">"自动删除"</string>
-    <string name="auto_delete_header" msgid="4258649705159293715">"安排系统在设定的期限过后删除您在 Health Connect 内存储的数据，从而控制这类数据的存储时长"</string>
+    <string name="auto_delete_header" msgid="4258649705159293715">"安排系统在设定的期限过后删除您在健康数据共享内存储的数据，从而控制这类数据的存储时长"</string>
     <string name="auto_delete_learn_more" msgid="7416469042791307994">"详细了解自动删除"</string>
     <string name="auto_delete_section" msgid="7732381000331475082">"自动删除数据"</string>
     <string name="range_after_x_months" msgid="3340127072680117121">"{count,plural, =1{# 个月后}other{# 个月后}}"</string>
     <string name="range_never" msgid="4429478261788361233">"永不"</string>
     <string name="range_off" msgid="8178520557618184215">"已关闭"</string>
-    <string name="auto_delete_rationale" msgid="5255442126521464878">"如果您更改这些设置，Health Connect 即会删除现有数据以体现您的新偏好设置"</string>
+    <string name="auto_delete_rationale" msgid="5255442126521464878">"如果您更改这些设置，健康数据共享即会删除现有数据以体现您的新偏好设置"</string>
     <string name="confirming_question_x_months" msgid="8204363800605282103">"{count,plural, =1{在 # 个月后自动删除数据？}other{在 # 个月后自动删除数据？}}"</string>
-    <string name="confirming_message_x_months" msgid="4798474593741471977">"{count,plural, =1{Health Connect 会在 # 个月后自动删除新数据。这样设置也会删除存储时长已超过 # 个月的现有数据。}other{Health Connect 会在 # 个月后自动删除新数据。这样设置也会删除存储时长已超过 # 个月的现有数据。}}"</string>
+    <string name="confirming_message_x_months" msgid="4798474593741471977">"{count,plural, =1{健康数据共享会在 # 个月后自动删除新数据。这样设置也会删除存储时长已超过 # 个月的现有数据。}other{健康数据共享会在 # 个月后自动删除新数据。这样设置也会删除存储时长已超过 # 个月的现有数据。}}"</string>
     <string name="set_auto_delete_button" msgid="268450418318199197">"设置自动删除"</string>
     <string name="deletion_started_title" msgid="1177766097121885025">"现有数据将被删除"</string>
-    <string name="deletion_started_x_months" msgid="6567199107249615612">"{count,plural, =1{Health Connect 将会删除存储时长已超过 # 个月的所有数据。这些更改可能需要一天的时间才会体现在您已关联的应用内。}other{Health Connect 将会删除存储时长已超过 # 个月的所有数据。这些更改可能需要一天的时间才会体现在您已关联的应用内。}}"</string>
+    <string name="deletion_started_x_months" msgid="6567199107249615612">"{count,plural, =1{健康数据共享将会删除存储时长已超过 # 个月的所有数据。这些更改可能需要一天的时间才会体现在您已关联的应用内。}other{健康数据共享将会删除存储时长已超过 # 个月的所有数据。这些更改可能需要一天的时间才会体现在您已关联的应用内。}}"</string>
     <string name="deletion_started_category_list_section" msgid="3052940611815658991">"以下类别的数据将被删除"</string>
     <string name="deletion_started_done_button" msgid="1232018689825054257">"完成"</string>
     <string name="priority_dialog_title" msgid="7360654442596118085">"设置应用优先级"</string>
-    <string name="priority_dialog_message" msgid="6971250365335018184">"如果多个应用都可以添加<xliff:g id="DATA_TYPE">%s</xliff:g>数据，Health Connect 会优先考虑此列表中排在最前面的应用。拖动应用即可重新排序。"</string>
+    <string name="priority_dialog_message" msgid="6971250365335018184">"如果多个应用都可以添加<xliff:g id="DATA_TYPE">%s</xliff:g>数据，健康数据共享会优先考虑此列表中排在最前面的应用。拖动应用即可重新排序。"</string>
     <string name="priority_dialog_positive_button" msgid="2503570694373675092">"保存"</string>
     <string name="action_drag_label_move_up" msgid="4221641798253080966">"上移"</string>
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"下移"</string>
@@ -711,76 +711,76 @@
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"移至底部"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"健身, 健康, fitness, wellness"</string>
     <string name="search_keywords_permissions" msgid="7821010295153350533">"权限"</string>
-    <string name="search_keywords_data" msgid="5359602744325490523">"Health Connect, 健康数据, 健康类别, 数据访问权限, 活动, 身体测量数据, 经期记录, 营养, 睡眠, 生命体征, health connect, health data, health categories, data access, activity, body measurements, cycle tracking, nutrition, sleep, vitals"</string>
-    <string name="search_breadcrumbs_permissions" msgid="2667471090347475796">"Health Connect &gt; 应用权限"</string>
-    <string name="search_breadcrumbs_data" msgid="6635428480372024040">"Health Connect &gt; 数据和访问权限"</string>
+    <string name="search_keywords_data" msgid="5359602744325490523">"健康数据共享, 健康数据, 健康类别, 数据访问权限, 活动, 身体测量数据, 经期记录, 营养, 睡眠, 生命体征, health connect, health data, health categories, data access, activity, body measurements, cycle tracking, nutrition, sleep, vitals"</string>
+    <string name="search_breadcrumbs_permissions" msgid="2667471090347475796">"健康数据共享 &gt; 应用权限"</string>
+    <string name="search_breadcrumbs_data" msgid="6635428480372024040">"健康数据共享 &gt; 数据和访问权限"</string>
     <string name="search_connected_apps" msgid="8180770761876928851">"搜索应用"</string>
     <string name="no_results" msgid="4007426147286897998">"没有相符的结果"</string>
     <string name="help" msgid="6028777453152686162">"帮助"</string>
-    <string name="request_route_header_title" msgid="6599707039845646714">"允许 <xliff:g id="APP_NAME">%1$s</xliff:g> 访问 Health Connect 中的此锻炼路线？"</string>
+    <string name="request_route_header_title" msgid="6599707039845646714">"允许 <xliff:g id="APP_NAME">%1$s</xliff:g> 访问健康数据共享中的此锻炼路线？"</string>
     <string name="request_route_disclaimer_notice" msgid="8060511384737662598">"此应用将能够读取您在路线中经过的位置"</string>
     <string name="date_owner_format" msgid="4431196384037157320">"<xliff:g id="DATE">%1$s</xliff:g> • <xliff:g id="APP_NAME">%2$s</xliff:g>"</string>
     <string name="request_route_info_header_title" msgid="4149969049719763190">"锻炼路线包含位置信息"</string>
     <string name="request_route_info_who_can_see_data_title" msgid="858355329937113994">"谁能看到此数据？"</string>
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"只有您授予了相应权限的应用才能访问您的锻炼路线"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"如何管理访问权限？"</string>
-    <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"您可以在 Health Connect 设置中管理应用对锻炼路线的访问权限"</string>
+    <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"您可以在健康数据共享设置中管理应用对锻炼路线的访问权限"</string>
     <string name="back_button" msgid="780519527385993407">"返回"</string>
     <string name="loading" msgid="2526615755685950317">"正在加载…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"集成正在进行中"</string>
-    <string name="migration_in_progress_screen_integration_details" msgid="5916989113111973466">"Health Connect 正在与 Android 系统集成。\n\n转移数据和权限可能需要一些时间。"</string>
+    <string name="migration_in_progress_screen_integration_details" msgid="5916989113111973466">"健康数据共享正在与 Android 系统集成。\n\n转移数据和权限可能需要一些时间。"</string>
     <string name="migration_in_progress_screen_integration_dont_close" msgid="2095732208438772444">"在收到集成完成的通知之前，请勿关闭应用。"</string>
-    <string name="migration_in_progress_notification_title" msgid="8873411008158407737">"Health Connect 集成正在进行中"</string>
+    <string name="migration_in_progress_notification_title" msgid="8873411008158407737">"健康数据共享集成正在进行中"</string>
     <string name="migration_update_needed_screen_title" msgid="3260466598312877429">"需要更新"</string>
-    <string name="migration_update_needed_screen_details" msgid="7984745102006782603">"Health Connect 正在与 Android 系统集成，完成后您可以直接在设置中访问它。"</string>
+    <string name="migration_update_needed_screen_details" msgid="7984745102006782603">"健康数据共享正在与 Android 系统集成，完成后您可以直接在设置中访问它。"</string>
     <string name="update_button" msgid="4544529019832009496">"更新"</string>
-    <string name="migration_update_needed_notification_content" msgid="478899618719297517">"开始执行此更新操作，以便 Health Connect 能继续与您的系统设置集成"</string>
+    <string name="migration_update_needed_notification_content" msgid="478899618719297517">"开始执行此更新操作，以便健康数据共享能继续与您的系统设置集成"</string>
     <string name="migration_update_needed_notification_action" msgid="1219223694165492000">"立即更新"</string>
     <string name="migration_module_update_needed_notification_title" msgid="5428523284357105379">"需要更新系统"</string>
     <string name="migration_module_update_needed_action" msgid="7211167950758064289">"在继续集成之前，请更新您的手机系统。"</string>
     <string name="migration_module_update_needed_restart" msgid="1246884613546321798">"如果您已更新手机系统，请尝试重启手机，继续进行集成"</string>
-    <string name="migration_app_update_needed_notification_title" msgid="8971076370900025444">"需要更新 Health Connect"</string>
-    <string name="migration_app_update_needed_action" msgid="3289432528592774601">"在继续操作之前，请将 Health Connect 应用更新到最新版本。"</string>
+    <string name="migration_app_update_needed_notification_title" msgid="8971076370900025444">"需要更新健康数据共享"</string>
+    <string name="migration_app_update_needed_action" msgid="3289432528592774601">"在继续操作之前，请将健康数据共享应用更新到最新版本。"</string>
     <string name="migration_more_space_needed_screen_title" msgid="1535473230886051579">"需要更多存储空间"</string>
-    <string name="migration_more_space_needed_screen_details" msgid="621140247825603412">"Health Connect 需要 <xliff:g id="SPACE_NEEDED">%1$s</xliff:g> 的手机存储空间，才能继续集成。\n\n请清除手机上的一些内容，然后重试。"</string>
+    <string name="migration_more_space_needed_screen_details" msgid="621140247825603412">"健康数据共享需要 <xliff:g id="SPACE_NEEDED">%1$s</xliff:g> 的手机存储空间，才能继续集成。\n\n请清除手机上的一些内容，然后重试。"</string>
     <string name="try_again_button" msgid="8745496819992160789">"重试"</string>
     <string name="free_up_space_button" msgid="4141013808635654695">"释放空间"</string>
     <string name="migration_more_space_needed_notification_title" msgid="8238155395120107672">"需要更多存储空间"</string>
-    <string name="migration_more_space_needed_notification_content" msgid="4034728181940567836">"Health Connect 需要 <xliff:g id="SPACE_NEEDED">%1$s</xliff:g> 的手机存储空间，才能继续集成。"</string>
+    <string name="migration_more_space_needed_notification_content" msgid="4034728181940567836">"健康数据共享需要 <xliff:g id="SPACE_NEEDED">%1$s</xliff:g> 的手机存储空间，才能继续集成。"</string>
     <string name="migration_paused_screen_title" msgid="8041170155372429894">"集成已暂停"</string>
-    <string name="migration_paused_screen_details" msgid="5898311710030340187">"Health Connect 应用与 Android 系统集成时，会处于关闭状态。\n\n请点击“恢复”重新打开该应用，继续转移您的数据和权限。"</string>
-    <string name="migration_paused_screen_details_timeout" msgid="353768000785837394">"为保留您的 Health Connect 数据，请在 <xliff:g id="TIME_NEEDED">%1$s</xliff:g> 内完成这项操作"</string>
+    <string name="migration_paused_screen_details" msgid="5898311710030340187">"健康数据共享应用与 Android 系统集成时，会处于关闭状态。\n\n请点击“恢复”重新打开该应用，继续转移您的数据和权限。"</string>
+    <string name="migration_paused_screen_details_timeout" msgid="353768000785837394">"为保留您的健康数据共享数据，请在 <xliff:g id="TIME_NEEDED">%1$s</xliff:g>内完成这项操作"</string>
     <string name="resume_button" msgid="2255148549862208047">"恢复"</string>
     <string name="migration_paused_notification_title" msgid="4368414714202113077">"集成已暂停"</string>
-    <string name="migration_paused_notification_content" msgid="1950511270109811771">"Health Connect 正在与 Android 系统集成。点按即可继续"</string>
+    <string name="migration_paused_notification_content" msgid="1950511270109811771">"健康数据共享正在与 Android 系统集成。点按即可继续"</string>
     <string name="resume_migration_banner_title" msgid="4443957114824045317">"恢复集成"</string>
-    <string name="resume_migration_banner_description" msgid="6236230413670826036">"点按即可继续将 Health Connect 与 Android 系统进行集成。为保留您的数据，请在 <xliff:g id="TIME_NEEDED">%1$s</xliff:g>内完成这项操作"</string>
-    <string name="resume_migration_banner_description_fallback" msgid="6060444898839211883">"点按即可继续将 Health Connect 与 Android 系统进行集成。"</string>
+    <string name="resume_migration_banner_description" msgid="6236230413670826036">"点按即可继续将健康数据共享与 Android 系统进行集成。为保留您的数据，请在 <xliff:g id="TIME_NEEDED">%1$s</xliff:g>内完成这项操作"</string>
+    <string name="resume_migration_banner_description_fallback" msgid="6060444898839211883">"点按即可继续将健康数据共享与 Android 系统进行集成。"</string>
     <string name="resume_migration_banner_button" msgid="2112318760107756469">"继续"</string>
-    <string name="resume_migration_notification_title" msgid="8859575633668908327">"恢复 Health Connect 集成"</string>
+    <string name="resume_migration_notification_title" msgid="8859575633668908327">"恢复健康数据共享集成"</string>
     <string name="resume_migration_notification_content" msgid="46172108837648715">"为保留您的数据，请在 <xliff:g id="TIME_NEEDED">%1$s</xliff:g>内完成这项操作"</string>
     <string name="app_update_needed_banner_title" msgid="4724335956851853802">"需要更新应用"</string>
-    <string name="app_update_needed_banner_description_single" msgid="2229935331303234217">"“<xliff:g id="APP_NAME">%1$s</xliff:g>”必须为最新版本，才能继续与 Health Connect 搭配使用"</string>
-    <string name="app_update_needed_banner_description_multiple" msgid="1523113182062764912">"部分应用必须为最新版本，才能继续与 Health Connect 搭配使用"</string>
+    <string name="app_update_needed_banner_description_single" msgid="2229935331303234217">"“<xliff:g id="APP_NAME">%1$s</xliff:g>”必须为最新版本，才能继续与健康数据共享搭配使用"</string>
+    <string name="app_update_needed_banner_description_multiple" msgid="1523113182062764912">"部分应用必须为最新版本，才能继续与健康数据共享搭配使用"</string>
     <string name="app_update_needed_banner_button" msgid="8223115764065649627">"检查更新"</string>
-    <string name="migration_pending_permissions_dialog_title" msgid="6019552841791757048">"Health Connect 集成"</string>
-    <string name="migration_pending_permissions_dialog_content" msgid="6350115816948005466">"Health Connect 已可以与您的 Android 系统集成。如果您现在授予“<xliff:g id="APP_NAME">%1$s</xliff:g>”访问权限，则在集成完成之前，部分功能可能无法使用。"</string>
-    <string name="migration_pending_permissions_dialog_content_apps" msgid="6417173899016940664">"Health Connect 已可以与您的 Android 系统集成。如果您现在授予应用访问权限，则在集成完成之前，部分功能可能无法使用。"</string>
+    <string name="migration_pending_permissions_dialog_title" msgid="6019552841791757048">"健康数据共享集成"</string>
+    <string name="migration_pending_permissions_dialog_content" msgid="6350115816948005466">"健康数据共享已可以与您的 Android 系统集成。如果您现在授予“<xliff:g id="APP_NAME">%1$s</xliff:g>”访问权限，则在集成完成之前，部分功能可能无法使用。"</string>
+    <string name="migration_pending_permissions_dialog_content_apps" msgid="6417173899016940664">"健康数据共享已可以与您的 Android 系统集成。如果您现在授予应用访问权限，则在集成完成之前，部分功能可能无法使用。"</string>
     <string name="migration_pending_permissions_dialog_button_continue" msgid="258571372365364506">"继续"</string>
     <string name="migration_pending_permissions_dialog_button_start_integration" msgid="754910196871313049">"开始集成"</string>
-    <string name="migration_in_progress_permissions_dialog_title" msgid="2188354144857156984">"Health Connect 集成正在进行中"</string>
-    <string name="migration_in_progress_permissions_dialog_content" msgid="2249793103623253693">"Health Connect 正在与 Android 系统集成。\n\n完成后，您会收到相关通知，届时即可将“<xliff:g id="APP_NAME">%1$s</xliff:g>”与 Health Connect 配合使用。"</string>
-    <string name="migration_in_progress_permissions_dialog_content_apps" msgid="8653954808926889199">"Health Connect 正在与 Android 系统集成。\n\n完成后，您会收到通知，然后便可使用 Health Connect。"</string>
+    <string name="migration_in_progress_permissions_dialog_title" msgid="2188354144857156984">"健康数据共享集成正在进行中"</string>
+    <string name="migration_in_progress_permissions_dialog_content" msgid="2249793103623253693">"健康数据共享正在与 Android 系统集成。\n\n完成后，您会收到相关通知，届时即可将“<xliff:g id="APP_NAME">%1$s</xliff:g>”与健康数据共享配合使用。"</string>
+    <string name="migration_in_progress_permissions_dialog_content_apps" msgid="8653954808926889199">"健康数据共享正在与 Android 系统集成。\n\n完成后，您会收到通知，然后便可使用健康数据共享。"</string>
     <string name="migration_in_progress_permissions_dialog_button_got_it" msgid="3437208109334974656">"知道了"</string>
-    <string name="migration_not_complete_dialog_title" msgid="3725576338159027149">"Health Connect 集成未完成"</string>
+    <string name="migration_not_complete_dialog_title" msgid="3725576338159027149">"健康数据共享集成未完成"</string>
     <string name="migration_not_complete_dialog_content" msgid="4992771587233088606">"当您可以再次集成时，会收到相关通知。"</string>
     <string name="migration_not_complete_dialog_button" msgid="3271842109680807482">"知道了"</string>
-    <string name="migration_not_complete_notification_title" msgid="7392885522310227293">"Health Connect 集成未完成"</string>
+    <string name="migration_not_complete_notification_title" msgid="7392885522310227293">"健康数据共享集成未完成"</string>
     <string name="migration_not_complete_notification_action" msgid="757041885992445657">"了解详情"</string>
-    <string name="migration_complete_notification_title" msgid="4988631739109332404">"Health Connect 集成已完成"</string>
+    <string name="migration_complete_notification_title" msgid="4988631739109332404">"健康数据共享集成已完成"</string>
     <string name="migration_complete_notification_action" msgid="5350322865206331186">"打开"</string>
     <string name="migration_whats_new_dialog_title" msgid="2349465358457105228">"新增功能"</string>
-    <string name="migration_whats_new_dialog_content" msgid="1271560399054864488">"现在，您可以直接在设置中访问 Health Connect，也可以随时卸载 Health Connect 应用以释放存储空间。"</string>
+    <string name="migration_whats_new_dialog_content" msgid="1271560399054864488">"现在，您可以直接在设置中访问健康数据共享，也可以随时卸载健康数据共享应用以释放存储空间。"</string>
     <string name="migration_whats_new_dialog_button" msgid="642575552457587805">"知道了"</string>
     <string name="data_totals_header" msgid="8316977153276216025">"数据总值"</string>
     <string name="app_sources_header" msgid="6343062519512947665">"应用来源"</string>
@@ -792,7 +792,7 @@
     <string name="edit_data_sources" msgid="79641360876849547">"编辑应用来源"</string>
     <string name="default_app_summary" msgid="6183876151011837062">"设备默认设置"</string>
     <string name="app_data_title" msgid="6499967982291000837">"应用数据"</string>
-    <string name="no_data_footer" msgid="4777297654713673100">"具有 Health Connect 访问权的应用中的数据将显示在此处"</string>
+    <string name="no_data_footer" msgid="4777297654713673100">"具有健康数据共享访问权的应用中的数据将显示在此处"</string>
     <string name="date_picker_day" msgid="3076687507968958991">"日"</string>
     <string name="date_picker_week" msgid="1038805538316142229">"周"</string>
     <string name="date_picker_month" msgid="3560692391260778560">"月"</string>
