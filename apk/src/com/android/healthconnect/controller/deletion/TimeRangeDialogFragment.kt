@@ -18,6 +18,7 @@ package com.android.healthconnect.controller.deletion
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.core.view.children
@@ -27,6 +28,7 @@ import androidx.fragment.app.setFragmentResult
 import com.android.healthconnect.controller.R
 import com.android.healthconnect.controller.deletion.DeletionConstants.TIME_RANGE_SELECTION_EVENT
 import com.android.healthconnect.controller.shared.dialog.AlertDialogBuilder
+import com.android.healthconnect.controller.utils.AttributeResolver
 import com.android.healthconnect.controller.utils.logging.DeletionDialogTimeRangeElement
 import com.android.healthconnect.controller.utils.logging.ErrorPageElement
 import com.android.healthconnect.controller.utils.logging.HealthConnectLogger
@@ -46,12 +48,19 @@ class TimeRangeDialogFragment : Hilt_TimeRangeDialogFragment() {
         val view: View = layoutInflater.inflate(R.layout.dialog_message_time_range_picker, null)
         val radioGroup: RadioGroup = view.findViewById(R.id.radio_group_time_range)
         val messageView: TextView = view.findViewById(R.id.time_range_message)
+        val iconView = view.findViewById(R.id.dialog_icon) as ImageView
+        val title = view.findViewById(R.id.dialog_title) as TextView
         messageView.text = buildMessage()
+        val iconDrawable =
+            AttributeResolver.getNullableDrawable(view.context, R.attr.deletionSettingsIcon)
+        iconDrawable?.let {
+            iconView.setImageDrawable(it)
+            iconView.visibility = View.VISIBLE
+        }
+        title.text = getString(R.string.time_range_title)
 
         return AlertDialogBuilder(this)
             .setLogName(DeletionDialogTimeRangeElement.DELETION_DIALOG_TIME_RANGE_CONTAINER)
-            .setCustomTitle(R.string.time_range_title)
-            .setCustomIcon(R.attr.deletionSettingsIcon)
             .setView(view)
             .setNegativeButton(
                 android.R.string.cancel,
