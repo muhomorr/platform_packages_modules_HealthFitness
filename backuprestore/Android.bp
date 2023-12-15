@@ -39,6 +39,16 @@ android_library {
         "framework-healthfitness.impl",
     ],
     apex_available: ["com.android.healthfitness"],
+    errorprone: {
+        extra_check_modules: [
+           "//external/nullaway:nullaway_plugin"
+        ],
+        javacflags: [
+            "-Xep:NullAway:ERROR",
+            "-XepOpt:NullAway:AnnotatedPackages=com.android.health.connect.backuprestore",
+            "-XepOpt:NullAway:KnownInitializers=android.app.backup.BackupAgent.onCreate",
+        ],
+    },
 }
 
 android_app {
