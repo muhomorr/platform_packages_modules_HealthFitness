@@ -121,7 +121,7 @@ constructor(
                 period = DateNavigationPeriod.PERIOD_MONTH,
                 showDataOrigin = false)
 
-        val entryRecords = loadEntriesHelper.readRecords(input)
+        val entryRecords = loadEntriesHelper.readLastRecord(input)
 
         if (entryRecords.isNotEmpty()) {
             // The records are returned in descending order by startTime

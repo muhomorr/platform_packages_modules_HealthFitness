@@ -18,7 +18,11 @@ import android.health.connect.HealthConnectManager
 import android.health.connect.ReadRecordsRequestUsingFilters
 import android.health.connect.ReadRecordsResponse
 import android.health.connect.TimeInstantRangeFilter
+import android.health.connect.datatypes.DistanceRecord
 import android.health.connect.datatypes.SleepSessionRecord
+import android.health.connect.datatypes.StepsRecord
+import android.health.connect.datatypes.TotalCaloriesBurnedRecord
+import android.health.connect.datatypes.units.Length
 import android.os.OutcomeReceiver
 import androidx.test.platform.app.InstrumentationRegistry
 import com.android.healthconnect.controller.data.entries.api.LoadDataEntriesInput
@@ -26,6 +30,7 @@ import com.android.healthconnect.controller.data.entries.api.LoadEntriesHelper
 import com.android.healthconnect.controller.data.entries.datenavigation.DateNavigationPeriod
 import com.android.healthconnect.controller.dataentries.formatters.shared.HealthDataEntryFormatter
 import com.android.healthconnect.controller.permissions.data.HealthPermissionType
+import com.android.healthconnect.controller.tests.utils.getDistanceRecord
 import com.android.healthconnect.controller.tests.utils.getMetaData
 import com.android.healthconnect.controller.tests.utils.setLocale
 import com.android.healthconnect.controller.tests.utils.verifySleepSessionListsEqual
@@ -65,6 +70,8 @@ class LoadEntriesHelperUseCaseTest {
 
     @Captor
     lateinit var requestCaptor: ArgumentCaptor<ReadRecordsRequestUsingFilters<SleepSessionRecord>>
+    @Captor
+    lateinit var stepsRequestCaptor: ArgumentCaptor<ReadRecordsRequestUsingFilters<StepsRecord>>
 
     @Before
     fun setup() {
@@ -74,14 +81,13 @@ class LoadEntriesHelperUseCaseTest {
         hiltRule.inject()
         loadEntriesHelper =
             LoadEntriesHelper(context, healthDataEntryFormatter, healthConnectManager)
+        TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("UTC")))
     }
 
     // TODO (b/309288325) add tests for other permission types
 
     @Test
     fun loadSleepData_withinDay_returnsListOfRecords_sortedByDescendingStartTime() = runTest {
-        TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("UTC")))
-
         val startTime = Instant.parse("2023-06-12T22:30:00Z").atStartOfDay()
         val input =
             LoadDataEntriesInput(
@@ -135,8 +141,6 @@ class LoadEntriesHelperUseCaseTest {
     @Test
     fun loadSleepDataUseCase_withinWeek_returnsListOfRecords_sortedByDescendingStartTime() =
         runTest {
-            TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("UTC")))
-
             val startTime = Instant.parse("2023-06-12T22:30:00Z").atStartOfDay()
             val input =
                 LoadDataEntriesInput(
@@ -200,8 +204,6 @@ class LoadEntriesHelperUseCaseTest {
     @Test
     fun loadSleepDataUseCase_withinMonth_returnsListOfRecords_sortedByDescendingStartTime() =
         runTest {
-            TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("UTC")))
-
             val startTime = Instant.parse("2023-06-12T22:30:00Z").atStartOfDay()
             val input =
                 LoadDataEntriesInput(
@@ -266,6 +268,106 @@ class LoadEntriesHelperUseCaseTest {
                 .isEqualTo(expectedTimeRangeFilter.isBounded)
             verifySleepSessionListsEqual(actual, expected)
         }
+
+    @Test
+    fun readLastRecord_forDistance_returnsListOfOneRecord() = runTest {
+        val startTime = Instant.parse("2023-06-12T22:30:00Z")
+        val input =
+            LoadDataEntriesInput(
+                displayedStartTime = startTime.atStartOfDay(),
+                packageName = null,
+                period = DateNavigationPeriod.PERIOD_MONTH,
+                showDataOrigin = true,
+                permissionType = HealthPermissionType.DISTANCE)
+
+        val timeRangeFilter =
+            loadEntriesHelper.getTimeFilter(
+                startTime.atStartOfDay(), DateNavigationPeriod.PERIOD_MONTH, true)
+
+        Mockito.doAnswer(prepareDistanceAnswer())
+            .`when`(healthConnectManager)
+            .readRecords(
+                ArgumentMatchers.any(ReadRecordsRequestUsingFilters::class.java),
+                ArgumentMatchers.any(),
+                ArgumentMatchers.any())
+
+        val actual = loadEntriesHelper.readLastRecord(input)
+        val expected = listOf(getDistanceRecord(Length.fromMeters(1000.0), time = startTime))
+        Mockito.verify(healthConnectManager, Mockito.times(1))
+            .readRecords(
+                stepsRequestCaptor.capture(), ArgumentMatchers.any(), ArgumentMatchers.any())
+        assertThat((stepsRequestCaptor.value.timeRangeFilter as TimeInstantRangeFilter).startTime)
+            .isEqualTo(timeRangeFilter.startTime)
+        assertThat((stepsRequestCaptor.value.timeRangeFilter as TimeInstantRangeFilter).endTime)
+            .isEqualTo(timeRangeFilter.endTime)
+        assertThat((stepsRequestCaptor.value.timeRangeFilter as TimeInstantRangeFilter).isBounded)
+            .isEqualTo(timeRangeFilter.isBounded)
+        assertThat(actual.size).isEqualTo(expected.size)
+        assertThat((actual[0] as DistanceRecord).distance).isEqualTo(expected[0].distance)
+        assertThat((actual[0] as DistanceRecord).startTime).isEqualTo(startTime)
+        assertThat((actual[0] as DistanceRecord).endTime).isEqualTo(expected[0].endTime)
+        assertThat(stepsRequestCaptor.value.isAscending).isFalse()
+        assertThat(stepsRequestCaptor.value.pageSize).isEqualTo(1)
+    }
+
+    @Test
+    fun readLastRecord_forTotalCaloriesBurned_whenNoData_returnsEmptyList() = runTest {
+        val startTime = Instant.parse("2023-06-12T22:30:00Z").atStartOfDay()
+        val input =
+            LoadDataEntriesInput(
+                displayedStartTime = startTime,
+                packageName = null,
+                period = DateNavigationPeriod.PERIOD_MONTH,
+                showDataOrigin = true,
+                permissionType = HealthPermissionType.TOTAL_CALORIES_BURNED)
+
+        val timeRangeFilter =
+            loadEntriesHelper.getTimeFilter(startTime, DateNavigationPeriod.PERIOD_MONTH, true)
+
+        Mockito.doAnswer(prepareEmptyCaloriesAnswer())
+            .`when`(healthConnectManager)
+            .readRecords(
+                ArgumentMatchers.any(ReadRecordsRequestUsingFilters::class.java),
+                ArgumentMatchers.any(),
+                ArgumentMatchers.any())
+
+        val actual = loadEntriesHelper.readLastRecord(input)
+
+        Mockito.verify(healthConnectManager, Mockito.times(1))
+            .readRecords(
+                stepsRequestCaptor.capture(), ArgumentMatchers.any(), ArgumentMatchers.any())
+        assertThat((stepsRequestCaptor.value.timeRangeFilter as TimeInstantRangeFilter).startTime)
+            .isEqualTo(timeRangeFilter.startTime)
+        assertThat((stepsRequestCaptor.value.timeRangeFilter as TimeInstantRangeFilter).endTime)
+            .isEqualTo(timeRangeFilter.endTime)
+        assertThat((stepsRequestCaptor.value.timeRangeFilter as TimeInstantRangeFilter).isBounded)
+            .isEqualTo(timeRangeFilter.isBounded)
+        assertThat(actual.size).isEqualTo(0)
+        assertThat(stepsRequestCaptor.value.isAscending).isFalse()
+        assertThat(stepsRequestCaptor.value.pageSize).isEqualTo(1)
+    }
+
+    private fun prepareDistanceAnswer(): (InvocationOnMock) -> ReadRecordsResponse<DistanceRecord> {
+        val answer = { args: InvocationOnMock ->
+            val receiver =
+                args.arguments[2] as OutcomeReceiver<ReadRecordsResponse<DistanceRecord>, *>
+            receiver.onResult(getMonthDistanceRecords())
+            getMonthDistanceRecords()
+        }
+        return answer
+    }
+
+    private fun prepareEmptyCaloriesAnswer():
+        (InvocationOnMock) -> ReadRecordsResponse<TotalCaloriesBurnedRecord> {
+        val answer = { args: InvocationOnMock ->
+            val receiver =
+                args.arguments[2]
+                    as OutcomeReceiver<ReadRecordsResponse<TotalCaloriesBurnedRecord>, *>
+            receiver.onResult(getEmptyCaloriesRecords())
+            getEmptyCaloriesRecords()
+        }
+        return answer
+    }
 
     private fun prepareDaySleepAnswer():
         (InvocationOnMock) -> ReadRecordsResponse<SleepSessionRecord> {
@@ -386,5 +488,17 @@ class LoadEntriesHelperUseCaseTest {
                         Instant.parse("2023-07-13T07:45:00Z"))
                     .build()),
             -1)
+    }
+
+    private fun getMonthDistanceRecords(): ReadRecordsResponse<DistanceRecord> {
+        return ReadRecordsResponse<DistanceRecord>(
+            listOf(
+                getDistanceRecord(
+                    Length.fromMeters(1000.0), Instant.parse("2023-06-12T22:30:00Z"))),
+            -1)
+    }
+
+    private fun getEmptyCaloriesRecords(): ReadRecordsResponse<TotalCaloriesBurnedRecord> {
+        return ReadRecordsResponse<TotalCaloriesBurnedRecord>(listOf(), -1)
     }
 }
