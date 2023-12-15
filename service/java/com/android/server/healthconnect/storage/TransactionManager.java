@@ -79,7 +79,7 @@ public final class TransactionManager {
     private static final ConcurrentHashMap<UserHandle, HealthConnectDatabase>
             mUserHandleToDatabaseMap = new ConcurrentHashMap<>();
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private static volatile TransactionManager sTransactionManager;
 
     private volatile HealthConnectDatabase mHealthConnectDatabase;
@@ -190,7 +190,7 @@ public final class TransactionManager {
      *
      * @param request a delete request.
      */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public int deleteAll(@NonNull DeleteTransactionRequest request) throws SQLiteException {
         final SQLiteDatabase db = getWritableDb();
         db.beginTransaction();
@@ -771,7 +771,7 @@ public final class TransactionManager {
     }
 
     /** Clear the static instance held in memory, so unit tests can perform correctly. */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @VisibleForTesting
     public static void clearInstance() {
         sTransactionManager = null;

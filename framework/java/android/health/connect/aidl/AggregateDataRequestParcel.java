@@ -63,6 +63,7 @@ public class AggregateDataRequestParcel implements Parcelable {
 
     private final boolean mLocalTimeFilter;
 
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     public AggregateDataRequestParcel(AggregateRecordsRequest<?> request) {
         mStartTime = TimeRangeFilterHelper.getFilterStartTimeMillis(request.getTimeRangeFilter());
         mEndTime = TimeRangeFilterHelper.getFilterEndTimeMillis(request.getTimeRangeFilter());
@@ -86,6 +87,7 @@ public class AggregateDataRequestParcel implements Parcelable {
         mDuration = duration;
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public AggregateDataRequestParcel(AggregateRecordsRequest request, Period period) {
         this(request);
         mDuration = null;
@@ -97,6 +99,7 @@ public class AggregateDataRequestParcel implements Parcelable {
         }
     }
 
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     protected AggregateDataRequestParcel(Parcel in) {
         mStartTime = in.readLong();
         mEndTime = in.readLong();

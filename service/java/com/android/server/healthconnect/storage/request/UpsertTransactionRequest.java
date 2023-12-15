@@ -97,7 +97,7 @@ public class UpsertTransactionRequest {
                 Collections.emptyMap());
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public UpsertTransactionRequest(
             @Nullable String packageName,
             @NonNull List<RecordInternal<?>> recordInternals,

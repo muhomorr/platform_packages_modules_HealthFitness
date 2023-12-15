@@ -66,10 +66,12 @@ public class AggregateDataResponseParcel implements Parcelable {
     private Period mPeriod;
     private TimeRangeFilter mTimeRangeFilter;
 
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     public AggregateDataResponseParcel(List<AggregateRecordsResponse<?>> aggregateRecordsResponse) {
         mAggregateRecordsResponses = aggregateRecordsResponse;
     }
 
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     protected AggregateDataResponseParcel(Parcel in) {
         final int size = in.readInt();
         mAggregateRecordsResponses = new ArrayList<>(size);
@@ -129,6 +131,7 @@ public class AggregateDataResponseParcel implements Parcelable {
         }
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public AggregateDataResponseParcel setDuration(
             @Nullable Duration duration, @Nullable TimeRangeFilter timeRangeFilter) {
         mDuration = duration;
@@ -137,6 +140,7 @@ public class AggregateDataResponseParcel implements Parcelable {
         return this;
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public AggregateDataResponseParcel setPeriod(
             @Nullable Period period, @Nullable TimeRangeFilter timeRangeFilter) {
         mPeriod = period;
@@ -156,6 +160,7 @@ public class AggregateDataResponseParcel implements Parcelable {
      * @return responses from {@code mAggregateRecordsResponses} grouped as per the {@code
      *     mDuration}
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public List<AggregateRecordsGroupedByDurationResponse<?>>
             getAggregateDataResponseGroupedByDuration() {
         Objects.requireNonNull(mDuration);
@@ -228,6 +233,7 @@ public class AggregateDataResponseParcel implements Parcelable {
     /**
      * @return responses from {@code mAggregateRecordsResponses} grouped as per the {@code mPeriod}
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public List<AggregateRecordsGroupedByPeriodResponse<?>>
             getAggregateDataResponseGroupedByPeriod() {
         Objects.requireNonNull(mPeriod);
@@ -314,6 +320,7 @@ public class AggregateDataResponseParcel implements Parcelable {
         }
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     private ZoneOffset parseZoneOffset(Parcel in) {
         int zoneOffsetInSecs = in.readInt();
         ZoneOffset zoneOffset = null;
@@ -324,6 +331,7 @@ public class AggregateDataResponseParcel implements Parcelable {
         return zoneOffset;
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     private LocalDateTime getPeriodEndLocalDateTime(TimeRangeFilter timeRangeFilter) {
         if (timeRangeFilter instanceof TimeInstantRangeFilter) {
             return LocalDateTime.ofInstant(

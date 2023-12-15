@@ -39,11 +39,16 @@ public final class Device {
      * @see Device
      */
     public static final class Builder {
+        @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
         private String mManufacturer;
+
+        @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
         private String mModel;
+
         @DeviceType private int mType = DEVICE_TYPE_UNKNOWN;
 
         /** Sets an optional client supplied manufacturer of the device */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setManufacturer(@Nullable String manufacturer) {
             mManufacturer = manufacturer;
@@ -51,6 +56,7 @@ public final class Device {
         }
 
         /** Sets an optional client supplied model of the device */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setModel(@Nullable String model) {
             mModel = model;

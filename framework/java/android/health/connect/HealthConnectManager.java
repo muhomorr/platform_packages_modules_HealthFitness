@@ -317,7 +317,10 @@ public class HealthConnectManager {
 
     private static final String TAG = "HealthConnectManager";
     private static final String HEALTH_PERMISSION_PREFIX = "android.permission.health.";
+
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private static volatile Set<String> sHealthPermissions;
+
     private final Context mContext;
     private final IHealthConnectService mService;
     private final InternalExternalRecordConverter mInternalExternalRecordConverter;
@@ -356,6 +359,7 @@ public class HealthConnectManager {
      *
      * @hide
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @RequiresPermission(MANAGE_HEALTH_PERMISSIONS)
     @UserHandleAware
     public void revokeHealthPermission(
@@ -375,6 +379,7 @@ public class HealthConnectManager {
      *
      * @hide
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @RequiresPermission(MANAGE_HEALTH_PERMISSIONS)
     @UserHandleAware
     public void revokeAllHealthPermissions(@NonNull String packageName, @Nullable String reason) {

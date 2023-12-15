@@ -136,7 +136,7 @@ public final class NutritionRecordHelper extends IntervalRecordHelper<NutritionR
         super(RecordTypeIdentifier.RECORD_TYPE_NUTRITION);
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public AggregateResult<?> getAggregateResult(
             Cursor results, AggregationType<?> aggregationType) {
@@ -288,7 +288,7 @@ public final class NutritionRecordHelper extends IntervalRecordHelper<NutritionR
         return NUTRITION_RECORD_TABLE_NAME;
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     AggregateParams getAggregateParams(AggregationType<?> aggregateRequest) {
         List<String> columnNames;

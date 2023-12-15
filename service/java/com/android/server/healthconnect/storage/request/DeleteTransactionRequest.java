@@ -51,7 +51,7 @@ public final class DeleteTransactionRequest {
     private ChangeLogsHelper.ChangeLogs mChangeLogs;
     private boolean mHasHealthDataManagementPermission;
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     public DeleteTransactionRequest(String packageName, DeleteUsingFiltersRequestParcel request) {
         Objects.requireNonNull(packageName);
         mDeleteTableRequests = new ArrayList<>(request.getRecordTypeFilters().size());

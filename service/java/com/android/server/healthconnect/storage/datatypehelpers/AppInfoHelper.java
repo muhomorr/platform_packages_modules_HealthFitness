@@ -92,7 +92,7 @@ public final class AppInfoHelper extends DatabaseHelper {
     private static final String RECORD_TYPES_USED_COLUMN_NAME = "record_types_used";
     private static final int COMPRESS_FACTOR = 100;
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private static volatile AppInfoHelper sAppInfoHelper;
 
     /**
@@ -110,10 +110,10 @@ public final class AppInfoHelper extends DatabaseHelper {
      */
     private volatile ConcurrentHashMap<String, AppInfoInternal> mAppInfoMap;
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private AppInfoHelper() {}
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public synchronized void clearCache() {
         mAppInfoMap = null;
@@ -176,7 +176,7 @@ public final class AppInfoHelper extends DatabaseHelper {
             boolean onlyUpdate) {
         if (!isAppInstalled(context, packageName)) {
             // using pre-existing value of recordTypesUsed.
-            @SuppressWarnings("NullAway")
+            @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
             var recordTypesUsed =
                     containsAppInfo(packageName)
                             ? mAppInfoMap.get(packageName).getRecordTypesUsed()
@@ -240,7 +240,7 @@ public final class AppInfoHelper extends DatabaseHelper {
     }
 
     /** Gets the package name corresponding to the {@code packageId}. */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @NonNull
     public String getPackageName(long packageId) {
         return getIdPackageNameMap().get(packageId);
@@ -431,7 +431,7 @@ public final class AppInfoHelper extends DatabaseHelper {
      * This method updates recordTypesUsed for all packages and hence is a heavy operation. This
      * method is used during AutoDeleteService and is run once per day.
      */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @SuppressLint("LongLogTag")
     private synchronized void syncAppInfoMapRecordTypesUsed(
             @NonNull Map<Integer, HashSet<String>> recordTypeToContributingPackagesMap) {
@@ -488,7 +488,7 @@ public final class AppInfoHelper extends DatabaseHelper {
      * Checks and deletes record types in app info table for which the package is no longer
      * contributing data. This is done after delete records operation has been performed.
      */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @SuppressLint("LongLogTag")
     private synchronized void deleteRecordTypesForPackagesIfRequiredInternal(
             Set<Integer> recordTypesToBeDeleted,

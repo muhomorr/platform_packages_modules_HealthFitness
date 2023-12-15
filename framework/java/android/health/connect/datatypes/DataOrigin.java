@@ -27,6 +27,7 @@ public final class DataOrigin {
      * @see DataOrigin
      */
     public static final class Builder {
+        @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
         private String mPackageName;
 
         /**

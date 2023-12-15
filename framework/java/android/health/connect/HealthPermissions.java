@@ -783,6 +783,7 @@ public final class HealthPermissions {
     }
 
     /** @hide */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public static String getHealthReadPermission(
             @HealthPermissionCategory.Type int permissionCategory) {
         if (sHealthCategoryToReadPermissionMap.isEmpty()) {

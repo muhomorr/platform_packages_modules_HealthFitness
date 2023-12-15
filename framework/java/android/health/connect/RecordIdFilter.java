@@ -35,6 +35,7 @@ public class RecordIdFilter {
      * @param clientRecordId Client identifier that was set while inserting the record.
      * @return Object of {@link RecordIdFilter}
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @NonNull
     public static RecordIdFilter fromClientRecordId(
             @NonNull Class<? extends Record> recordType, @NonNull String clientRecordId) {
@@ -51,6 +52,7 @@ public class RecordIdFilter {
      *     HealthConnectManager#insertRecords}
      * @return Object of {@link RecordIdFilter}
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @NonNull
     public static RecordIdFilter fromId(
             @NonNull Class<? extends Record> recordType, @NonNull String id) {

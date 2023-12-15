@@ -53,7 +53,7 @@ public final class BasalMetabolicRateRecordHelper
         super(RecordTypeIdentifier.RECORD_TYPE_BASAL_METABOLIC_RATE);
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public AggregateResult<?> getAggregateResult(
             Cursor results, AggregationType<?> aggregationType, double result) {
@@ -72,7 +72,7 @@ public final class BasalMetabolicRateRecordHelper
         return BASAL_METABOLIC_RATE_RECORD_TABLE_NAME;
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     AggregateParams getAggregateParams(AggregationType<?> aggregateRequest) {
         switch (aggregateRequest.getAggregationTypeIdentifier()) {

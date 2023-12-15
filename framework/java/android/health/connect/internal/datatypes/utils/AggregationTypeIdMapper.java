@@ -123,7 +123,9 @@ import java.util.Map;
  * @hide
  */
 public final class AggregationTypeIdMapper {
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private static volatile AggregationTypeIdMapper sAggregationTypeIdMapper;
+
     private final Map<Integer, AggregationResultCreator> mIdToAggregateResult;
     private final Map<Integer, AggregationType<?>> mIdDataAggregationTypeMap;
     private final Map<AggregationType<?>, Integer> mDataAggregationTypeIdMap;
@@ -236,18 +238,21 @@ public final class AggregationTypeIdMapper {
         return sAggregationTypeIdMapper;
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @NonNull
     public AggregateResult<?> getAggregateResultFor(
             @AggregationType.AggregationTypeIdentifier.Id int id, @NonNull Parcel parcel) {
         return mIdToAggregateResult.get(id).getAggregateResult(parcel);
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @NonNull
     public AggregationType<?> getAggregationTypeFor(
             @AggregationType.AggregationTypeIdentifier.Id int id) {
         return mIdDataAggregationTypeMap.get(id);
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @NonNull
     @AggregationType.AggregationTypeIdentifier.Id
     public int getIdFor(AggregationType<?> aggregationType) {

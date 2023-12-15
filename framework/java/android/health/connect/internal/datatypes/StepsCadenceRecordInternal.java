@@ -37,6 +37,7 @@ import java.util.Set;
 public class StepsCadenceRecordInternal
         extends SeriesRecordInternal<
                 StepsCadenceRecord, StepsCadenceRecord.StepsCadenceRecordSample> {
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private Set<StepsCadenceRecordSample> mStepsCadenceRecordSamples;
 
     @Override

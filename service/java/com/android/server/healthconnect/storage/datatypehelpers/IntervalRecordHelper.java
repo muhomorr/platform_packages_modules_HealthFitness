@@ -136,7 +136,7 @@ public abstract class IntervalRecordHelper<T extends IntervalRecordInternal<?>>
         return LOCAL_DATE_COLUMN_NAME;
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     final ZoneOffset getZoneOffset(Cursor cursor) {
         ZoneOffset zoneOffset = null;
         if (cursor.getCount() > 0 && cursor.getColumnIndex(START_ZONE_OFFSET_COLUMN_NAME) != -1) {

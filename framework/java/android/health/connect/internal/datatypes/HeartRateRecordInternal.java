@@ -70,8 +70,10 @@ public class HeartRateRecordInternal
         }
     }
 
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private Set<HeartRateSample> mHeartRateHeartRateSamples;
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     @Nullable
     public Set<HeartRateSample> getSamples() {

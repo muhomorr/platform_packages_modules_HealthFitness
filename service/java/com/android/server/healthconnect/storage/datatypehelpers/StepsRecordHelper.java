@@ -56,7 +56,7 @@ public final class StepsRecordHelper extends IntervalRecordHelper<StepsRecordInt
         return STEPS_TABLE_NAME;
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     AggregateParams getAggregateParams(AggregationType<?> aggregateRequest) {
         switch (aggregateRequest.getAggregationTypeIdentifier()) {

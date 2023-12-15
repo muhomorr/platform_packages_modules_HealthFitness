@@ -52,7 +52,7 @@ public final class RestingHeartRateRecordHelper
         super(RecordTypeIdentifier.RECORD_TYPE_RESTING_HEART_RATE);
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public AggregateResult<?> getAggregateResult(
             Cursor results, AggregationType<?> aggregationType) {
@@ -76,7 +76,7 @@ public final class RestingHeartRateRecordHelper
         return RESTING_HEART_RATE_RECORD_TABLE_NAME;
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     AggregateParams getAggregateParams(AggregationType<?> aggregateRequest) {
         List<String> columnNames;

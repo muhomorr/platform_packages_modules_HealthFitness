@@ -50,7 +50,7 @@ public final class MigrationEntityHelper extends DatabaseHelper {
     private static final Object sGetInstanceLock = new Object();
     private static final int DB_VERSION_TABLE_CREATED = 3;
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private static volatile MigrationEntityHelper sInstance;
 
     private MigrationEntityHelper() {}

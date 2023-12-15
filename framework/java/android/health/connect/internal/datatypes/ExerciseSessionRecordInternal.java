@@ -35,14 +35,23 @@ import java.util.Objects;
 @Identifier(recordIdentifier = RecordTypeIdentifier.RECORD_TYPE_EXERCISE_SESSION)
 public final class ExerciseSessionRecordInternal
         extends IntervalRecordInternal<ExerciseSessionRecord> {
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private String mNotes;
+
     private int mExerciseType;
+
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private String mTitle;
+
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private ExerciseRouteInternal mExerciseRoute;
 
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private List<ExerciseLapInternal> mExerciseLaps;
 
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private List<ExerciseSegmentInternal> mExerciseSegments;
+
     private boolean mHasRoute;
 
     @Nullable
@@ -191,6 +200,7 @@ public final class ExerciseSessionRecordInternal
         ExerciseSegmentInternal.writeSegmentsToParcel(mExerciseSegments, parcel);
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public void populateIntervalRecordFrom(@NonNull Parcel parcel) {
         mNotes = parcel.readString();

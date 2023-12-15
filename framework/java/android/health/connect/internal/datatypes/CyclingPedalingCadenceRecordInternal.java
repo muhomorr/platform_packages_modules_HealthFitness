@@ -38,6 +38,7 @@ public class CyclingPedalingCadenceRecordInternal
         extends SeriesRecordInternal<
                 CyclingPedalingCadenceRecord,
                 CyclingPedalingCadenceRecord.CyclingPedalingCadenceRecordSample> {
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private Set<CyclingPedalingCadenceRecordSample> mCyclingPedalingCadenceRecordSamples;
 
     @Override

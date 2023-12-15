@@ -66,6 +66,7 @@ public final class MigrationException extends RuntimeException implements Parcel
     @ErrorCode private final int mErrorCode;
     private final String mFailedEntityId;
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public MigrationException(
             @Nullable String message, @ErrorCode int errorCode, @Nullable String failedEntityId) {
         super(message);

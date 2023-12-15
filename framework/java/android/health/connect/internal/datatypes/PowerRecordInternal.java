@@ -37,6 +37,7 @@ import java.util.Set;
 @Identifier(recordIdentifier = RecordTypeIdentifier.RECORD_TYPE_POWER)
 public class PowerRecordInternal
         extends SeriesRecordInternal<PowerRecord, PowerRecord.PowerRecordSample> {
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private Set<PowerRecordSample> mPowerRecordSamples;
 
     @Override

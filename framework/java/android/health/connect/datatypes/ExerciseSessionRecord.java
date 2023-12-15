@@ -79,7 +79,7 @@ public final class ExerciseSessionRecord extends IntervalRecord {
      * @param title Title of this activity
      * @param skipValidation Boolean flag to skip validation of record values.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "NullAway"})
     private ExerciseSessionRecord(
             @NonNull Metadata metadata,
             @NonNull Instant startTime,
@@ -167,6 +167,7 @@ public final class ExerciseSessionRecord extends IntervalRecord {
         return mHasRoute;
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -215,6 +216,7 @@ public final class ExerciseSessionRecord extends IntervalRecord {
          * @param exerciseType Type of exercise (e.g. walking, swimming). Required field. Allowed
          *     values: {@link ExerciseSessionType}
          */
+        @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
         public Builder(
                 @NonNull Metadata metadata,
                 @NonNull Instant startTime,
@@ -270,6 +272,7 @@ public final class ExerciseSessionRecord extends IntervalRecord {
          *
          * @param notes Notes for this activity
          */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setNotes(@Nullable CharSequence notes) {
             mNotes = notes;
@@ -281,6 +284,7 @@ public final class ExerciseSessionRecord extends IntervalRecord {
          *
          * @param title Title of this activity
          */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setTitle(@Nullable CharSequence title) {
             mTitle = title;
@@ -292,6 +296,7 @@ public final class ExerciseSessionRecord extends IntervalRecord {
          *
          * @param route ExerciseRoute for this activity
          */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setRoute(@Nullable ExerciseRoute route) {
             mRoute = route;

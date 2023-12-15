@@ -50,7 +50,7 @@ public final class WeightRecordHelper extends InstantRecordHelper<WeightRecordIn
         super(RecordTypeIdentifier.RECORD_TYPE_WEIGHT);
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public AggregateResult<?> getAggregateResult(
             Cursor results, AggregationType<?> aggregationType) {
@@ -73,7 +73,7 @@ public final class WeightRecordHelper extends InstantRecordHelper<WeightRecordIn
         return WEIGHT_RECORD_TABLE_NAME;
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     AggregateParams getAggregateParams(AggregationType<?> aggregateRequest) {
         List<String> columnNames;

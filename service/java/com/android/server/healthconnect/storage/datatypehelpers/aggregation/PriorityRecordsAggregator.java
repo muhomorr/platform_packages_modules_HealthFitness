@@ -210,13 +210,13 @@ public class PriorityRecordsAggregator {
     }
 
     /** Returns result for the given group */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public Double getResultForGroup(Integer groupNumber) {
         return mGroupToAggregationResult.get(groupNumber);
     }
 
     /** Returns start time zone offset for the given group */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public ZoneOffset getZoneOffsetForGroup(Integer groupNumber) {
         return mGroupToFirstZoneOffset.get(groupNumber);
     }

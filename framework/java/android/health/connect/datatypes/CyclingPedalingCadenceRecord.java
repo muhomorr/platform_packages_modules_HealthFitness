@@ -294,6 +294,7 @@ public final class CyclingPedalingCadenceRecord extends IntervalRecord {
      * @param object the reference object with which to compare.
      * @return {@code true} if this object is the same as the obj
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public boolean equals(@Nullable Object object) {
         if (super.equals(object)) {

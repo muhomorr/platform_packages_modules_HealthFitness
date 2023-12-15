@@ -122,6 +122,7 @@ public final class ReadRecordsRequestUsingFilters<T extends Record> extends Read
         /**
          * @param recordType Class object of {@link Record} type that needs to be read
          */
+        @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
         public Builder(@NonNull Class<T> recordType) {
             Objects.requireNonNull(recordType);
 
@@ -150,6 +151,7 @@ public final class ReadRecordsRequestUsingFilters<T extends Record> extends Read
          *     <p>If not time range filter is present all the records will be read without any time
          *     constraints.
          */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder<T> setTimeRangeFilter(@Nullable TimeRangeFilter timeRangeFilter) {
             mTimeRangeFilter = timeRangeFilter;

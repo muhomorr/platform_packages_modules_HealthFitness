@@ -85,7 +85,7 @@ public class GrantTimeXmlHelper {
      * @param file the file from which the data should be parsed.
      * @return the grant times.
      */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public static UserGrantTimeState parseGrantTime(File file) {
         try (FileInputStream inputStream = new AtomicFile(file).openRead()) {
             XmlPullParser parser = Xml.newPullParser();

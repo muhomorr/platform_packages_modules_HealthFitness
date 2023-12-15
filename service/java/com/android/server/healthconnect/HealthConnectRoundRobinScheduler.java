@@ -40,7 +40,7 @@ public final class HealthConnectRoundRobinScheduler {
     @GuardedBy("mLock")
     private boolean mPauseScheduler;
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     @GuardedBy("mLock")
     private Integer mLastKeyUsed;
 
@@ -50,7 +50,7 @@ public final class HealthConnectRoundRobinScheduler {
         }
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     void addTask(int uid, Runnable task) {
         synchronized (mLock) {
             // If the scheduler is currently paused (this can happen if the platform is doing a user

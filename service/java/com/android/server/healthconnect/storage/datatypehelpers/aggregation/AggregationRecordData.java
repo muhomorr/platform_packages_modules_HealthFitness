@@ -45,7 +45,7 @@ public abstract class AggregationRecordData implements Comparable<AggregationRec
     private int mPriority;
     private long mLastModifiedTime;
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private ZoneOffset mStartTimeZoneOffset;
 
     long getStartTime() {

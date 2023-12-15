@@ -98,12 +98,16 @@ public final class TimeInstantRangeFilter implements TimeRangeFilter {
 
     /** Builder class for {@link TimeInstantRangeFilter} */
     public static final class Builder {
+        @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
         private Instant mStartTime;
+
+        @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
         private Instant mEndTime;
 
         /**
          * @param startTime represents start time of this filter
          */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setStartTime(@Nullable Instant startTime) {
             mStartTime = startTime;
@@ -113,6 +117,7 @@ public final class TimeInstantRangeFilter implements TimeRangeFilter {
         /**
          * @param endTime end time of this filter
          */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setEndTime(@Nullable Instant endTime) {
             mEndTime = endTime;

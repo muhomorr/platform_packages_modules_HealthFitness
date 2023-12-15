@@ -90,6 +90,7 @@ public class ReadRecordsRequestParcel implements Parcelable {
         mAscending = true;
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public ReadRecordsRequestParcel(ReadRecordsRequestUsingFilters<?> request) {
         mPackageFilters =
                 request.getDataOrigins().stream()

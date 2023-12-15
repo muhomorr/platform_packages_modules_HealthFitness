@@ -199,6 +199,7 @@ public final class RateLimiter {
         }
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     private static Object getLockObject(int uid) {
         sLocks.putIfAbsent(uid, uid);
         return sLocks.get(uid);
@@ -245,6 +246,7 @@ public final class RateLimiter {
                 uid, memoryQuotaBucketToAvailableQuotaMap, memoryQuotaBuckets, memoryCost);
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     private static void checkIfResourcesAreAvailable(
             Map<Integer, Float> quotaBucketToAvailableQuotaMap,
             List<Integer> quotaBuckets,
@@ -259,6 +261,7 @@ public final class RateLimiter {
         quota.setLastUpdatedTime(Instant.now());
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     private static void spendAvailableResources(
             int uid,
             Map<Integer, Float> quotaBucketToAvailableQuotaMap,
@@ -269,6 +272,7 @@ public final class RateLimiter {
         }
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     private static void spendResources(
             int uid, @QuotaBucket.Type int quotaBucket, float availableQuota, long cost) {
         sUserIdToQuotasMap

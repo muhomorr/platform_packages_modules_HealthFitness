@@ -103,7 +103,10 @@ import java.util.Map;
 /** @hide */
 public final class RecordMapper {
     private static final int NUM_ENTRIES = 35;
+
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private static volatile RecordMapper sRecordMapper;
+
     private final Map<Integer, Class<? extends RecordInternal<?>>>
             mRecordIdToInternalRecordClassMap;
     private final Map<Integer, Class<? extends Record>> mRecordIdToExternalRecordClassMap;
@@ -325,6 +328,7 @@ public final class RecordMapper {
         return mRecordIdToExternalRecordClassMap;
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @RecordTypeIdentifier.RecordType
     public int getRecordType(Class<? extends Record> recordClass) {
         return mExternalRecordClassToRecordIdMap.get(recordClass);

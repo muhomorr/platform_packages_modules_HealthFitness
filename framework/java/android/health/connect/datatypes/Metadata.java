@@ -247,6 +247,7 @@ public final class Metadata {
 
         @RecordingMethod private int mRecordingMethod = RECORDING_METHOD_UNKNOWN;
 
+        @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
         public Builder() {}
 
         /** Sets optional client supplied device information associated with the data. */
@@ -306,6 +307,7 @@ public final class Metadata {
          *
          * <p>A null value means that no clientRecordId is set
          */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setClientRecordId(@Nullable String clientRecordId) {
             mClientRecordId = clientRecordId;

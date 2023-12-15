@@ -61,13 +61,13 @@ public final class PriorityMigrationHelper extends DatabaseHelper {
 
     private static final Object sPriorityMigrationHelperLock = new Object();
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private static volatile PriorityMigrationHelper sPriorityMigrationHelper;
 
     private final Object mPriorityMigrationHelperInstanceLock = new Object();
     private Map<Integer, List<Long>> mPreMigrationPriorityCache;
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private PriorityMigrationHelper() {}
 
     /**
@@ -120,7 +120,7 @@ public final class PriorityMigrationHelper extends DatabaseHelper {
     }
 
     /** Delete pre-migration priority data when migration is finished. */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public void clearData(@NonNull TransactionManager transactionManager) {
         synchronized (mPriorityMigrationHelperInstanceLock) {
             transactionManager.delete(new DeleteTableRequest(PRE_MIGRATION_TABLE_NAME));

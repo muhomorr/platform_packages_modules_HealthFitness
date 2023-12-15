@@ -44,7 +44,7 @@ public class SessionDurationAggregationData extends AggregationRecordData {
     List<Long> mExcludeStarts;
     List<Long> mExcludeEnds;
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     public SessionDurationAggregationData(
             String excludeIntervalStartTimeColumn, String excludeIntervalEndTimeColumn) {
         mExcludeIntervalStartTimeColumn = excludeIntervalStartTimeColumn;

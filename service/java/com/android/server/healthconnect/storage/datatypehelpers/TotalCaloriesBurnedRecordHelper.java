@@ -59,7 +59,7 @@ public final class TotalCaloriesBurnedRecordHelper
         super(RecordTypeIdentifier.RECORD_TYPE_TOTAL_CALORIES_BURNED);
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public AggregateResult<?> getAggregateResult(
             Cursor results, AggregationType<?> aggregationType, double aggregation) {
@@ -79,7 +79,7 @@ public final class TotalCaloriesBurnedRecordHelper
         return TOTAL_CALORIES_BURNED_RECORD_TABLE_NAME;
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     AggregateParams getAggregateParams(AggregationType<?> aggregateRequest) {
         switch (aggregateRequest.getAggregationTypeIdentifier()) {

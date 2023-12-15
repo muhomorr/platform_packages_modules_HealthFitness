@@ -71,7 +71,7 @@ import java.util.Map;
  * @hide
  */
 public final class RecordHelperProvider {
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private static volatile RecordHelperProvider sRecordHelperProvider;
 
     private final Map<Integer, RecordHelper<?>> mRecordIDToHelperMap;

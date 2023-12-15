@@ -40,6 +40,7 @@ public final class TimeRangeFilterHelper {
      * @return start time epoch milliseconds for Instant time filter and epoch milliseconds using
      *     UTC zoneOffset for LocalTime filter
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public static long getFilterStartTimeMillis(@NonNull TimeRangeFilter timeRangeFilter) {
         if (isLocalTimeFilter(timeRangeFilter)) {
             return getMillisOfLocalTime(((LocalTimeRangeFilter) timeRangeFilter).getStartTime());
@@ -56,6 +57,7 @@ public final class TimeRangeFilterHelper {
      * @return end time epoch milliseconds for Instant time filter and epoch milliseconds using UTC
      *     zoneOffset for LocalTime filter
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public static long getFilterEndTimeMillis(@NonNull TimeRangeFilter timeRangeFilter) {
         if (isLocalTimeFilter(timeRangeFilter)) {
             return getMillisOfLocalTime(((LocalTimeRangeFilter) timeRangeFilter).getEndTime());

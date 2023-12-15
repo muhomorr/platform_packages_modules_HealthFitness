@@ -70,5 +70,15 @@ java_sdk_library {
     impl_library_visibility: [
         "//packages/modules/HealthFitness:__subpackages__"
     ],
-    static_libs: ["healthfitness-statsd"]
+    static_libs: ["healthfitness-statsd"],
+    errorprone: {
+        extra_check_modules: [
+           "//external/nullaway:nullaway_plugin"
+        ],
+        javacflags: [
+            "-XepExcludedPaths:.*/out/soong/.*",
+            "-Xep:NullAway:ERROR",
+            "-XepOpt:NullAway:AnnotatedPackages=android.health.connect",
+        ],
+    },
 }

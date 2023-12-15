@@ -37,6 +37,7 @@ import java.util.Set;
 @Identifier(recordIdentifier = RecordTypeIdentifier.RECORD_TYPE_SPEED)
 public class SpeedRecordInternal
         extends SeriesRecordInternal<SpeedRecord, SpeedRecord.SpeedRecordSample> {
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     private Set<SpeedRecordSample> mSpeedRecordSamples;
 
     @Override

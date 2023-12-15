@@ -62,6 +62,7 @@ public final class SleepSessionRecord extends IntervalRecord {
     private final List<Stage> mStages;
     private final CharSequence mNotes;
     private final CharSequence mTitle;
+
     /**
      * Builds {@link SleepSessionRecord} instance
      *
@@ -75,7 +76,7 @@ public final class SleepSessionRecord extends IntervalRecord {
      * @param title Title of the session. Optional field.
      * @param skipValidation Boolean flag to skip validation of record values.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "NullAway"})
     private SleepSessionRecord(
             @NonNull Metadata metadata,
             @NonNull Instant startTime,
@@ -114,6 +115,7 @@ public final class SleepSessionRecord extends IntervalRecord {
         return mStages;
     }
 
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -292,6 +294,7 @@ public final class SleepSessionRecord extends IntervalRecord {
          * @param startTime Start time of this sleep session
          * @param endTime End time of this sleep session
          */
+        @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
         public Builder(
                 @NonNull Metadata metadata, @NonNull Instant startTime, @NonNull Instant endTime) {
             Objects.requireNonNull(metadata);
@@ -341,6 +344,7 @@ public final class SleepSessionRecord extends IntervalRecord {
          *
          * @param notes Additional notes for the session. Optional field.
          */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setNotes(@Nullable CharSequence notes) {
             mNotes = notes;
@@ -352,6 +356,7 @@ public final class SleepSessionRecord extends IntervalRecord {
          *
          * @param title Title of the session. Optional field.
          */
+        @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
         @NonNull
         public Builder setTitle(@Nullable CharSequence title) {
             mTitle = title;

@@ -190,7 +190,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
      *
      * @return {@link AggregateResult} for {@link AggregationType}
      */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public AggregateResult<?> getAggregateResult(
             Cursor cursor, AggregationType<?> aggregationType) {
         return null;
@@ -202,7 +202,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
      *
      * @return {@link AggregateResult} for {@link AggregationType}
      */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public AggregateResult<?> getAggregateResult(
             Cursor results, AggregationType<?> aggregationType, double total) {
         return null;
@@ -211,7 +211,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
     /**
      * Used to calculate and get aggregate results for data types that support derived aggregates
      */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public double[] deriveAggregate(Cursor cursor, AggregateTableRequest request) {
         return null;
     }
@@ -236,7 +236,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
     }
 
     /** Gets {@link UpsertTableRequest} from {@code recordInternal}. */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public UpsertTableRequest getUpsertTableRequest(RecordInternal<?> recordInternal) {
         return getUpsertTableRequest(recordInternal, null);
     }
@@ -537,7 +537,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
     @SuppressWarnings("unchecked") // uncheck cast to T
     private T getRecord(Cursor cursor, @Nullable Map<Long, String> packageNamesByAppIds) {
         try {
-            @SuppressWarnings("NullAway")
+            @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
             T record =
                     (T)
                             RecordMapper.getInstance()
@@ -612,12 +612,12 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
 
     public abstract String getLocalStartTimeColumnName();
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public String getLocalEndTimeColumnName() {
         return null;
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     public String getEndTimeColumnName() {
         return null;
     }
@@ -639,7 +639,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
     abstract String getMainTableName();
 
     /** Returns the information required to perform aggregate operation. */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     AggregateParams getAggregateParams(AggregationType<?> aggregateRequest) {
         return null;
     }
@@ -672,7 +672,7 @@ public abstract class RecordHelper<T extends RecordInternal<?>> {
         return Collections.emptyList();
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     SqlJoin getJoinForReadRequest() {
         return null;
     }

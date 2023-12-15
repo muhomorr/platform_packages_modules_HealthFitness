@@ -96,12 +96,14 @@ public abstract class IntervalRecord extends Record {
     public ZoneOffset getEndZoneOffset() {
         return mEndZoneOffset;
     }
+
     /**
      * Indicates whether some other object is "equal to" this one.
      *
      * @param object the reference object with which to compare.
      * @return {@code true} if this object is the same as the obj
      */
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     @Override
     public boolean equals(@Nullable Object object) {
         if (super.equals(object)) {

@@ -104,7 +104,7 @@ public final class MergeDataHelper {
 
     private final boolean mUseLocalTime;
 
-    @SuppressWarnings("NullAway.Init")
+    @SuppressWarnings("NullAway.Init") // TODO(b/317029272): fix this suppression
     public MergeDataHelper(
             @NonNull Cursor cursor,
             @NonNull List<Long> priorityList,
@@ -250,7 +250,7 @@ public final class MergeDataHelper {
         return emptyIntervals;
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     private TreeSet<RecordData> eliminateEarliestRecordOverlaps(TreeSet<RecordData> bufferWindow) {
         RecordData firstBufferData = bufferWindow.pollFirst();
         if (firstBufferData == null) {
@@ -321,7 +321,7 @@ public final class MergeDataHelper {
         }
     }
 
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     private RecordData getRecordData(Cursor cursor) {
         if (cursor != null) {
             double factor = 1;
@@ -364,7 +364,7 @@ public final class MergeDataHelper {
      * the data column value based on a multiplying factor calculated for the duration of
      * non-overlapping time interval. This data will be added to form a new buffer window.
      */
-    @SuppressWarnings("NullAway")
+    @SuppressWarnings("NullAway") // TODO(b/317029272): fix this suppression
     private RecordData trimRecordData(RecordData data, Instant startTime, Instant endTime) {
         if (startTime.isAfter(data.getEndTime())) {
             // throw new IllegalArgumentException("startTime must be before data.endTime to trim.");
