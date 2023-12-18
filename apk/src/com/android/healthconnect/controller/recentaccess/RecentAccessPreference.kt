@@ -95,6 +95,8 @@ constructor(
 
         accessTime = holder.findViewById(R.id.time) as TextView
         accessTime.text = formattedTime
+        accessTime.contentDescription =
+            context.getString(R.string.recent_access_time_content_descritption, formattedTime)
     }
 
     override fun isSameItem(preference: Preference): Boolean {
