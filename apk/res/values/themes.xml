@@ -136,6 +136,10 @@
         <item name="listItemMinHeight">@dimen/list_item_min_height</item>
         <item name="recentAccessTimelineDividerHeight">@dimen/timeline_divider_height</item>
         <!-- END REGION -->
+
+        <!-- Popup Menu -->
+        <item name="android:itemBackground">@color/settingslib_dialog_background</item>
+        <!-- END REGION -->
     </style>
 
     <style name="Theme.HealthConnect" parent="Base.Theme.HealthConnect" />
