@@ -75,8 +75,6 @@ constructor(
     val dataSourcesInfo: LiveData<DataSourcesInfo>
         get() = _dataSourcesInfo
 
-    var isEditMode = false
-
     init {
         _dataSourcesAndAggregationsInfo.addSource(_currentPriorityList) { priorityListState ->
             if (!priorityListState.shouldObserve) {

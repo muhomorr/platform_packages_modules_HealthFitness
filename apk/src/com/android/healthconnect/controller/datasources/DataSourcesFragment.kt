@@ -65,6 +65,7 @@ class DataSourcesFragment :
         private const val NON_EMPTY_FOOTER_PREFERENCE_KEY = "data_sources_footer"
         private const val EMPTY_STATE_HEADER_PREFERENCE_KEY = "empty_state_header"
         private const val EMPTY_STATE_FOOTER_PREFERENCE_KEY = "empty_state_footer"
+        private const val IS_EDIT_MODE = "is_edit_mode"
 
         private val dataSourcesCategories =
             arrayListOf(HealthDataCategory.ACTIVITY, HealthDataCategory.SLEEP)
@@ -76,6 +77,7 @@ class DataSourcesFragment :
 
     @Inject lateinit var logger: HealthConnectLogger
     @Inject lateinit var appUtils: AppUtils
+    private var isEditMode = false
 
     private val dataSourcesViewModel: DataSourcesViewModel by activityViewModels()
     private lateinit var spinnerPreference: SettingsSpinnerPreference
@@ -133,8 +135,19 @@ class DataSourcesFragment :
         setupSpinnerPreference()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(IS_EDIT_MODE, isEditMode)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        savedInstanceState?.let { bundle ->
+            val savedIsEditMode = bundle.getBoolean(IS_EDIT_MODE, false)
+            isEditMode = savedIsEditMode
+        }
+
         setLoading(true)
         val currentStringSelection = spinnerPreference.selectedItem
         currentCategorySelection =
@@ -163,7 +176,7 @@ class DataSourcesFragment :
                 if (priorityList.isEmpty() && potentialAppSources.isEmpty()) {
                     addEmptyState()
                 } else {
-                    updateMenu(priorityList.size > 1 && !dataSourcesViewModel.isEditMode)
+                    updateMenu(priorityList.size > 1 && !isEditMode)
                     updateAppSourcesSection(priorityList, potentialAppSources)
                     updateDataTotalsSection(cardInfos)
                 }
@@ -200,7 +213,7 @@ class DataSourcesFragment :
     }
 
     private fun editPriorityList() {
-        dataSourcesViewModel.isEditMode = true
+        isEditMode = true
         updateMenu(shouldShowEditButton = false)
         appSourcesPreferenceGroup?.removePreferenceRecursively(ADD_AN_APP_PREFERENCE_KEY)
         val appSourcesPreference =
@@ -214,7 +227,7 @@ class DataSourcesFragment :
             ?.toggleEditMode(false)
         updateMenu(dataSourcesViewModel.getEditedPriorityList().size > 1)
         updateAddApp(dataSourcesViewModel.getEditedPotentialAppSources().isNotEmpty())
-        dataSourcesViewModel.isEditMode = false
+        isEditMode = false
     }
 
     /** Updates the priority list preference. */
@@ -236,10 +249,10 @@ class DataSourcesFragment :
                     this)
                 .also {
                     it.key = APP_SOURCES_PREFERENCE_KEY
-                    it.setEditMode(dataSourcesViewModel.isEditMode)
+                    it.setEditMode(isEditMode)
                 })
 
-        updateAddApp(potentialAppSources.isNotEmpty() && !dataSourcesViewModel.isEditMode)
+        updateAddApp(potentialAppSources.isNotEmpty() && !isEditMode)
         nonEmptyFooterPreference?.isVisible = true
     }
 
