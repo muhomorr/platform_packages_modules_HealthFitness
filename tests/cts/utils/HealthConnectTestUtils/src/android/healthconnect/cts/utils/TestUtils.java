@@ -162,11 +162,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -265,6 +268,18 @@ public final class TestUtils {
         }
 
         return recordTypeAndRecordIdsList;
+    }
+
+    /**
+     * Returns all records from the `records` list in their original order, but distinct by UUID.
+     */
+    public static <T extends Record> List<T> distinctByUuid(List<T> records) {
+        return records.stream().filter(distinctByUuid()).toList();
+    }
+
+    private static Predicate<? super Record> distinctByUuid() {
+        Set<String> seen = ConcurrentHashMap.newKeySet();
+        return record -> seen.add(record.getMetadata().getId());
     }
 
     public static void updateRecords(List<Record> records) throws InterruptedException {
@@ -941,7 +956,17 @@ public final class TestUtils {
                 .build();
     }
 
+    /** Creates and returns a {@link StepsRecord} with default arguments. */
     public static StepsRecord getCompleteStepsRecord() {
+        return getCompleteStepsRecord(
+                Instant.now(),
+                Instant.now().plusMillis(1000),
+                /* clientRecordId= */ "SR" + Math.random());
+    }
+
+    /** Creates and returns a {@link StepsRecord} with the specified arguments. */
+    public static StepsRecord getCompleteStepsRecord(
+            Instant startTime, Instant endTime, String clientRecordId) {
         Device device =
                 new Device.Builder().setManufacturer("google").setModel("Pixel").setType(1).build();
         DataOrigin dataOrigin =
@@ -949,13 +974,11 @@ public final class TestUtils {
 
         Metadata.Builder testMetadataBuilder = new Metadata.Builder();
         testMetadataBuilder.setDevice(device).setDataOrigin(dataOrigin);
-        testMetadataBuilder.setClientRecordId("SR" + Math.random());
+        testMetadataBuilder.setClientRecordId(clientRecordId);
         testMetadataBuilder.setRecordingMethod(RECORDING_METHOD_ACTIVELY_RECORDED);
         Metadata testMetaData = testMetadataBuilder.build();
         assertThat(testMetaData.getRecordingMethod()).isEqualTo(RECORDING_METHOD_ACTIVELY_RECORDED);
-        return new StepsRecord.Builder(
-                        testMetaData, Instant.now(), Instant.now().plusMillis(1000), 10)
-                .build();
+        return new StepsRecord.Builder(testMetaData, startTime, endTime, 10).build();
     }
 
     public static StepsRecord getStepsRecord_update(

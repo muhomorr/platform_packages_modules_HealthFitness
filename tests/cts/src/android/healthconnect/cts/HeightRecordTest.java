@@ -19,6 +19,8 @@ package android.healthconnect.cts;
 import static android.health.connect.datatypes.HeightRecord.HEIGHT_AVG;
 import static android.health.connect.datatypes.HeightRecord.HEIGHT_MAX;
 import static android.health.connect.datatypes.HeightRecord.HEIGHT_MIN;
+import static android.healthconnect.cts.utils.TestUtils.distinctByUuid;
+import static android.healthconnect.cts.utils.TestUtils.insertRecords;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -529,6 +531,26 @@ public class HeightRecordTest {
                 .build();
     }
 
+    @Test
+    public void insertRecords_withDuplicatedClientRecordId_readNoDuplicates() throws Exception {
+        int distinctRecordCount = 10;
+        List<HeightRecord> records = new ArrayList<>();
+        Instant now = Instant.now();
+        for (int i = 0; i < distinctRecordCount; i++) {
+            HeightRecord record =
+                    getCompleteHeightRecord(
+                            now.minusMillis(i), /* clientRecordId= */ "client_id_" + i);
+
+            records.add(record);
+            records.add(record); // Add each record twice
+        }
+
+        List<Record> distinctRecords = distinctByUuid(insertRecords(records));
+        assertThat(distinctRecords.size()).isEqualTo(distinctRecordCount);
+
+        readHeightRecordUsingIds(distinctRecords);
+    }
+
     HeightRecord getHeightRecord_update(Record record, String id, String clientRecordId) {
         Metadata metadata = record.getMetadata();
         Metadata metadataWithId =
@@ -568,6 +590,10 @@ public class HeightRecordTest {
     }
 
     private static HeightRecord getCompleteHeightRecord() {
+        return getCompleteHeightRecord(Instant.now(), /* clientRecordId= */ "HR" + Math.random());
+    }
+
+    private static HeightRecord getCompleteHeightRecord(Instant time, String clientRecordId) {
         Device device =
                 new Device.Builder()
                         .setManufacturer("google")
@@ -578,11 +604,10 @@ public class HeightRecordTest {
                 new DataOrigin.Builder().setPackageName("android.healthconnect.cts").build();
         Metadata.Builder testMetadataBuilder = new Metadata.Builder();
         testMetadataBuilder.setDevice(device).setDataOrigin(dataOrigin);
-        testMetadataBuilder.setClientRecordId("HR" + Math.random());
+        testMetadataBuilder.setClientRecordId(clientRecordId);
         testMetadataBuilder.setRecordingMethod(Metadata.RECORDING_METHOD_ACTIVELY_RECORDED);
 
-        return new HeightRecord.Builder(
-                        testMetadataBuilder.build(), Instant.now(), Length.fromMeters(1.0))
+        return new HeightRecord.Builder(testMetadataBuilder.build(), time, Length.fromMeters(1.0))
                 .setZoneOffset(ZoneOffset.systemDefault().getRules().getOffset(Instant.now()))
                 .build();
     }

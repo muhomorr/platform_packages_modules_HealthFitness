@@ -18,6 +18,7 @@ package android.healthconnect.cts;
 
 import static android.health.connect.HealthConnectException.ERROR_INVALID_ARGUMENT;
 import static android.health.connect.datatypes.StepsRecord.STEPS_COUNT_TOTAL;
+import static android.healthconnect.cts.utils.TestUtils.distinctByUuid;
 import static android.healthconnect.cts.utils.TestUtils.readRecordsWithPagination;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -136,7 +137,7 @@ public class StepsRecordTest {
                 Arrays.asList(
                         TestUtils.getCompleteStepsRecord(), TestUtils.getCompleteStepsRecord());
         List<Record> insertedRecords = TestUtils.insertRecords(recordList);
-        readStepsRecordUsingIds(insertedRecords);
+        assertStepsRecordUsingIds(insertedRecords);
     }
 
     @Test
@@ -986,7 +987,7 @@ public class StepsRecordTest {
                                 TestUtils.getCompleteStepsRecord()));
 
         // read inserted records and verify that the data is same as inserted.
-        readStepsRecordUsingIds(insertedRecords);
+        assertStepsRecordUsingIds(insertedRecords);
 
         // Generate a new set of records that will be used to perform the update operation.
         List<Record> updateRecords =
@@ -1006,7 +1007,7 @@ public class StepsRecordTest {
         TestUtils.updateRecords(updateRecords);
 
         // assert the inserted data has been modified by reading the data.
-        readStepsRecordUsingIds(updateRecords);
+        assertStepsRecordUsingIds(updateRecords);
     }
 
     @Test
@@ -1019,7 +1020,7 @@ public class StepsRecordTest {
                                 TestUtils.getCompleteStepsRecord()));
 
         // read inserted records and verify that the data is same as inserted.
-        readStepsRecordUsingIds(insertedRecords);
+        assertStepsRecordUsingIds(insertedRecords);
 
         // Generate a second set of records that will be used to perform the update operation.
         List<Record> updateRecords =
@@ -1050,7 +1051,7 @@ public class StepsRecordTest {
         }
 
         // assert the inserted data has not been modified by reading the data.
-        readStepsRecordUsingIds(insertedRecords);
+        assertStepsRecordUsingIds(insertedRecords);
     }
 
     @Test
@@ -1063,7 +1064,7 @@ public class StepsRecordTest {
                                 TestUtils.getCompleteStepsRecord()));
 
         // read inserted records and verify that the data is same as inserted.
-        readStepsRecordUsingIds(insertedRecords);
+        assertStepsRecordUsingIds(insertedRecords);
 
         // Generate a second set of records that will be used to perform the update operation.
         List<Record> updateRecords =
@@ -1091,7 +1092,7 @@ public class StepsRecordTest {
         }
 
         // assert the inserted data has not been modified by reading the data.
-        readStepsRecordUsingIds(insertedRecords);
+        assertStepsRecordUsingIds(insertedRecords);
     }
 
     @Test
@@ -1490,6 +1491,31 @@ public class StepsRecordTest {
         testAggregateDurationWithLocalTimeForZoneOffset(ZoneOffset.MAX);
     }
 
+    @Test
+    public void insertRecords_withDuplicatedClientRecordId_readNoDuplicates() throws Exception {
+        int distinctRecordCount = 10;
+        List<StepsRecord> records = new ArrayList<>();
+        Instant now = Instant.now();
+        for (int i = 0; i < distinctRecordCount; i++) {
+            StepsRecord record =
+                    TestUtils.getCompleteStepsRecord(
+                            /* startTime= */ now.minusMillis(i + 1),
+                            /* endTime= */ now.minusMillis(i),
+                            /* clientRecordId= */ "client_id_" + i);
+
+            records.add(record);
+            records.add(record); // Add each record twice
+        }
+
+        List<Record> insertedRecords = TestUtils.insertRecords(records);
+        assertThat(insertedRecords.size()).isEqualTo(records.size());
+
+        List<Record> distinctRecords = distinctByUuid(insertedRecords);
+        assertThat(distinctRecords.size()).isEqualTo(distinctRecordCount);
+
+        assertStepsRecordUsingIds(distinctRecords);
+    }
+
     private void testAggregateDurationWithLocalTimeForZoneOffset(ZoneOffset offset)
             throws Exception {
         TestUtils.setupAggregation(PACKAGE_NAME, HealthDataCategory.ACTIVITY);
@@ -1564,7 +1590,7 @@ public class StepsRecordTest {
                 .build();
     }
 
-    static void readStepsRecordUsingIds(List<Record> recordList) throws InterruptedException {
+    static void assertStepsRecordUsingIds(List<Record> recordList) throws InterruptedException {
         ReadRecordsRequestUsingIds.Builder<StepsRecord> request =
                 new ReadRecordsRequestUsingIds.Builder<>(StepsRecord.class);
         for (Record record : recordList) {

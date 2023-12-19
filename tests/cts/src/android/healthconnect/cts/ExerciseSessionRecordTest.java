@@ -20,6 +20,7 @@ import static android.healthconnect.cts.utils.TestUtils.SESSION_END_TIME;
 import static android.healthconnect.cts.utils.TestUtils.SESSION_START_TIME;
 import static android.healthconnect.cts.utils.TestUtils.buildExerciseSession;
 import static android.healthconnect.cts.utils.TestUtils.buildLocationTimePoint;
+import static android.healthconnect.cts.utils.TestUtils.distinctByUuid;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -590,6 +591,31 @@ public class ExerciseSessionRecordTest {
         assertThat(response.getDeletedLogs()).isEmpty();
     }
 
+    @Test
+    public void insertRecords_withDuplicatedClientRecordId_readNoDuplicates() throws Exception {
+        int distinctRecordCount = 10;
+        List<ExerciseSessionRecord> records = new ArrayList<>();
+        Instant now = Instant.now();
+        for (int i = 0; i < distinctRecordCount; i++) {
+            ExerciseSessionRecord record =
+                    buildSession(
+                            /* startTime= */ now.minusSeconds(i + 1),
+                            /* endTime= */ now.minusSeconds(i),
+                            /* clientRecordId= */ "client_id_" + i);
+
+            records.add(record);
+            records.add(record); // Add each record twice
+        }
+
+        List<Record> insertedRecords = TestUtils.insertRecords(records);
+        assertThat(insertedRecords.size()).isEqualTo(records.size());
+
+        List<Record> distinctRecords = distinctByUuid(insertedRecords);
+        assertThat(distinctRecords.size()).isEqualTo(distinctRecordCount);
+
+        readAndAssertEquals(distinctRecords);
+    }
+
     private ExerciseSessionRecord buildRecordWithOneSegment(int sessionType, int segmentType) {
         return new ExerciseSessionRecord.Builder(
                         TestUtils.generateMetadata(),
@@ -643,8 +669,14 @@ public class ExerciseSessionRecordTest {
     }
 
     private static ExerciseSessionRecord buildSession(Instant startTime, Instant endTime) {
+        return buildSession(
+                startTime, endTime, /* clientRecordId= */ "ExerciseSessionClient" + Math.random());
+    }
+
+    private static ExerciseSessionRecord buildSession(
+            Instant startTime, Instant endTime, String clientRecordId) {
         return new ExerciseSessionRecord.Builder(
-                        TestUtils.generateMetadata(),
+                        buildMetadata(clientRecordId),
                         startTime,
                         endTime,
                         ExerciseSessionType.EXERCISE_SESSION_TYPE_FOOTBALL_AMERICAN)
@@ -658,18 +690,22 @@ public class ExerciseSessionRecordTest {
 
     private static ExerciseSessionRecord buildSessionMinimal() {
         return new ExerciseSessionRecord.Builder(
-                        new Metadata.Builder()
-                                .setDataOrigin(
-                                        new DataOrigin.Builder()
-                                                .setPackageName("android.healthconnect.cts")
-                                                .build())
-                                .setId(UUID.randomUUID().toString())
-                                .setClientRecordId("ExerciseSessionClient" + Math.random())
-                                .setRecordingMethod(Metadata.RECORDING_METHOD_ACTIVELY_RECORDED)
-                                .build(),
+                        buildMetadata("ExerciseSessionClient" + Math.random()),
                         SESSION_START_TIME,
                         SESSION_END_TIME,
                         ExerciseSessionType.EXERCISE_SESSION_TYPE_FOOTBALL_AMERICAN)
+                .build();
+    }
+
+    private static Metadata buildMetadata(String clientRecordId) {
+        return new Metadata.Builder()
+                .setDataOrigin(
+                        new DataOrigin.Builder()
+                                .setPackageName("android.healthconnect.cts")
+                                .build())
+                .setId(UUID.randomUUID().toString())
+                .setClientRecordId(clientRecordId)
+                .setRecordingMethod(Metadata.RECORDING_METHOD_ACTIVELY_RECORDED)
                 .build();
     }
 }
