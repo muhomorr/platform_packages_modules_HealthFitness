@@ -57,6 +57,7 @@ class DataSourcesFragment :
     Hilt_DataSourcesFragment(), AppSourcesAdapter.OnAppRemovedFromPriorityListListener {
 
     companion object {
+        private const val DATA_TYPE_SPINNER_PREFERENCE_GROUP = "data_type_spinner_group"
         private const val DATA_TOTALS_PREFERENCE_GROUP = "data_totals_group"
         private const val DATA_TOTALS_PREFERENCE_KEY = "data_totals_preference"
         private const val APP_SOURCES_PREFERENCE_GROUP = "app_sources_group"
@@ -84,6 +85,10 @@ class DataSourcesFragment :
     private lateinit var dataSourcesCategoriesStrings: List<String>
     private var currentCategorySelection: @HealthDataCategoryInt Int = HealthDataCategory.ACTIVITY
     @Inject lateinit var timeSource: TimeSource
+
+    private val dataTypeSpinnerPreferenceGroup: PreferenceGroup? by lazy {
+        preferenceScreen.findPreference(DATA_TYPE_SPINNER_PREFERENCE_GROUP)
+    }
 
     private val dataTotalsPreferenceGroup: PreferenceGroup? by lazy {
         preferenceScreen.findPreference(DATA_TOTALS_PREFERENCE_GROUP)
@@ -403,7 +408,8 @@ class DataSourcesFragment :
         spinnerPreference.setSelection(
             dataSourcesCategories.indexOf(dataSourcesViewModel.getCurrentSelection()))
 
-        preferenceScreen.addPreference(spinnerPreference)
+        dataTypeSpinnerPreferenceGroup?.isVisible = true
+        dataTypeSpinnerPreferenceGroup?.addPreference(spinnerPreference)
         logger.logImpression(DataSourcesElement.DATA_TYPE_SPINNER)
     }
 }
