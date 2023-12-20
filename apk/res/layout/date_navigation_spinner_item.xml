@@ -21,7 +21,7 @@
     android:id="@+id/spinner_item_text"
     style="?android:attr/spinnerDropDownItemStyle"
     android:textAppearance="?attr/textAppearanceLabel"
-    android:textColor="?android:attr/textColorPrimary"
+    android:textColor="@color/spinner_text_color"
     android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
