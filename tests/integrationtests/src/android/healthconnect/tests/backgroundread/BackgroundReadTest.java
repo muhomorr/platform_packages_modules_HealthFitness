@@ -88,7 +88,8 @@ public class BackgroundReadTest {
     }
 
     @Test
-    public void testReadRecords_inBackgroundWithoutPermission_cantReadRecordsForOtherApp() {
+    public void testReadRecords_inBackgroundWithoutPermission_cantReadRecordsForOtherApp()
+            throws Exception {
         revokeBackgroundReadPermissionForTestApp();
         insertRecords();
 
@@ -129,7 +130,7 @@ public class BackgroundReadTest {
     }
 
     @Test
-    public void testAggregate_inBackgroundWithoutPermission_securityError() {
+    public void testAggregate_inBackgroundWithoutPermission_securityError() throws Exception {
         revokeBackgroundReadPermissionForTestApp();
 
         sendCommandToTestAppReceiver(mContext, ACTION_AGGREGATE);
@@ -147,7 +148,7 @@ public class BackgroundReadTest {
     }
 
     @Test
-    public void testGetChangeLogs_inBackgroundWithoutPermission_securityError() {
+    public void testGetChangeLogs_inBackgroundWithoutPermission_securityError() throws Exception {
         revokeBackgroundReadPermissionForTestApp();
 
         final Bundle extras = new Bundle();
@@ -158,7 +159,7 @@ public class BackgroundReadTest {
     }
 
     @Test
-    public void testGetChangeLogs_inBackgroundWithPermission_success() {
+    public void testGetChangeLogs_inBackgroundWithPermission_success() throws Exception {
         revokeBackgroundReadPermissionForTestApp();
         sendCommandToTestAppReceiver(mContext, ACTION_GET_CHANGE_LOG_TOKEN);
         final String token = requireNonNull(TestReceiver.getResult()).getString(EXTRA_TOKEN);
@@ -178,11 +179,14 @@ public class BackgroundReadTest {
                                 PKG_TEST_APP, READ_HEALTH_DATA_IN_BACKGROUND, mContext.getUser()));
     }
 
-    private void revokeBackgroundReadPermissionForTestApp() {
+    private void revokeBackgroundReadPermissionForTestApp() throws InterruptedException {
         runWithShellPermissionIdentity(
                 () ->
                         mPackageManager.revokeRuntimePermission(
                                 PKG_TEST_APP, READ_HEALTH_DATA_IN_BACKGROUND, mContext.getUser()));
+
+        // Wait a bit for the process to be killed
+        Thread.sleep(500);
     }
 
     private void assertSecurityError() {
