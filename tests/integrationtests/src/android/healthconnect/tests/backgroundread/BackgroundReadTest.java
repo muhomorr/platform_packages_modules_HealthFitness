@@ -45,7 +45,7 @@ import android.health.connect.datatypes.units.Energy;
 import android.healthconnect.cts.utils.AssumptionCheckerRule;
 import android.healthconnect.cts.utils.TestReceiver;
 import android.healthconnect.cts.utils.TestUtils;
-import android.healthconnect.test.app.BlockingOutcomeReceiver;
+import android.healthconnect.test.app.DefaultOutcomeReceiver;
 import android.os.Bundle;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -120,8 +120,8 @@ public class BackgroundReadTest {
     }
 
     private void insertRecords() {
-        final BlockingOutcomeReceiver<InsertRecordsResponse> outcomeReceiver =
-                new BlockingOutcomeReceiver<>();
+        DefaultOutcomeReceiver<InsertRecordsResponse> outcomeReceiver =
+                new DefaultOutcomeReceiver<>();
 
         mManager.insertRecords(
                 List.of(

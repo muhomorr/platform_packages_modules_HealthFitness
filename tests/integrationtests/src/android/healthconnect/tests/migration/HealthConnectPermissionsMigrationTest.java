@@ -32,13 +32,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.health.connect.HealthConnectManager;
 import android.health.connect.migration.MigrationEntity;
-import android.health.connect.migration.MigrationException;
 import android.health.connect.migration.PermissionMigrationPayload;
 import android.healthconnect.cts.utils.AssumptionCheckerRule;
 import android.healthconnect.cts.utils.TestUtils;
-import android.healthconnect.tests.permissions.PermissionsTestUtils;
-import android.os.OutcomeReceiver;
-import android.util.Log;
+import android.healthconnect.tests.IntegrationTestUtils;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
@@ -52,8 +49,6 @@ import org.junit.runner.RunWith;
 import java.time.Instant;
 import java.time.Period;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
 /** Integration tests for Health Connect permissions migration. */
@@ -117,33 +112,17 @@ public class HealthConnectPermissionsMigrationTest {
         return readGrantTime.get();
     }
 
-    private void migrate(MigrationEntity... entities) throws InterruptedException {
+    private void migrate(MigrationEntity... entities) {
         runWithShellPermissionIdentity(
-                PermissionsTestUtils::startMigration,
+                IntegrationTestUtils::startMigration,
                 Manifest.permission.MIGRATE_HEALTH_CONNECT_DATA);
 
         runWithShellPermissionIdentity(
-                () -> {
-                    CountDownLatch latch = new CountDownLatch(1);
-                    mHealthConnectManager.writeMigrationData(
-                            List.of(entities),
-                            Executors.newSingleThreadExecutor(),
-                            new OutcomeReceiver<>() {
-                                @Override
-                                public void onResult(Void result) {
-                                    latch.countDown();
-                                }
-
-                                @Override
-                                public void onError(MigrationException exception) {
-                                    Log.e(TAG, exception.getMessage());
-                                }
-                            });
-                },
+                () -> IntegrationTestUtils.writeMigrationData(List.of(entities)),
                 Manifest.permission.MIGRATE_HEALTH_CONNECT_DATA);
 
         runWithShellPermissionIdentity(
-                PermissionsTestUtils::finishMigration,
+                IntegrationTestUtils::finishMigration,
                 Manifest.permission.MIGRATE_HEALTH_CONNECT_DATA);
     }
 

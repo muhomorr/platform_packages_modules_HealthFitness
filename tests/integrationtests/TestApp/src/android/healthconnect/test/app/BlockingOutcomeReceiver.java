@@ -16,18 +16,17 @@
 
 package android.healthconnect.test.app;
 
-import android.health.connect.HealthConnectException;
 import android.os.OutcomeReceiver;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public final class BlockingOutcomeReceiver<T>
-        implements OutcomeReceiver<T, HealthConnectException> {
+/** A blocking implementation of {@link OutcomeReceiver} that allows waiting for responses. */
+public class BlockingOutcomeReceiver<T, E extends Throwable> implements OutcomeReceiver<T, E> {
 
     private final CountDownLatch mLatch = new CountDownLatch(1);
     private T mResult;
-    private HealthConnectException mError;
+    private E mError;
 
     @Override
     public void onResult(T result) {
@@ -36,17 +35,28 @@ public final class BlockingOutcomeReceiver<T>
     }
 
     @Override
-    public void onError(HealthConnectException error) {
+    public void onError(E error) {
         mError = error;
         mLatch.countDown();
     }
 
-    public T getResult() throws HealthConnectException {
-        await();
+    /** Waits for a response and returns the result if successful, or throws the error if failed. */
+    public T getResult() throws E {
+        awaitSuccess();
         return mResult;
     }
 
-    public HealthConnectException getError() {
+    /** Waits for a response, throws the error if failed. */
+    public void awaitSuccess() throws E {
+        await();
+
+        if (mError != null) {
+            throw mError;
+        }
+    }
+
+    /** Waits for a response and returns the error if failed, or {@code null} if successful. */
+    public E getError() {
         await();
         return mError;
     }

@@ -110,22 +110,22 @@ public class TestAppReceiver extends BroadcastReceiver {
     }
 
     private static void insertStepsRecords(Context context, Intent intent) {
-        BlockingOutcomeReceiver<InsertRecordsResponse> outcome = new BlockingOutcomeReceiver<>();
+        DefaultOutcomeReceiver<InsertRecordsResponse> outcome = new DefaultOutcomeReceiver<>();
         getHealthConnectManager(context)
                 .insertRecords(createStepsRecords(intent), newSingleThreadExecutor(), outcome);
         sendInsertRecordsResult(context, intent, outcome);
     }
 
     private static void insertWeightRecords(Context context, Intent intent) {
-        BlockingOutcomeReceiver<InsertRecordsResponse> outcome = new BlockingOutcomeReceiver<>();
+        DefaultOutcomeReceiver<InsertRecordsResponse> outcome = new DefaultOutcomeReceiver<>();
         getHealthConnectManager(context)
                 .insertRecords(createWeightRecords(intent), newSingleThreadExecutor(), outcome);
         sendInsertRecordsResult(context, intent, outcome);
     }
 
     private void readRecordsForOtherApp(Context context, Intent intent) {
-        final BlockingOutcomeReceiver<ReadRecordsResponse<ActiveCaloriesBurnedRecord>> outcome =
-                new BlockingOutcomeReceiver<>();
+        DefaultOutcomeReceiver<ReadRecordsResponse<ActiveCaloriesBurnedRecord>> outcome =
+                new DefaultOutcomeReceiver<>();
 
         getHealthConnectManager(context)
                 .readRecords(
@@ -143,8 +143,8 @@ public class TestAppReceiver extends BroadcastReceiver {
     }
 
     private void aggregate(Context context, Intent intent) {
-        final BlockingOutcomeReceiver<AggregateRecordsResponse<Energy>> outcome =
-                new BlockingOutcomeReceiver<>();
+        DefaultOutcomeReceiver<AggregateRecordsResponse<Energy>> outcome =
+                new DefaultOutcomeReceiver<>();
 
         getHealthConnectManager(context)
                 .aggregate(
@@ -162,8 +162,7 @@ public class TestAppReceiver extends BroadcastReceiver {
     }
 
     private void getChangeLogToken(Context context, Intent intent) {
-        final BlockingOutcomeReceiver<ChangeLogTokenResponse> outcome =
-                new BlockingOutcomeReceiver<>();
+        DefaultOutcomeReceiver<ChangeLogTokenResponse> outcome = new DefaultOutcomeReceiver<>();
 
         getHealthConnectManager(context)
                 .getChangeLogToken(
@@ -185,7 +184,7 @@ public class TestAppReceiver extends BroadcastReceiver {
 
     private void getChangeLogs(Context context, Intent intent) {
         String token = intent.getStringExtra(EXTRA_TOKEN);
-        final BlockingOutcomeReceiver<ChangeLogsResponse> outcome = new BlockingOutcomeReceiver<>();
+        DefaultOutcomeReceiver<ChangeLogsResponse> outcome = new DefaultOutcomeReceiver<>();
 
         getHealthConnectManager(context)
                 .getChangeLogs(
@@ -203,7 +202,7 @@ public class TestAppReceiver extends BroadcastReceiver {
     private static void sendReadRecordsResult(
             Context context,
             Intent intent,
-            BlockingOutcomeReceiver<? extends ReadRecordsResponse<?>> outcome) {
+            DefaultOutcomeReceiver<? extends ReadRecordsResponse<?>> outcome) {
         final HealthConnectException error = outcome.getError();
         if (error != null) {
             sendError(context, intent, error);
@@ -218,7 +217,7 @@ public class TestAppReceiver extends BroadcastReceiver {
     private static void sendInsertRecordsResult(
             Context context,
             Intent intent,
-            BlockingOutcomeReceiver<? extends InsertRecordsResponse> outcome) {
+            DefaultOutcomeReceiver<? extends InsertRecordsResponse> outcome) {
         final HealthConnectException error = outcome.getError();
         if (error != null) {
             sendError(context, intent, error);
@@ -239,7 +238,7 @@ public class TestAppReceiver extends BroadcastReceiver {
     }
 
     private static void sendResult(
-            Context context, Intent intent, BlockingOutcomeReceiver<?> outcomeReceiver) {
+            Context context, Intent intent, DefaultOutcomeReceiver<?> outcomeReceiver) {
         final HealthConnectException error = outcomeReceiver.getError();
         if (error != null) {
             sendError(context, intent, error);

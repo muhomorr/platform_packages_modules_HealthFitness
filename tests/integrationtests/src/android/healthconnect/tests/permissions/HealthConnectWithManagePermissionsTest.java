@@ -34,6 +34,7 @@ import android.health.connect.HealthConnectManager;
 import android.health.connect.HealthPermissions;
 import android.healthconnect.cts.utils.AssumptionCheckerRule;
 import android.healthconnect.cts.utils.TestUtils;
+import android.healthconnect.tests.IntegrationTestUtils;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
@@ -443,7 +444,7 @@ public class HealthConnectWithManagePermissionsTest {
     @Test
     public void testPermissionApis_migrationInProgress_apisBlocked() throws Exception {
         runWithShellPermissionIdentity(
-                PermissionsTestUtils::startMigration,
+                IntegrationTestUtils::startMigration,
                 Manifest.permission.MIGRATE_HEALTH_CONNECT_DATA);
 
         // Grant permission
@@ -459,7 +460,7 @@ public class HealthConnectWithManagePermissionsTest {
 
         // Revoke permission
         runWithShellPermissionIdentity(
-                PermissionsTestUtils::startMigration,
+                IntegrationTestUtils::startMigration,
                 Manifest.permission.MIGRATE_HEALTH_CONNECT_DATA);
 
         grantPermissionViaPackageManager(DEFAULT_APP_PACKAGE, DEFAULT_PERM);
@@ -500,7 +501,7 @@ public class HealthConnectWithManagePermissionsTest {
                                 DEFAULT_APP_PACKAGE, List.of(DEFAULT_PERM, DEFAULT_PERM_2)));
 
         runWithShellPermissionIdentity(
-                PermissionsTestUtils::finishMigration,
+                IntegrationTestUtils::finishMigration,
                 Manifest.permission.MIGRATE_HEALTH_CONNECT_DATA);
         assertPermGrantedForApp(DEFAULT_APP_PACKAGE, DEFAULT_PERM);
     }
