@@ -36,6 +36,8 @@ import android.health.connect.datatypes.BodyFatRecord;
 import android.health.connect.datatypes.HeightRecord;
 import android.health.connect.datatypes.Record;
 import android.health.connect.restore.StageRemoteDataException;
+import android.healthconnect.cts.utils.AssumptionCheckerRule;
+import android.healthconnect.cts.utils.TestUtils;
 import android.healthconnect.integrationtests.backuprestore.R;
 import android.os.FileUtils;
 import android.os.OutcomeReceiver;
@@ -49,6 +51,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -69,6 +72,11 @@ public class BackupRestoreApiTest {
     private static final String TAG = "BackupRestoreIntegrationTest";
     private Context mContext;
     private HealthConnectManager mService;
+
+    @Rule
+    public AssumptionCheckerRule mSupportedHardwareRule =
+            new AssumptionCheckerRule(
+                    TestUtils::isHardwareSupported, "Tests should run on supported hardware only.");
 
     @Before
     public void setUp() throws Exception {

@@ -27,8 +27,6 @@ import static com.android.compatibility.common.util.SystemUtil.runWithShellPermi
 
 import static com.google.common.truth.Truth.assertThat;
 
-import static org.junit.Assume.assumeFalse;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -36,6 +34,8 @@ import android.health.connect.HealthConnectManager;
 import android.health.connect.migration.MigrationEntity;
 import android.health.connect.migration.MigrationException;
 import android.health.connect.migration.PermissionMigrationPayload;
+import android.healthconnect.cts.utils.AssumptionCheckerRule;
+import android.healthconnect.cts.utils.TestUtils;
 import android.healthconnect.tests.permissions.PermissionsTestUtils;
 import android.os.OutcomeReceiver;
 import android.util.Log;
@@ -45,6 +45,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -64,9 +65,13 @@ public class HealthConnectPermissionsMigrationTest {
     private Context mContext;
     private HealthConnectManager mHealthConnectManager;
 
+    @Rule
+    public AssumptionCheckerRule mSupportedHardwareRule =
+            new AssumptionCheckerRule(
+                    TestUtils::isHardwareSupported, "Tests should run on supported hardware only.");
+
     @Before
     public void setUp() throws Exception {
-        assumeFalse(isHardwareAutomotive());
         mContext = InstrumentationRegistry.getTargetContext();
         mHealthConnectManager = mContext.getSystemService(HealthConnectManager.class);
         revokeAllHealthPermissions(DEFAULT_APP_PACKAGE, null);

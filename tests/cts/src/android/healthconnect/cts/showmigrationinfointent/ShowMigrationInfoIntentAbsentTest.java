@@ -24,6 +24,7 @@ import android.app.UiAutomation;
 import android.content.Context;
 import android.health.connect.HealthConnectManager;
 import android.health.connect.migration.MigrationException;
+import android.healthconnect.cts.utils.AssumptionCheckerRule;
 import android.healthconnect.cts.utils.TestUtils;
 import android.os.Build;
 import android.os.OutcomeReceiver;
@@ -35,6 +36,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -50,6 +52,11 @@ public class ShowMigrationInfoIntentAbsentTest {
     private Context mContext;
     private HealthConnectManager mManager;
     UiAutomation uiAutomation = InstrumentationRegistry.getInstrumentation().getUiAutomation();
+
+    @Rule
+    public AssumptionCheckerRule mSupportedHardwareRule =
+            new AssumptionCheckerRule(
+                    TestUtils::isHardwareSupported, "Tests should run on supported hardware only.");
 
     @Before
     public void setUp() {

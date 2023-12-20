@@ -43,9 +43,6 @@ import static android.healthconnect.cts.utils.TestUtils.updateDataOriginPriority
 import static android.healthconnect.cts.utils.TestUtils.verifyDeleteRecords;
 import static android.healthconnect.cts.utils.TestUtils.yesterdayAt;
 
-import static com.android.compatibility.common.util.FeatureUtil.AUTOMOTIVE_FEATURE;
-import static com.android.compatibility.common.util.FeatureUtil.hasSystemFeature;
-
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.junit.Assert.assertThrows;
@@ -80,6 +77,7 @@ import android.health.connect.datatypes.Record;
 import android.health.connect.datatypes.StepsRecord;
 import android.health.connect.datatypes.units.Power;
 import android.healthconnect.cts.lib.TestAppProxy;
+import android.healthconnect.cts.utils.AssumptionCheckerRule;
 import android.healthconnect.cts.utils.TestUtils;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -87,8 +85,8 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
-import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -152,9 +150,13 @@ public class HealthConnectDeviceTest {
 
     private Context mContext;
 
+    @Rule
+    public AssumptionCheckerRule mSupportedHardwareRule =
+            new AssumptionCheckerRule(
+                    TestUtils::isHardwareSupported, "Tests should run on supported hardware only.");
+
     @Before
     public void setUp() {
-        Assume.assumeFalse(hasSystemFeature(AUTOMOTIVE_FEATURE));
         mContext = ApplicationProvider.getApplicationContext();
     }
 

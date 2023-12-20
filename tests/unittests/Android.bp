@@ -41,6 +41,7 @@ android_test {
         "truth",
         "services.core",
         "androidx.test.ext.truth",
+        "cts-healthconnect-utils",
     ],
     jni_libs: [
         // Required for ExtendedMockito

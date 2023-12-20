@@ -43,6 +43,7 @@ import android.health.connect.datatypes.ExerciseSessionType;
 import android.health.connect.datatypes.Metadata;
 import android.health.connect.datatypes.Record;
 import android.health.connect.datatypes.units.Length;
+import android.healthconnect.cts.utils.AssumptionCheckerRule;
 import android.healthconnect.cts.utils.TestUtils;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -50,6 +51,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -64,10 +66,10 @@ import java.util.UUID;
 @RunWith(AndroidJUnit4.class)
 public class ExerciseSessionRecordTest {
 
-    /** Constructs a new object. */
-    public ExerciseSessionRecordTest() {
-        super();
-    }
+    @Rule
+    public AssumptionCheckerRule mSupportedHardwareRule =
+            new AssumptionCheckerRule(
+                    TestUtils::isHardwareSupported, "Tests should run on supported hardware only.");
 
     @After
     public void tearDown() throws InterruptedException {

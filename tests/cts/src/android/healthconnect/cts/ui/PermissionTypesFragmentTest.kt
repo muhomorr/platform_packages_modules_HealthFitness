@@ -44,18 +44,23 @@ class PermissionTypesFragmentTest : HealthConnectBaseTest() {
         @JvmStatic
         @BeforeClass
         fun setup() {
+            if (!TestUtils.isHardwareSupported()) {
+                return
+            }
             val now = Instant.now().truncatedTo(ChronoUnit.MILLIS)
             val record =
                 StepsRecord.Builder(TestUtils.getEmptyMetadata(), now.minusSeconds(30), now, 43)
                     .build()
             APP_A_WITH_READ_WRITE_PERMS.insertRecords(record)
-
             APP_B_WITH_READ_WRITE_PERMS.insertRecords(record)
         }
 
         @JvmStatic
         @AfterClass
         fun teardown() {
+            if (!TestUtils.isHardwareSupported()) {
+                return
+            }
             verifyDeleteRecords(
                 StepsRecord::class.java,
                 TimeInstantRangeFilter.Builder()

@@ -51,6 +51,9 @@ public class DailyDeleteAccessLogTest extends DeviceTestCase implements IBuildRe
 
     @Override
     protected void tearDown() throws Exception {
+        if (!isHardwareSupported(getDevice())) {
+            return;
+        }
         clearData(getDevice());
         resetTime(getDevice(), mTestStartTime, mDeviceStartTime);
         super.tearDown();

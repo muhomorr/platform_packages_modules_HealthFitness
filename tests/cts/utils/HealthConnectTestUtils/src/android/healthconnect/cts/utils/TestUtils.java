@@ -1509,6 +1509,19 @@ public final class TestUtils {
         }
     }
 
+    public static boolean isHardwareSupported() {
+        return isHardwareSupported(ApplicationProvider.getApplicationContext());
+    }
+
+    /** returns true if the hardware is supported by HealthConnect. */
+    public static boolean isHardwareSupported(Context context) {
+        PackageManager pm = context.getPackageManager();
+        return (!pm.hasSystemFeature(PackageManager.FEATURE_EMBEDDED)
+                && !pm.hasSystemFeature(PackageManager.FEATURE_WATCH)
+                && !pm.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+                && !pm.hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE));
+    }
+
     /** Gets the priority list after getting the MANAGE_HEALTH_DATA permission. */
     public static FetchDataOriginsPriorityOrderResponse getPriorityWithManageHealthDataPermission(
             int permissionCategory) throws InterruptedException {

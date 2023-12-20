@@ -49,6 +49,7 @@ import android.health.connect.aidl.IMigrationCallback;
 import android.health.connect.migration.MigrationEntityParcel;
 import android.health.connect.migration.MigrationException;
 import android.health.connect.restore.StageRemoteDataRequest;
+import android.healthconnect.cts.utils.AssumptionCheckerRule;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -172,6 +173,12 @@ public class HealthConnectServiceImplTest {
     private HealthConnectServiceImpl mHealthConnectService;
     private UserHandle mUserHandle;
     private File mMockDataDirectory;
+
+    @Rule
+    public AssumptionCheckerRule mSupportedHardwareRule =
+            new AssumptionCheckerRule(
+                    android.healthconnect.cts.utils.TestUtils::isHardwareSupported,
+                    "Tests should run on supported hardware only.");
 
     @Before
     public void setUp() throws Exception {
