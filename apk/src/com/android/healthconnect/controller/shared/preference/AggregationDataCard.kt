@@ -99,7 +99,11 @@ constructor(
                 ConstraintSet.BOTTOM,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.BOTTOM)
+            constraintSet.connect(
+                R.id.card_title_number, ConstraintSet.END, R.id.card_date, ConstraintSet.START)
 
+            constraintSet.connect(
+                R.id.card_date, ConstraintSet.START, R.id.card_title_number, ConstraintSet.END)
             constraintSet.connect(
                 R.id.card_date, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
             constraintSet.connect(

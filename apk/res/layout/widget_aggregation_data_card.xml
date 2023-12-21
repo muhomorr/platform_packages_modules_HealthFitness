@@ -39,19 +39,17 @@
 
         <TextView
             android:id="@+id/card_title_number"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_xsmall"
-            android:maxLines="1"
-            android:ellipsize="end"
+            android:singleLine="true"
             android:textAppearance="?attr/textAppearanceItem"/>
 
         <TextView
             android:id="@+id/card_date"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
+            android:singleLine="true"
             android:textAppearance="?attr/textAppearanceSummary"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
