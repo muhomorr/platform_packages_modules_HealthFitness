@@ -169,13 +169,18 @@ class RecentAccessFragment : Hilt_RecentAccessFragment() {
                         if (!recentApp.isInactive) {
                             // Do not set click listeners for inactive apps
                             it.setOnPreferenceClickListener {
-                                findNavController()
-                                    .navigate(
-                                        R.id.action_recentAccessFragment_to_connectedAppFragment,
-                                        bundleOf(
-                                            Intent.EXTRA_PACKAGE_NAME to
-                                                recentApp.metadata.packageName,
-                                            Constants.EXTRA_APP_NAME to recentApp.metadata.appName))
+                                if (findNavController().currentDestination?.id ==
+                                    R.id.recentAccessFragment) {
+                                    findNavController()
+                                        .navigate(
+                                            R.id
+                                                .action_recentAccessFragment_to_connectedAppFragment,
+                                            bundleOf(
+                                                Intent.EXTRA_PACKAGE_NAME to
+                                                    recentApp.metadata.packageName,
+                                                Constants.EXTRA_APP_NAME to
+                                                    recentApp.metadata.appName))
+                                }
                                 true
                             }
                         }
