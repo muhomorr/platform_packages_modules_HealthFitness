@@ -31,7 +31,9 @@
         android:padding="@dimen/spacing_normal"
         android:src="@drawable/ic_left_arrow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/selected_date"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton
         android:id="@+id/navigation_next_day"
@@ -42,32 +44,26 @@
         android:contentDescription="@string/navigation_next_day"
         android:padding="@dimen/spacing_normal"
         android:src="@drawable/ic_right_arrow"
+        app:layout_constraintStart_toEndOf="@id/selected_date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/navigation_next_day"
-        app:layout_constraintStart_toStartOf="@+id/navigation_previous_day"
         app:layout_constraintTop_toTopOf="parent"
-        android:layoutDirection="locale"
-        android:orientation="horizontal">
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <TextView
-            android:id="@+id/selected_date"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            style="?attr/spinnerStyle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/navigation_selected_day"
-            tools:text="Jan 16, 2023" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/selected_date"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:padding="@dimen/spacing_xsmall"
+        style="?attr/spinnerStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/navigation_next_day"
+        app:layout_constraintStart_toEndOf="@id/navigation_previous_day"
+        app:layout_constrainedWidth = "true"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/navigation_selected_day"
+        tools:text="Jan 16, 2023" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
