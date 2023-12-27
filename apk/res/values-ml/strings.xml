@@ -45,6 +45,7 @@
     <string name="write_data_access_label" msgid="7955988316773000250">"റൈറ്റ് ചെയ്യുക: %s"</string>
     <string name="data_type_separator" msgid="1299848322898210658">", "</string>
     <string name="manage_permissions" msgid="8394221950712608160">"അനുമതികൾ മാനേജ് ചെയ്യുക"</string>
+    <string name="recent_access_time_content_descritption" msgid="1709675393952226273">"സമയം: %s"</string>
     <string name="activity_category_uppercase" msgid="136628843341377088">"ആക്റ്റിവിറ്റി"</string>
     <string name="activity_category_lowercase" msgid="3007220578865400601">"ആക്റ്റിവിറ്റി"</string>
     <string name="body_measurements_category_uppercase" msgid="422923782603313038">"ശാരീരിക അളവുകൾ"</string>

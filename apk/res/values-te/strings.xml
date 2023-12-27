@@ -45,6 +45,7 @@
     <string name="write_data_access_label" msgid="7955988316773000250">"రాసిన విషయాలు: %s"</string>
     <string name="data_type_separator" msgid="1299848322898210658">", "</string>
     <string name="manage_permissions" msgid="8394221950712608160">"అనుమతులను మేనేజ్ చేయండి"</string>
+    <string name="recent_access_time_content_descritption" msgid="1709675393952226273">"సమయం: %s"</string>
     <string name="activity_category_uppercase" msgid="136628843341377088">"యాక్టివిటీ"</string>
     <string name="activity_category_lowercase" msgid="3007220578865400601">"యాక్టివిటీ"</string>
     <string name="body_measurements_category_uppercase" msgid="422923782603313038">"శారీరక సమాచారం"</string>

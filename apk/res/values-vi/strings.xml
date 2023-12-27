@@ -45,6 +45,7 @@
     <string name="write_data_access_label" msgid="7955988316773000250">"Ghi: %s"</string>
     <string name="data_type_separator" msgid="1299848322898210658">", "</string>
     <string name="manage_permissions" msgid="8394221950712608160">"Quản lý quyền"</string>
+    <string name="recent_access_time_content_descritption" msgid="1709675393952226273">"Thời gian: %s"</string>
     <string name="activity_category_uppercase" msgid="136628843341377088">"Hoạt động"</string>
     <string name="activity_category_lowercase" msgid="3007220578865400601">"hoạt động"</string>
     <string name="body_measurements_category_uppercase" msgid="422923782603313038">"Số đo cơ thể"</string>

@@ -45,6 +45,7 @@
     <string name="write_data_access_label" msgid="7955988316773000250">"書き込み: %s"</string>
     <string name="data_type_separator" msgid="1299848322898210658">"、 "</string>
     <string name="manage_permissions" msgid="8394221950712608160">"権限を管理"</string>
+    <string name="recent_access_time_content_descritption" msgid="1709675393952226273">"時間: %s"</string>
     <string name="activity_category_uppercase" msgid="136628843341377088">"アクティビティ"</string>
     <string name="activity_category_lowercase" msgid="3007220578865400601">"アクティビティ"</string>
     <string name="body_measurements_category_uppercase" msgid="422923782603313038">"身体測定"</string>
@@ -681,7 +682,7 @@
     <string name="things_to_try" msgid="8200374691546152703">"おすすめの方法"</string>
     <string name="check_for_updates" msgid="3841090978657783101">"アップデートを確認"</string>
     <string name="check_for_updates_description" msgid="1347667778199095160">"インストール済みのアプリについて、アップデートがないか確認できます"</string>
-    <string name="see_all_compatible_apps" msgid="6791146164535475726">"対応するアプリをすべて表示"</string>
+    <string name="see_all_compatible_apps" msgid="6791146164535475726">"対応アプリの一覧をチェック"</string>
     <string name="see_all_compatible_apps_description" msgid="2092325337403254491">"Google Play でアプリを探します"</string>
     <string name="send_feedback" msgid="7756927746070096780">"フィードバックを送信"</string>
     <string name="send_feedback_description" msgid="2887207112856240778">"ヘルスコネクトで使用したい健康アプリやフィットネス アプリをリクエストできます"</string>
