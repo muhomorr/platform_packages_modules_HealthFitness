@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package com.android.server.healthconnect.storage.utils;
+package android.health.connect;
 
 import static android.health.connect.Constants.DEFAULT_LONG;
-
-import static com.android.internal.util.Preconditions.checkArgument;
 
 import static java.lang.Integer.min;
 
@@ -29,8 +27,6 @@ import java.util.Objects;
  *
  * @hide
  */
-// TODO(b/296846629): Move this util to under framework/, so we can use this on client side, and use
-//  this in {@link ReadRecordsRequestUsingFilters}
 public final class PageTokenWrapper {
     /**
      * This constant represents an empty token returned by the last read request, meaning no more
@@ -42,8 +38,8 @@ public final class PageTokenWrapper {
      */
     public static final PageTokenWrapper EMPTY_PAGE_TOKEN = new PageTokenWrapper();
 
-    static final long MAX_ALLOWED_TIME_MILLIS = (1L << 44) - 1;
-    static final long MAX_ALLOWED_OFFSET = (1 << 18) - 1;
+    private static final long MAX_ALLOWED_TIME_MILLIS = (1L << 44) - 1;
+    private static final long MAX_ALLOWED_OFFSET = (1 << 18) - 1;
     private static final int OFFSET_START_BIT = 45;
     private static final int TIMESTAMP_START_BIT = 1;
 
@@ -140,6 +136,12 @@ public final class PageTokenWrapper {
     /** Shifts bits in the given {@code pageToken} to retrieve offset information. */
     private static int getOffset(long pageToken) {
         return (int) (pageToken >> OFFSET_START_BIT);
+    }
+
+    private static void checkArgument(boolean expression, String errorMsg) {
+        if (!expression) {
+            throw new IllegalArgumentException(errorMsg);
+        }
     }
 
     /**

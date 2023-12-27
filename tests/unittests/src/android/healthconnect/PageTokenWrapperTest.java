@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package com.android.server.healthconnect.storage.utils;
+package android.healthconnect;
 
 import static android.health.connect.Constants.DEFAULT_LONG;
-
-import static com.android.server.healthconnect.storage.utils.PageTokenWrapper.EMPTY_PAGE_TOKEN;
-import static com.android.server.healthconnect.storage.utils.PageTokenWrapper.MAX_ALLOWED_OFFSET;
-import static com.android.server.healthconnect.storage.utils.PageTokenWrapper.MAX_ALLOWED_TIME_MILLIS;
+import static android.health.connect.PageTokenWrapper.EMPTY_PAGE_TOKEN;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.junit.Assert.assertThrows;
 
+import android.health.connect.PageTokenWrapper;
 
 import androidx.test.runner.AndroidJUnit4;
 
@@ -36,6 +34,9 @@ import java.time.Instant;
 
 @RunWith(AndroidJUnit4.class)
 public class PageTokenWrapperTest {
+    private static final long MAX_ALLOWED_TIME_MILLIS = (1L << 44) - 1;
+    private static final long MAX_ALLOWED_OFFSET = (1 << 18) - 1;
+
     @Test
     public void of_createInstance() {
         boolean isAscending = false;

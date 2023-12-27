@@ -20,10 +20,10 @@ import static android.health.connect.Constants.DEFAULT_INT;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.health.connect.PageTokenWrapper;
 import android.health.connect.aidl.ReadRecordsRequestParcel;
 
 import com.android.server.healthconnect.storage.datatypehelpers.RecordHelper;
-import com.android.server.healthconnect.storage.utils.PageTokenWrapper;
 import com.android.server.healthconnect.storage.utils.RecordHelperProvider;
 
 import java.util.ArrayList;
