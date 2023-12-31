@@ -105,15 +105,40 @@ class LoadLastDateWithPriorityDataUseCaseTest {
     }
 
     @Test
-    fun onePriorityApp_noActivityDates_returnsNull() = runTest {
+    fun onePriorityApp_noActivityDates_noData_returnsNull() = runTest {
+        val now = Instant.parse("2023-10-14T12:00:00Z")
+        timeSource.setNow(now)
         loadPriorityListUseCase.updatePriorityList(listOf(TEST_APP))
 
         mockQueryActivityDatesAnswer(listOf())
+        mockReadRecordsResult(
+            packageName = TEST_APP_PACKAGE_NAME,
+            healthPermissionType = HealthPermissionType.STEPS,
+            queryDate = timeSource.currentLocalDateTime().toLocalDate().minusMonths(1),
+            numRecords = 0)
 
         val result = loadLastDateWithPriorityDataUseCase.invoke(HealthPermissionType.STEPS)
         assertThat(result is UseCaseResults.Success).isTrue()
         assertThat((result as UseCaseResults.Success).data).isNull()
-        Mockito.verify(healthConnectManager, times(0)).readRecords<StepsRecord>(any(), any(), any())
+    }
+
+    @Test
+    fun onePriorityApp_noActivityDates_dataPresent_returnsMostRecentDateWithPriority() = runTest {
+        val now = Instant.parse("2023-10-14T12:00:00Z")
+        timeSource.setNow(now)
+        loadPriorityListUseCase.updatePriorityList(listOf(TEST_APP))
+        val queryDate = timeSource.currentLocalDateTime().toLocalDate().minusMonths(1)
+
+        mockQueryActivityDatesAnswer(listOf())
+        mockReadRecordsResult(
+            packageName = TEST_APP_PACKAGE_NAME,
+            healthPermissionType = HealthPermissionType.STEPS,
+            queryDate = queryDate,
+            numRecords = 1)
+
+        val result = loadLastDateWithPriorityDataUseCase.invoke(HealthPermissionType.STEPS)
+        assertThat(result is UseCaseResults.Success).isTrue()
+        assertThat((result as UseCaseResults.Success).data).isEqualTo(queryDate)
     }
 
     @Test
@@ -148,6 +173,11 @@ class LoadLastDateWithPriorityDataUseCaseTest {
             healthPermissionType = HealthPermissionType.STEPS,
             queryDate = dateWithData,
             numRecords = 2)
+        mockReadRecordsResult(
+            packageName = TEST_APP_PACKAGE_NAME,
+            healthPermissionType = HealthPermissionType.STEPS,
+            queryDate = timeSource.currentLocalDateTime().toLocalDate().minusMonths(1),
+            numRecords = 0)
 
         mockQueryActivityDatesAnswer(listOf(dateWithData))
 
