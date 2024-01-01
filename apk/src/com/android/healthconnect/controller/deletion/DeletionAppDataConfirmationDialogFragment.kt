@@ -84,7 +84,7 @@ class DeletionAppDataConfirmationDialogFragment : Hilt_DeletionAppDataConfirmati
                         viewModel.setRemovePermissions(checkBox.isChecked)
                         setFragmentResult(CONFIRMATION_EVENT, Bundle())
                     }
-                .setNegativeButton(
+                .setNeutralButton(
                     android.R.string.cancel,
                     DeletionDialogConfirmationElement.DELETION_DIALOG_CONFIRMATION_CANCEL_BUTTON) {
                         _,

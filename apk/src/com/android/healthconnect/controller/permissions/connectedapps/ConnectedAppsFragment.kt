@@ -124,7 +124,7 @@ class ConnectedAppsFragment : Hilt_ConnectedAppsFragment() {
             .setIcon(R.attr.disconnectAllIcon)
             .setTitle(R.string.permissions_disconnect_all_dialog_title)
             .setMessage(R.string.permissions_disconnect_all_dialog_message)
-            .setNegativeButton(
+            .setNeutralButton(
                 android.R.string.cancel,
                 DisconnectAllAppsDialogElement.DISCONNECT_ALL_APPS_DIALOG_CANCEL_BUTTON) { _, _ ->
                     viewModel.setAlertDialogStatus(false)

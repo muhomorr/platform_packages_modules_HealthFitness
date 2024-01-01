@@ -60,7 +60,7 @@ class PriorityListDialogFragment() : Hilt_PriorityListDialogFragment() {
         return AlertDialogBuilder(this)
             .setLogName(PermissionTypesElement.SET_APP_PRIORITY_DIALOG_CONTAINER)
             .setView(parentView)
-            .setNegativeButton(
+            .setNeutralButton(
                 android.R.string.cancel,
                 PermissionTypesElement.SET_APP_PRIORITY_DIALOG_CANCEL_BUTTON)
             .setPositiveButton(

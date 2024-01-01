@@ -71,18 +71,16 @@ class MigrationActivity : Hilt_MigrationActivity() {
                     return true
                 }
             } else if (migrationState == MigrationState.ALLOWED_PAUSED ||
-                    migrationState == MigrationState.ALLOWED_NOT_STARTED) {
+                migrationState == MigrationState.ALLOWED_NOT_STARTED) {
                 val allowedPausedSeen =
-                        sharedPreference.getBoolean(INTEGRATION_PAUSED_SEEN_KEY, false)
+                    sharedPreference.getBoolean(INTEGRATION_PAUSED_SEEN_KEY, false)
 
                 if (!allowedPausedSeen) {
                     activity.startActivity(createMigrationActivityIntent(activity))
                     activity.finish()
                     return true
                 }
-            }
-
-            else if (migrationState == MigrationState.IN_PROGRESS) {
+            } else if (migrationState == MigrationState.IN_PROGRESS) {
                 activity.startActivity(createMigrationActivityIntent(activity))
                 activity.finish()
                 return true
@@ -102,7 +100,7 @@ class MigrationActivity : Hilt_MigrationActivity() {
                 .setTitle(R.string.migration_pending_permissions_dialog_title)
                 .setMessage(message)
                 .setCancelable(false)
-                .setNegativeButton(
+                .setNeutralButton(
                     R.string.migration_pending_permissions_dialog_button_start_integration,
                     MigrationElement.MIGRATION_PENDING_DIALOG_CANCEL_BUTTON,
                     negativeButtonAction)
@@ -132,30 +130,35 @@ class MigrationActivity : Hilt_MigrationActivity() {
                 .show()
         }
 
-        fun maybeShowWhatsNewDialog(context: Context,
-                                    negativeButtonAction: DialogInterface.OnClickListener? = null) {
+        fun maybeShowWhatsNewDialog(
+            context: Context,
+            negativeButtonAction: DialogInterface.OnClickListener? = null
+        ) {
             val sharedPreference =
-                    context.getSharedPreferences("USER_ACTIVITY_TRACKER", Context.MODE_PRIVATE)
+                context.getSharedPreferences("USER_ACTIVITY_TRACKER", Context.MODE_PRIVATE)
             val dialogSeen =
-                    sharedPreference.getBoolean(context.getString(R.string.whats_new_dialog_seen), false)
+                sharedPreference.getBoolean(
+                    context.getString(R.string.whats_new_dialog_seen), false)
 
             if (!dialogSeen) {
                 AlertDialogBuilder(context)
-                        .setLogName(MigrationElement.MIGRATION_DONE_DIALOG_CONTAINER)
-                        .setTitle(R.string.migration_whats_new_dialog_title)
-                        .setMessage(R.string.migration_whats_new_dialog_content)
-                        .setCancelable(false)
-                        .setNegativeButton(
-                                R.string.migration_whats_new_dialog_button, MigrationElement.MIGRATION_DONE_DIALOG_BUTTON) {
-                            unusedDialogInterface, unusedInt ->
+                    .setLogName(MigrationElement.MIGRATION_DONE_DIALOG_CONTAINER)
+                    .setTitle(R.string.migration_whats_new_dialog_title)
+                    .setMessage(R.string.migration_whats_new_dialog_content)
+                    .setCancelable(false)
+                    .setNegativeButton(
+                        R.string.migration_whats_new_dialog_button,
+                        MigrationElement.MIGRATION_DONE_DIALOG_BUTTON) {
+                            unusedDialogInterface,
+                            unusedInt ->
                             sharedPreference.edit().apply {
                                 putBoolean(context.getString(R.string.whats_new_dialog_seen), true)
                                 apply()
                             }
                             negativeButtonAction?.onClick(unusedDialogInterface, unusedInt)
                         }
-                        .create()
-                        .show()
+                    .create()
+                    .show()
             }
         }
 

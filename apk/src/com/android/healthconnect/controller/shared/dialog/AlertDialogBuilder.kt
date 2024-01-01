@@ -199,6 +199,30 @@ class AlertDialogBuilder(private val context: Context) {
                 onClickListener?.onClick(dialog, which)
             }
 
+        alertDialogBuilder.setNegativeButton(textId, loggingClickListener)
+        return this
+    }
+
+    /**
+     * To ensure a clear and accessible layout for all users, this button replaces a traditional
+     * negative button with a neutral button and used as a negative button when a positive button is
+     * also present. This prevents button borders from overlapping, when display and font sizes are
+     * set to their largest in accessibility settings.
+     */
+    fun setNeutralButton(
+        @StringRes textId: Int,
+        buttonId: ElementName,
+        onClickListener: DialogInterface.OnClickListener? = null
+    ): AlertDialogBuilder {
+        hasNegativeButton = true
+        negativeButtonKey = buttonId
+
+        val loggingClickListener =
+            DialogInterface.OnClickListener { dialog, which ->
+                logger.logInteraction(negativeButtonKey)
+                onClickListener?.onClick(dialog, which)
+            }
+
         alertDialogBuilder.setNeutralButton(textId, loggingClickListener)
         return this
     }

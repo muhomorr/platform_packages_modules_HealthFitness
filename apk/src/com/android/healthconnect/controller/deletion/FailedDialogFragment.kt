@@ -41,7 +41,7 @@ class FailedDialogFragment : Hilt_FailedDialogFragment() {
                 FailedDialogElement.DELETION_DIALOG_ERROR_TRY_AGAIN_BUTTON) { _, _ ->
                     setFragmentResult(TRY_AGAIN_EVENT, Bundle())
                 }
-            .setNegativeButton(
+            .setNeutralButton(
                 R.string.delete_dialog_failure_close_button,
                 FailedDialogElement.DELETION_DIALOG_ERROR_CLOSE_BUTTON)
             .create()
