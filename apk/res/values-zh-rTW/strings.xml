@@ -62,7 +62,7 @@
     <string name="manage_data_section" msgid="5859629270946511903">"管理資料"</string>
     <string name="export_data_button" msgid="7783329820434117744">"匯出資料"</string>
     <string name="delete_all_data_button" msgid="7238755635416521487">"刪除所有資料"</string>
-    <string name="no_categories" msgid="2636778482437506241">"你在「健康資料同步」中沒有任何資料"</string>
+    <string name="no_categories" msgid="2636778482437506241">"你在「健康資料同步」平台沒有任何資料"</string>
     <string name="permission_types_title" msgid="7698058200557389436">"你的資料"</string>
     <string name="app_priority_button" msgid="3126133977893705098">"應用程式優先順序"</string>
     <string name="delete_category_data_button" msgid="2324773398768267043">"刪除<xliff:g id="CATEGORY">%s</xliff:g>資料"</string>
