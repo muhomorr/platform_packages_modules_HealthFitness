@@ -14,12 +14,14 @@
   limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="permission_types_screen">
     <com.android.settingslib.widget.AppHeaderPreference
         android:key="permission_types_header"
         android:order="0" />
     <PreferenceCategory
         android:key="app_filters_preference"
+        app:isPreferenceVisible="false"
         android:order="1" />
     <PreferenceCategory
         android:key="permission_types"
