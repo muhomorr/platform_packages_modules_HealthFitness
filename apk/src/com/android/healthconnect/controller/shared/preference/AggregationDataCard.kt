@@ -54,6 +54,7 @@ constructor(
 
         cardIcon.background = fromHealthPermissionType(cardInfo.healthPermissionType).icon(context)
         cardTitle.text = cardInfo.aggregation.aggregation
+        cardTitle.contentDescription = cardInfo.aggregation.aggregationA11y
 
         val totalStartDate = cardInfo.startDate
         val totalEndDate = cardInfo.endDate

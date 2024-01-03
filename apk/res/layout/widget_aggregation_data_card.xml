@@ -30,7 +30,6 @@
         android:layout_height="@dimen/icon_size"
         android:layout_marginEnd="@dimen/spacing_small"
         app:tint="?android:attr/textColorPrimary" />
-    <!-- TODO (b/299940574) dynamically set content description using category of aggregation -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/title_date_container"
