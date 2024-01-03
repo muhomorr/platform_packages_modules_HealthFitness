@@ -162,6 +162,8 @@ open class HealthPermissionTypesFragment : Hilt_HealthPermissionTypesFragment() 
                     if (state.appsWithData.size > 1) {
                         addAppFilters(state.appsWithData)
                         mAppFiltersPreference?.isVisible = true
+                    } else {
+                        mAppFiltersPreference?.isVisible = false
                     }
                 }
             }

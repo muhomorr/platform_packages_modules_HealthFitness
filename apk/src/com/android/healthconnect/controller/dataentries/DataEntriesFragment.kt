@@ -237,6 +237,7 @@ class DataEntriesFragment : Hilt_DataEntriesFragment() {
                 is WithData -> {
                     entriesRecyclerView.isVisible = true
                     adapter.updateData(state.entries)
+                    entriesRecyclerView.scrollToPosition(0)
                     errorView.isVisible = false
                     noDataView.isVisible = false
                     loadingView.isVisible = false
