@@ -3,6 +3,9 @@ package com.android.healthconnect.controller.tests.utils
 import android.content.Context
 import android.content.res.Configuration
 import android.os.LocaleList
+import android.provider.Settings.System
+import com.android.compatibility.common.util.UserSettings
+import com.android.compatibility.common.util.UserSettings.Namespace
 import com.android.healthconnect.controller.utils.LocalDateTimeFormatter
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,7 +27,9 @@ class LocalDateTimeFormatterTest {
     @get:Rule val hiltRule = HiltAndroidRule(this)
 
     @Inject @ApplicationContext lateinit var context: Context
+    private lateinit var systemSettings: UserSettings
 
+    private var previousTimeFormat: String? = null
     private var previousDefaultTimeZone: TimeZone? = null
     private var previousLocale: Locale? = null
 
@@ -33,6 +38,13 @@ class LocalDateTimeFormatterTest {
     @Before
     fun setup() {
         hiltRule.inject()
+
+        systemSettings = UserSettings(context, Namespace.SYSTEM)
+        previousTimeFormat = systemSettings.get(System.TIME_12_24)
+        if (previousTimeFormat != null) {
+            // Clear setting so locale-defined time format is used.
+            systemSettings.syncSet(System.TIME_12_24, null)
+        }
 
         previousDefaultTimeZone = TimeZone.getDefault()
         previousLocale = Locale.getDefault()
@@ -43,6 +55,9 @@ class LocalDateTimeFormatterTest {
 
     @After
     fun tearDown() {
+        if (previousTimeFormat != null) {
+            systemSettings.syncSet(System.TIME_12_24, previousTimeFormat)
+        }
         TimeZone.setDefault(previousDefaultTimeZone)
         previousLocale?.let { locale -> Locale.setDefault(locale) }
     }
