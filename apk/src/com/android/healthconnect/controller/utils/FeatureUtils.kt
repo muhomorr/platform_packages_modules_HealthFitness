@@ -23,6 +23,8 @@ interface FeatureUtils {
     fun isNewInformationArchitectureEnabled(): Boolean
 
     fun isBackgroundReadEnabled(): Boolean
+
+    fun isImportExportEnabled(): Boolean
 }
 
 class FeatureUtilsImpl(context: Context) : FeatureUtils, DeviceConfig.OnPropertiesChangedListener {
@@ -38,6 +40,7 @@ class FeatureUtilsImpl(context: Context) : FeatureUtils, DeviceConfig.OnProperti
             "aggregation_source_controls_enable"
         private const val PROPERTY_NEW_INFORMATION_ARCHITECTURE_ENABLED =
             "new_information_architecture_enable"
+        private const val PROPERTY_IMPORT_EXPORT_ENABLED = "import_export_enable"
     }
 
     private val lock = Any()
@@ -63,9 +66,14 @@ class FeatureUtilsImpl(context: Context) : FeatureUtils, DeviceConfig.OnProperti
         DeviceConfig.getBoolean(HEALTH_FITNESS_FLAGS_NAMESPACE, PROPERTY_ENTRY_POINTS_ENABLED, true)
 
     private var isNewAppPriorityEnabled = true
+
     private var isNewInformationArchitectureEnabled =
         DeviceConfig.getBoolean(
             HEALTH_FITNESS_FLAGS_NAMESPACE, PROPERTY_NEW_INFORMATION_ARCHITECTURE_ENABLED, false)
+
+    private var isImportExportEnabled =
+        DeviceConfig.getBoolean(
+            HEALTH_FITNESS_FLAGS_NAMESPACE, PROPERTY_IMPORT_EXPORT_ENABLED, false)
 
     override fun isNewAppPriorityEnabled(): Boolean {
         synchronized(lock) {
@@ -109,6 +117,12 @@ class FeatureUtilsImpl(context: Context) : FeatureUtils, DeviceConfig.OnProperti
         }
     }
 
+    override fun isImportExportEnabled(): Boolean {
+        synchronized(lock) {
+            return isImportExportEnabled
+        }
+    }
+
     override fun onPropertiesChanged(properties: DeviceConfig.Properties) {
         synchronized(lock) {
             if (!properties.namespace.equals(HEALTH_FITNESS_FLAGS_NAMESPACE)) {
@@ -135,6 +149,9 @@ class FeatureUtilsImpl(context: Context) : FeatureUtils, DeviceConfig.OnProperti
                         isNewInformationArchitectureEnabled =
                             properties.getBoolean(
                                 PROPERTY_NEW_INFORMATION_ARCHITECTURE_ENABLED, false)
+                    PROPERTY_IMPORT_EXPORT_ENABLED ->
+                        isImportExportEnabled =
+                            properties.getBoolean(PROPERTY_IMPORT_EXPORT_ENABLED, false)
                 }
             }
         }
