@@ -656,6 +656,7 @@ public class WeightRecordTest {
 
     @Test
     public void testAggregateDuration_differentTimeZones_correctBucketTimes() throws Exception {
+        TestUtils.setupAggregation(PACKAGE_NAME, HealthDataCategory.BODY_MEASUREMENTS);
         Context context = ApplicationProvider.getApplicationContext();
         Duration oneHour = Duration.ofHours(1);
         Instant t1 = Instant.now().minus(Duration.ofDays(1)).truncatedTo(ChronoUnit.MILLIS);

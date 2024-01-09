@@ -1195,6 +1195,7 @@ public class BasalMetabolicRateRecordTest {
 
     @Test
     public void testAggregate_withDifferentTimeZone() throws Exception {
+        TestUtils.setupAggregation(PACKAGE_NAME, HealthDataCategory.BODY_MEASUREMENTS);
         Instant instant = Instant.now().minus(1, ChronoUnit.DAYS);
         List<Record> records =
                 List.of(
