@@ -22,6 +22,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commitNow
 import androidx.fragment.app.viewModels
@@ -84,6 +85,7 @@ class ConnectedAppsFragment : Hilt_ConnectedAppsFragment() {
     @Inject lateinit var deviceInfoUtils: DeviceInfoUtils
     private val viewModel: ConnectedAppsViewModel by viewModels()
     private lateinit var searchMenuItem: MenuItem
+    private lateinit var removeAllAppsDialog: AlertDialog
 
     private val mTopIntro: TopIntroPreference by lazy {
         preferenceScreen.findPreference(TOP_INTRO)!!
@@ -118,28 +120,31 @@ class ConnectedAppsFragment : Hilt_ConnectedAppsFragment() {
         }
     }
 
-    private fun openRemoveAllAppsAccessDialog(apps: List<ConnectedAppMetadata>) {
-        AlertDialogBuilder(this)
-            .setLogName(DisconnectAllAppsDialogElement.DISCONNECT_ALL_APPS_DIALOG_CONTAINER)
-            .setIcon(R.attr.disconnectAllIcon)
-            .setTitle(R.string.permissions_disconnect_all_dialog_title)
-            .setMessage(R.string.permissions_disconnect_all_dialog_message)
-            .setNeutralButton(
-                android.R.string.cancel,
-                DisconnectAllAppsDialogElement.DISCONNECT_ALL_APPS_DIALOG_CANCEL_BUTTON) { _, _ ->
-                    viewModel.setAlertDialogStatus(false)
-                }
-            .setPositiveButton(
-                R.string.permissions_disconnect_all_dialog_disconnect,
-                DisconnectAllAppsDialogElement.DISCONNECT_ALL_APPS_DIALOG_REMOVE_ALL_BUTTON) { _, _
-                    ->
-                    if (!viewModel.disconnectAllApps(apps)) {
-                        Toast.makeText(requireContext(), R.string.default_error, Toast.LENGTH_SHORT)
-                            .show()
+    private fun createRemoveAllAppsAccessDialog(apps: List<ConnectedAppMetadata>) {
+        removeAllAppsDialog =
+            AlertDialogBuilder(this)
+                .setLogName(DisconnectAllAppsDialogElement.DISCONNECT_ALL_APPS_DIALOG_CONTAINER)
+                .setIcon(R.attr.disconnectAllIcon)
+                .setTitle(R.string.permissions_disconnect_all_dialog_title)
+                .setMessage(R.string.permissions_disconnect_all_dialog_message)
+                .setNeutralButton(
+                    android.R.string.cancel,
+                    DisconnectAllAppsDialogElement.DISCONNECT_ALL_APPS_DIALOG_CANCEL_BUTTON) { _, _
+                        ->
+                        viewModel.setAlertDialogStatus(false)
                     }
-                }
-            .create()
-            .show()
+                .setPositiveButton(
+                    R.string.permissions_disconnect_all_dialog_disconnect,
+                    DisconnectAllAppsDialogElement.DISCONNECT_ALL_APPS_DIALOG_REMOVE_ALL_BUTTON) {
+                        _,
+                        _ ->
+                        if (!viewModel.disconnectAllApps(apps)) {
+                            Toast.makeText(
+                                    requireContext(), R.string.default_error, Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+                .create()
     }
 
     override fun onResume() {
@@ -195,6 +200,7 @@ class ConnectedAppsFragment : Hilt_ConnectedAppsFragment() {
                 val notAllowedApps = connectedAppsGroup[DENIED].orEmpty()
                 val activeApps: MutableList<ConnectedAppMetadata> = allowedApps.toMutableList()
                 activeApps.addAll(notAllowedApps)
+                createRemoveAllAppsAccessDialog(activeApps)
 
                 mSettingsAndHelpCategory?.addPreference(
                     getRemoveAccessForAllAppsPreference().apply {
@@ -216,7 +222,11 @@ class ConnectedAppsFragment : Hilt_ConnectedAppsFragment() {
 
                 viewModel.alertDialogActive.observe(viewLifecycleOwner) { state ->
                     if (state) {
-                        openRemoveAllAppsAccessDialog(activeApps)
+                        removeAllAppsDialog.show()
+                    } else {
+                        if (removeAllAppsDialog.isShowing) {
+                            removeAllAppsDialog.dismiss()
+                        }
                     }
                 }
             }
