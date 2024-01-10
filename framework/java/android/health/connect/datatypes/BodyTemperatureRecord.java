@@ -29,7 +29,7 @@ import java.util.Objects;
 
 /**
  * Captures the body temperature of a user. Each record represents a single instantaneous body
- * temperature measuremen
+ * temperature measurement.
  */
 @Identifier(recordIdentifier = RecordTypeIdentifier.RECORD_TYPE_BODY_TEMPERATURE)
 public final class BodyTemperatureRecord extends InstantRecord {
