@@ -29,6 +29,9 @@ class DestinationChangedListener(private val activity: CollapsingToolbarBaseActi
     ) {
         // Prevent header from being collapsed between fragments.
         activity.appBarLayout?.setExpanded(true)
+        activity.appBarLayout?.let {
+            activity.collapsingToolbarLayout?.setContentScrimColor(it.solidColor)
+        }
         activity.setTitle(destination.label)
     }
 }
