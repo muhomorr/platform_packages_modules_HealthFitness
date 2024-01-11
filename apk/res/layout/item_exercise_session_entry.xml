@@ -120,7 +120,6 @@
             android:background="?android:attr/selectableItemBackground"
             android:minWidth="@dimen/two_target_min_width"
             android:minHeight="@dimen/two_target_min_width"
-            android:contentDescription="@string/data_point_action_content_description"
             android:src="?attr/deleteIcon"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

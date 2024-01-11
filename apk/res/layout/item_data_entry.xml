@@ -48,7 +48,6 @@
         android:layout_weight="0"
         android:background="@null"
         android:padding="@dimen/spacing_normal"
-        android:contentDescription="@string/data_point_action_content_description"
         android:layout_gravity="center_vertical"
         android:src="?attr/deleteIcon"/>
 </LinearLayout>

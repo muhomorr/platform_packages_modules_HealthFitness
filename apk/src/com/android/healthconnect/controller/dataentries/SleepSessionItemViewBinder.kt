@@ -71,6 +71,9 @@ class SleepSessionItemViewBinder(
             logger.logInteraction(DataEntriesElement.DATA_ENTRY_DELETE_BUTTON)
             onDeleteEntryListenerClicked?.onDeleteEntry(data.uuid, data.dataType, index)
         }
+        deleteButton.contentDescription =
+            view.resources.getString(
+                R.string.data_point_action_content_description, title.contentDescription)
         if (showSecondAction) {
             container.setOnClickListener {
                 logger.logInteraction(DataEntriesElement.SLEEP_SESSION_ENTRY_BUTTON)

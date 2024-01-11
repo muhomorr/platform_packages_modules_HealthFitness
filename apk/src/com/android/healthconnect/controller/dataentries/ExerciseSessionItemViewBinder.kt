@@ -75,6 +75,9 @@ class ExerciseSessionItemViewBinder(
             mapView.setRoute(data.route)
         }
 
+        deleteButton.contentDescription =
+            view.resources.getString(
+                R.string.data_point_action_content_description, title.contentDescription)
         deleteButton.setOnClickListener {
             logger.logInteraction(DataEntriesElement.DATA_ENTRY_DELETE_BUTTON)
             onDeleteEntryClicked?.onDeleteEntry(data.uuid, data.dataType, index)
