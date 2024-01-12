@@ -347,8 +347,10 @@
     <string name="delete_data_notification_title" msgid="7740230240986343347">"Health Connect ଡାଟା ଡିଲିଟ କରାଯାଉଛି"</string>
     <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"Health Connect ଡାଟା ଡିଲିଟ କରାଯାଉଛି"</string>
     <string name="delete_data_notification_channel_name" msgid="4499713830012802095">"ଡାଟା ଡିଲିସନ"</string>
-    <string name="data_point_action_content_description" msgid="7872439279343967754">"ଡାଟା ଏଣ୍ଟ୍ରିକୁ ଡିଲିଟ କରନ୍ତୁ"</string>
-    <string name="delete_data_point" msgid="4234569507133768630">"ଏଣ୍ଟ୍ରିକୁ ଡିଲିଟ କରନ୍ତୁ"</string>
+    <!-- no translation found for data_point_action_content_description (6881048311770784455) -->
+    <skip />
+    <!-- no translation found for delete_data_point (1004049578454616738) -->
+    <skip />
     <string name="aggregation_total" msgid="5641333638662325184">"ମୋଟ: <xliff:g id="TOTAL_VALUE">%s</xliff:g>"</string>
     <string name="watt_format" msgid="8500953817369623803">"{value,plural, =1{1 ୱାଟ}other{# ୱାଟ}}"</string>
     <string name="watt_format_long" msgid="7107446926499116109">"{value,plural, =1{1 ୱାଟ}other{# ୱାଟ}}"</string>
@@ -710,6 +712,11 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"ତଳକୁ ମୁଭ କରନ୍ତୁ"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"ଶୀର୍ଷକୁ ମୁଭ କରନ୍ତୁ"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"ନିମ୍ନକୁ ମୁଭ କରନ୍ତୁ"</string>
+    <!-- no translation found for reorder_button_content_description (3104832018446653623) -->
+    <skip />
+    <string name="remove_button_content_description" msgid="6170490900032612048">"ପ୍ରାଥମିକତା ତାଲିକାରୁ <xliff:g id="SELECTED_APP">%s</xliff:g>କୁ କାଢ଼ି ଦେବା ପାଇଁ ବଟନ"</string>
+    <!-- no translation found for reorder_button_action_description (5197462036756192214) -->
+    <skip />
     <string name="search_keywords_home" msgid="5386515593026555327">"ଫିଟନେସ, ସୁସ୍ଥତା"</string>
     <string name="search_keywords_permissions" msgid="7821010295153350533">"ଅନୁମତିଗୁଡ଼ିକ"</string>
     <string name="search_keywords_data" msgid="5359602744325490523">"Health Connect, ସ୍ୱାସ୍ଥ୍ୟ ଡାଟା, ସ୍ୱାସ୍ଥ୍ୟର ବର୍ଗ, ଡାଟା ଆକ୍ସେସ, କାର୍ଯ୍ୟକଳାପ, ଶରୀର ପରିମାପ, ସାଇକେଲ ଟ୍ରାକିଂ, ନ୍ୟୁଟ୍ରିସନ, ଶୋଇବା, ଭାଇଟାଲ"</string>

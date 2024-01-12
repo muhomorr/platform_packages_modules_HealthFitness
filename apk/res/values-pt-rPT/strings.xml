@@ -347,8 +347,10 @@
     <string name="delete_data_notification_title" msgid="7740230240986343347">"A apagar dados da Saúde Connect"</string>
     <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"A apagar dados da Saúde Connect"</string>
     <string name="delete_data_notification_channel_name" msgid="4499713830012802095">"Eliminação de dados"</string>
-    <string name="data_point_action_content_description" msgid="7872439279343967754">"Elimine a entrada de dados"</string>
-    <string name="delete_data_point" msgid="4234569507133768630">"Apagar entrada"</string>
+    <!-- no translation found for data_point_action_content_description (6881048311770784455) -->
+    <skip />
+    <!-- no translation found for delete_data_point (1004049578454616738) -->
+    <skip />
     <string name="aggregation_total" msgid="5641333638662325184">"Total: <xliff:g id="TOTAL_VALUE">%s</xliff:g>"</string>
     <string name="watt_format" msgid="8500953817369623803">"{value,plural, =1{1 W}other{# W}}"</string>
     <string name="watt_format_long" msgid="7107446926499116109">"{value,plural, =1{1 watt}other{# watts}}"</string>
@@ -710,6 +712,11 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Mover para baixo"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Mover para o início"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Mover para o fim"</string>
+    <!-- no translation found for reorder_button_content_description (3104832018446653623) -->
+    <skip />
+    <string name="remove_button_content_description" msgid="6170490900032612048">"Botão que remove a app <xliff:g id="SELECTED_APP">%s</xliff:g> da lista de prioridades"</string>
+    <!-- no translation found for reorder_button_action_description (5197462036756192214) -->
+    <skip />
     <string name="search_keywords_home" msgid="5386515593026555327">"fitness, bem-estar"</string>
     <string name="search_keywords_permissions" msgid="7821010295153350533">"autorizações"</string>
     <string name="search_keywords_data" msgid="5359602744325490523">"saúde connect, dados de saúde, categorias de saúde, acesso a dados, atividade, medições corporais, monitorização do ciclo, nutrição, sono, sinais vitais"</string>

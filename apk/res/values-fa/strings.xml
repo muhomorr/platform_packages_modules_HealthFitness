@@ -347,8 +347,10 @@
     <string name="delete_data_notification_title" msgid="7740230240986343347">"درحال حذف داده‌های Health Connect"</string>
     <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"درحال حذف داده‌های Health Connect"</string>
     <string name="delete_data_notification_channel_name" msgid="4499713830012802095">"حذف داده"</string>
-    <string name="data_point_action_content_description" msgid="7872439279343967754">"حذف ورودی داده"</string>
-    <string name="delete_data_point" msgid="4234569507133768630">"حذف ورودی"</string>
+    <!-- no translation found for data_point_action_content_description (6881048311770784455) -->
+    <skip />
+    <!-- no translation found for delete_data_point (1004049578454616738) -->
+    <skip />
     <string name="aggregation_total" msgid="5641333638662325184">"مجموع: <xliff:g id="TOTAL_VALUE">%s</xliff:g>"</string>
     <string name="watt_format" msgid="8500953817369623803">"{value,plural, =1{یک وات}one{# وات}other{# وات}}"</string>
     <string name="watt_format_long" msgid="7107446926499116109">"{value,plural, =1{یک وات}one{# وات}other{# وات}}"</string>
@@ -710,6 +712,11 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"انتقال به‌پایین"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"انتقال به ابتدا"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"انتقال به انتها"</string>
+    <!-- no translation found for reorder_button_content_description (3104832018446653623) -->
+    <skip />
+    <string name="remove_button_content_description" msgid="6170490900032612048">"دکمه برداشتن <xliff:g id="SELECTED_APP">%s</xliff:g> از فهرست اولویت"</string>
+    <!-- no translation found for reorder_button_action_description (5197462036756192214) -->
+    <skip />
     <string name="search_keywords_home" msgid="5386515593026555327">"تناسب اندام، تندرستی"</string>
     <string name="search_keywords_permissions" msgid="7821010295153350533">"اجازه‌ها"</string>
     <string name="search_keywords_data" msgid="5359602744325490523">"health connect، داده‌های سلامت، دسته‌های سلامت، دسترسی به داده‌ها، فعالیت، سنجه‌های بدن، پیگیری قاعدگی، تغذیه، خواب، علائم حیاتی"</string>

@@ -347,8 +347,10 @@
     <string name="delete_data_notification_title" msgid="7740230240986343347">"Đang xoá dữ liệu trong Health Connect"</string>
     <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"Đang xoá dữ liệu trong Health Connect"</string>
     <string name="delete_data_notification_channel_name" msgid="4499713830012802095">"Xoá dữ liệu"</string>
-    <string name="data_point_action_content_description" msgid="7872439279343967754">"Xoá mục dữ liệu"</string>
-    <string name="delete_data_point" msgid="4234569507133768630">"Xoá mục"</string>
+    <!-- no translation found for data_point_action_content_description (6881048311770784455) -->
+    <skip />
+    <!-- no translation found for delete_data_point (1004049578454616738) -->
+    <skip />
     <string name="aggregation_total" msgid="5641333638662325184">"Tổng: <xliff:g id="TOTAL_VALUE">%s</xliff:g>"</string>
     <string name="watt_format" msgid="8500953817369623803">"{value,plural, =1{1 W}other{# W}}"</string>
     <string name="watt_format_long" msgid="7107446926499116109">"{value,plural, =1{1 watt}other{# watt}}"</string>
@@ -710,6 +712,11 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Chuyển xuống"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Chuyển lên trên cùng"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Chuyển xuống dưới cùng"</string>
+    <!-- no translation found for reorder_button_content_description (3104832018446653623) -->
+    <skip />
+    <string name="remove_button_content_description" msgid="6170490900032612048">"Nút để xoá <xliff:g id="SELECTED_APP">%s</xliff:g> khỏi danh sách ưu tiên"</string>
+    <!-- no translation found for reorder_button_action_description (5197462036756192214) -->
+    <skip />
     <string name="search_keywords_home" msgid="5386515593026555327">"thể chất, sức khoẻ"</string>
     <string name="search_keywords_permissions" msgid="7821010295153350533">"quyền"</string>
     <string name="search_keywords_data" msgid="5359602744325490523">"health connect, dữ liệu sức khoẻ, danh mục liên quan đến sức khoẻ, truy cập dữ liệu, hoạt động, số đo cơ thể, theo dõi chu kỳ kinh nguyệt, dinh dưỡng, giấc ngủ, chỉ số sức khoẻ"</string>
