@@ -77,7 +77,7 @@ class HealthPermissionReaderTest {
     }
 
     @Test
-    fun getDeclaredPermissions_returnsAllPermissions_exceptReadAllRoutes() = runTest {
+    fun getDeclaredPermissions_returnsAllPermissions_exceptHiddenPermissions() = runTest {
         assertThat(permissionReader.getDeclaredPermissions(TEST_APP_PACKAGE_NAME))
             .containsExactly(
                 HealthPermissions.WRITE_EXERCISE_ROUTE.toHealthPermission(),

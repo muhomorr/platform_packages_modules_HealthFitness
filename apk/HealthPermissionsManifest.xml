@@ -254,6 +254,12 @@
         android:protectionLevel="dangerous"
         android:permissionGroup="android.permission-group.HEALTH" />
 
+    <permission
+        android:name="android.permission.health.READ_SKIN_TEMPERATURE"
+        android:label="@string/skin_temperature_read_content_description"
+        android:protectionLevel="dangerous"
+        android:permissionGroup="android.permission-group.HEALTH" />
+
     <!-- Write permissions -->
     <!-- Write permissions for activities -->
     <permission
@@ -474,6 +480,12 @@
     <permission
         android:name="android.permission.health.WRITE_RESTING_HEART_RATE"
         android:label="@string/resting_heart_rate_write_content_description"
+        android:protectionLevel="dangerous"
+        android:permissionGroup="android.permission-group.HEALTH" />
+
+    <permission
+        android:name="android.permission.health.WRITE_SKIN_TEMPERATURE"
+        android:label="@string/skin_temperature_write_content_description"
         android:protectionLevel="dangerous"
         android:permissionGroup="android.permission-group.HEALTH" />
 </manifest>

@@ -131,7 +131,9 @@ constructor(
         return shouldHideExerciseRoute(permission) ||
             shouldHideExerciseRouteAll(permission) ||
             shouldHideSessionTypes(permission) ||
-            shouldHideBackgroundReadPermission(permission)
+            shouldHideBackgroundReadPermission(permission) ||
+            shouldHideSkinTemperaturePermissions(permission)
+
     }
 
     private fun shouldHideExerciseRoute(permission: String): Boolean {
@@ -144,8 +146,14 @@ constructor(
         return permission == "android.permission.health.READ_EXERCISE_ROUTES_ALL"
     }
 
+    private fun shouldHideSkinTemperaturePermissions(permission: String): Boolean {
+        // TODO(b/319602927): use skin temperature permissions when the API becomes unhidden.
+        return permission == "android.permission.health.READ_SKIN_TEMPERATURE" || permission == "android.permission.health.WRITE_SKIN_TEMPERATURE"
+    }
+
     private fun shouldHideSessionTypes(permission: String): Boolean {
-        return permission in sessionTypePermissions && !featureUtils.isSessionTypesEnabled()
+        return permission in sessionTypePermissions
+                && !featureUtils.isSessionTypesEnabled()
     }
 
     private fun shouldHideBackgroundReadPermission(permission: String): Boolean {

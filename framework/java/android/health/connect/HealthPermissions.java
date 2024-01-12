@@ -45,6 +45,7 @@ import static android.health.connect.HealthPermissionCategory.POWER;
 import static android.health.connect.HealthPermissionCategory.RESPIRATORY_RATE;
 import static android.health.connect.HealthPermissionCategory.RESTING_HEART_RATE;
 import static android.health.connect.HealthPermissionCategory.SEXUAL_ACTIVITY;
+import static android.health.connect.HealthPermissionCategory.SKIN_TEMPERATURE;
 import static android.health.connect.HealthPermissionCategory.SLEEP;
 import static android.health.connect.HealthPermissionCategory.SPEED;
 import static android.health.connect.HealthPermissionCategory.STEPS;
@@ -53,6 +54,7 @@ import static android.health.connect.HealthPermissionCategory.VO2_MAX;
 import static android.health.connect.HealthPermissionCategory.WEIGHT;
 import static android.health.connect.HealthPermissionCategory.WHEELCHAIR_PUSHES;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
@@ -421,6 +423,17 @@ public final class HealthPermissions {
             "android.permission.health.READ_RESTING_HEART_RATE";
 
     /**
+     * Allows an application to read the user's skin temperature data.
+     *
+     * <p>Protection level: dangerous.
+     *
+     * @hide
+     */
+    @FlaggedApi("com.android.healthconnect.flags.skin_temperature")
+    public static final String READ_SKIN_TEMPERATURE =
+            "android.permission.health.READ_SKIN_TEMPERATURE";
+
+    /**
      * Allows an application to write the user's calories burned data.
      *
      * <p>Protection level: dangerous.
@@ -694,6 +707,17 @@ public final class HealthPermissions {
     public static final String WRITE_RESTING_HEART_RATE =
             "android.permission.health.WRITE_RESTING_HEART_RATE";
 
+    /**
+     * Allows an application to write the user's skin temperature data.
+     *
+     * <p>Protection level: dangerous.
+     *
+     * @hide
+     */
+    @FlaggedApi("com.android.healthconnect.flags.skin_temperature")
+    public static final String WRITE_SKIN_TEMPERATURE =
+            "android.permission.health.WRITE_SKIN_TEMPERATURE";
+
     private static final Set<String> sWritePermissionsSet =
             new ArraySet<>(
                     Set.of(
@@ -731,7 +755,8 @@ public final class HealthPermissions {
                             WRITE_HEART_RATE_VARIABILITY,
                             WRITE_OXYGEN_SATURATION,
                             WRITE_RESPIRATORY_RATE,
-                            WRITE_RESTING_HEART_RATE));
+                            WRITE_RESTING_HEART_RATE,
+                            WRITE_SKIN_TEMPERATURE));
 
     private static final Map<String, Integer> sWriteHealthPermissionToHealthDataCategoryMap =
             new ArrayMap<>();
@@ -898,6 +923,7 @@ public final class HealthPermissions {
         sHealthCategoryToWritePermissionMap.put(OXYGEN_SATURATION, WRITE_OXYGEN_SATURATION);
         sHealthCategoryToWritePermissionMap.put(RESPIRATORY_RATE, WRITE_RESPIRATORY_RATE);
         sHealthCategoryToWritePermissionMap.put(RESTING_HEART_RATE, WRITE_RESTING_HEART_RATE);
+        sHealthCategoryToWritePermissionMap.put(SKIN_TEMPERATURE, WRITE_SKIN_TEMPERATURE);
 
         // Populate permission category to read permission map
         sHealthCategoryToReadPermissionMap.put(ACTIVE_CALORIES_BURNED, READ_ACTIVE_CALORIES_BURNED);
@@ -936,6 +962,7 @@ public final class HealthPermissions {
         sHealthCategoryToReadPermissionMap.put(OXYGEN_SATURATION, READ_OXYGEN_SATURATION);
         sHealthCategoryToReadPermissionMap.put(RESPIRATORY_RATE, READ_RESPIRATORY_RATE);
         sHealthCategoryToReadPermissionMap.put(RESTING_HEART_RATE, READ_RESTING_HEART_RATE);
+        sHealthCategoryToReadPermissionMap.put(SKIN_TEMPERATURE, READ_SKIN_TEMPERATURE);
     }
 
     private static synchronized void populateWriteHealthPermissionToHealthDataCategoryMap() {
@@ -998,6 +1025,8 @@ public final class HealthPermissions {
 
         sWriteHealthPermissionToHealthDataCategoryMap.put(
                 WRITE_BASAL_BODY_TEMPERATURE, HealthDataCategory.VITALS);
+        sWriteHealthPermissionToHealthDataCategoryMap.put(
+                WRITE_SKIN_TEMPERATURE, HealthDataCategory.VITALS);
         sWriteHealthPermissionToHealthDataCategoryMap.put(
                 WRITE_BLOOD_GLUCOSE, HealthDataCategory.VITALS);
         sWriteHealthPermissionToHealthDataCategoryMap.put(
