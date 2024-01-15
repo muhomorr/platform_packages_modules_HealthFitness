@@ -73,7 +73,7 @@ class SleepSessionItemViewBinder(
         }
         deleteButton.contentDescription =
             view.resources.getString(
-                R.string.data_point_action_content_description, title.contentDescription)
+                R.string.data_point_action_content_description, data.headerA11y)
         if (showSecondAction) {
             container.setOnClickListener {
                 logger.logInteraction(DataEntriesElement.SLEEP_SESSION_ENTRY_BUTTON)

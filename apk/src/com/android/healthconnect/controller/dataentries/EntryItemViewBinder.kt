@@ -56,7 +56,7 @@ class EntryItemViewBinder(private val onDeleteEntryListener: OnDeleteEntryListen
 
         deleteButton.contentDescription =
             view.resources.getString(
-                R.string.data_point_action_content_description, title.contentDescription)
+                R.string.data_point_action_content_description, data.headerA11y)
         deleteButton.setOnClickListener {
             logger.logInteraction(DataEntriesElement.DATA_ENTRY_DELETE_BUTTON)
             onDeleteEntryListener.onDeleteEntry(
