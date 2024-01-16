@@ -97,6 +97,7 @@
     <string name="data_access_exercise_description" description="Description of data access for the exercise data type [CHAR_LIMIT=NONE]">This data includes information like active time, exercise type, laps, repetitions, sessions, or swimming strokes</string>
     <string name="data_access_sleep_description" description="Description of data access for the sleep data type [CHAR_LIMIT=NONE]">This data includes information like sleep stages and sleep sessions</string>
     <string name="all_entries_button" description="Label for a button that opens the Data entries page. [CHAR_LIMIT=50]">See all entries</string>
+    <string name="selected_date_view_action_description" description="Action description of a selected date view for accessibility [CHAR LIMIT=NONE]">change</string>
     <string name="delete_permission_type_data_button" description="Label for a button that allows deleting all data points from a given health permission type. [CHAR_LIMIT=50]">Delete this data</string>
     <!--endregion-->
 

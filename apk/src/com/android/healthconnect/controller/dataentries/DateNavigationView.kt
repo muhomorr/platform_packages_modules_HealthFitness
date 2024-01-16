@@ -19,9 +19,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.android.healthconnect.controller.R
 import com.android.healthconnect.controller.utils.DatePickerFactory
 import com.android.healthconnect.controller.utils.LocalDateTimeFormatter
@@ -119,6 +121,19 @@ constructor(
             }
             datePickerDialog.show()
         }
+        selectedDateView.accessibilityDelegate =
+            object : AccessibilityDelegate() {
+                override fun onInitializeAccessibilityNodeInfo(
+                    host: View,
+                    info: AccessibilityNodeInfo
+                ) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+                    info.addAction(
+                        AccessibilityNodeInfo.AccessibilityAction(
+                            AccessibilityNodeInfoCompat.ACTION_CLICK,
+                            context.getString(R.string.selected_date_view_action_description)))
+                }
+            }
     }
 
     private fun updateSelectedDate() {
