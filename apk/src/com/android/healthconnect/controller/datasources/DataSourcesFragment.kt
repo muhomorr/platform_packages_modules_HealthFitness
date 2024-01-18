@@ -18,6 +18,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
+import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -217,7 +218,8 @@ class DataSourcesFragment :
         }
     }
 
-    private fun editPriorityList() {
+    @VisibleForTesting
+    fun editPriorityList() {
         isEditMode = true
         updateMenu(shouldShowEditButton = false)
         appSourcesPreferenceGroup?.removePreferenceRecursively(ADD_AN_APP_PREFERENCE_KEY)
@@ -396,6 +398,7 @@ class DataSourcesFragment :
 
                     val currentCategory = dataSourcesCategories[position]
                     currentCategorySelection = dataSourcesCategories[position]
+                    exitEditMode()
 
                     // Reload the data sources information when a new category has been selected
                     dataSourcesViewModel.loadData(currentCategory)
