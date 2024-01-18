@@ -75,6 +75,8 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"Šie dati ietver tādu informāciju kā aktivitātes ilgums, treniņa veids, apļu skaits, atkārtojumi, sesijas vai peldēšanas vēzieni."</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"Šie dati ietver tādu informāciju kā miega fāzes un miega sesijas."</string>
     <string name="all_entries_button" msgid="5109091107239135235">"Skatīt visus ierakstus"</string>
+    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
+    <skip />
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"Dzēst šos datus"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"piekļuve jūsu veselības rādītāju datiem"</string>
@@ -240,6 +242,14 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"sirdsdarbības ātrums miera stāvoklī"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"Lasīt sirdsdarbības ātrumu miera stāvoklī"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"Rakstīt sirdsdarbības ātrumu miera stāvoklī"</string>
+    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
+    <skip />
+    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
+    <skip />
+    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
+    <skip />
+    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
+    <skip />
     <string name="read_permission_category" msgid="6002099618259628632">"Atļauja lietotnei <xliff:g id="APP_NAME">%1$s</xliff:g> lasīt datus"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"Atļauja lietotnei <xliff:g id="APP_NAME">%1$s</xliff:g> rakstīt datus"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"Atcelt"</string>
@@ -347,10 +357,8 @@
     <string name="delete_data_notification_title" msgid="7740230240986343347">"Notiek Health Connect datu dzēšana"</string>
     <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"Notiek Health Connect datu dzēšana"</string>
     <string name="delete_data_notification_channel_name" msgid="4499713830012802095">"Datu dzēšana"</string>
-    <!-- no translation found for data_point_action_content_description (6881048311770784455) -->
-    <skip />
-    <!-- no translation found for delete_data_point (1004049578454616738) -->
-    <skip />
+    <string name="data_point_action_content_description" msgid="6881048311770784455">"Dzēst datu ierakstu: <xliff:g id="ENTRY_TO_DELETE">%s</xliff:g>"</string>
+    <string name="delete_data_point" msgid="1004049578454616738">"Dzēst ierakstu: <xliff:g id="ENTRY_TO_DELETE">%s</xliff:g>"</string>
     <string name="aggregation_total" msgid="5641333638662325184">"Kopā: <xliff:g id="TOTAL_VALUE">%s</xliff:g>"</string>
     <string name="watt_format" msgid="8500953817369623803">"{value,plural, =1{1 W}zero{# W}one{# W}other{# W}}"</string>
     <string name="watt_format_long" msgid="7107446926499116109">"{value,plural, =1{1 vats}zero{# vatu}one{# vats}other{# vati}}"</string>
@@ -712,11 +720,9 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Pārvietot uz leju"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Pārvietot uz sākumu"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Pārvietot uz beigām"</string>
-    <!-- no translation found for reorder_button_content_description (3104832018446653623) -->
-    <skip />
+    <string name="reorder_button_content_description" msgid="3104832018446653623">"Poga lietotnes <xliff:g id="SELECTED_APP">%s</xliff:g> pārvietošanai prioritāšu sarakstā; veiciet dubultskārienu un velciet, lai pārvietotu"</string>
     <string name="remove_button_content_description" msgid="6170490900032612048">"Poga lietotnes <xliff:g id="SELECTED_APP">%s</xliff:g> noņemšanai no prioritāšu saraksta"</string>
-    <!-- no translation found for reorder_button_action_description (5197462036756192214) -->
-    <skip />
+    <string name="reorder_button_action_description" msgid="5197462036756192214">"Veikt dubultskārienu un vilkt, lai pārvietotu"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"fiziskā sagatavotība, labsajūta"</string>
     <string name="search_keywords_permissions" msgid="7821010295153350533">"atļaujas"</string>
     <string name="search_keywords_data" msgid="5359602744325490523">"health connect, veselības dati, veselības kategorijas, piekļuve datiem, aktivitātes, ķermeņa rādītāji, cikla uzskaite, uzturs, miegs, veselības rādījumi"</string>

@@ -75,6 +75,8 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"Këto të dhëna përfshijnë informacione si p.sh. koha aktive, lloji i ushtrimeve, xhirot, përsëritjet, seancat ose stilet e notit"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"Këto të dhëna përfshijnë informacione si p.sh. fazat e gjumit dhe seancat e gjumit"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"Shiko të gjitha hyrjet"</string>
+    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
+    <skip />
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"Fshi këto të dhëna"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"të ketë qasje te të dhënat e tua të shëndetit"</string>
@@ -240,6 +242,14 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"rrahjet e zemrës në gjendje qetësie"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"Të lexojë të dhënat për rrahjet e zemrës në gjendje qetësie"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"Të shkruajë të dhënat për rrahjet e zemrës në gjendje qetësie"</string>
+    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
+    <skip />
+    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
+    <skip />
+    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
+    <skip />
+    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
+    <skip />
     <string name="read_permission_category" msgid="6002099618259628632">"Lejo \"<xliff:g id="APP_NAME">%1$s</xliff:g>\" të lexojë"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"Lejo \"<xliff:g id="APP_NAME">%1$s</xliff:g>\" të shkruajë"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"Anulo"</string>
@@ -347,10 +357,8 @@
     <string name="delete_data_notification_title" msgid="7740230240986343347">"Të dhënat e Health Connect po fshihen"</string>
     <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"Të dhënat e Health Connect po fshihen"</string>
     <string name="delete_data_notification_channel_name" msgid="4499713830012802095">"Fshirja e të dhënave"</string>
-    <!-- no translation found for data_point_action_content_description (6881048311770784455) -->
-    <skip />
-    <!-- no translation found for delete_data_point (1004049578454616738) -->
-    <skip />
+    <string name="data_point_action_content_description" msgid="6881048311770784455">"Fshi hyrjen e të dhënave: <xliff:g id="ENTRY_TO_DELETE">%s</xliff:g>"</string>
+    <string name="delete_data_point" msgid="1004049578454616738">"Fshi hyrjen: <xliff:g id="ENTRY_TO_DELETE">%s</xliff:g>"</string>
     <string name="aggregation_total" msgid="5641333638662325184">"Në total: <xliff:g id="TOTAL_VALUE">%s</xliff:g>"</string>
     <string name="watt_format" msgid="8500953817369623803">"{value,plural, =1{1 W}other{# W}}"</string>
     <string name="watt_format_long" msgid="7107446926499116109">"{value,plural, =1{1 vat}other{# vat}}"</string>
@@ -712,11 +720,9 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Zhvendos poshtë"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Zhvendos në krye"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Zhvendos në fund"</string>
-    <!-- no translation found for reorder_button_content_description (3104832018446653623) -->
-    <skip />
+    <string name="reorder_button_content_description" msgid="3104832018446653623">"Butoni për të rirenditur \"<xliff:g id="SELECTED_APP">%s</xliff:g>\" në listën e përparësisë. Trokit dy herë dhe zvarrit për të ndryshuar renditjen"</string>
     <string name="remove_button_content_description" msgid="6170490900032612048">"Butoni për të hequr \"<xliff:g id="SELECTED_APP">%s</xliff:g>\" nga lista e përparësisë"</string>
-    <!-- no translation found for reorder_button_action_description (5197462036756192214) -->
-    <skip />
+    <string name="reorder_button_action_description" msgid="5197462036756192214">"Trokit dy herë dhe zvarrit për të ndryshuar renditjen"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"fitnesi, mirëqenia"</string>
     <string name="search_keywords_permissions" msgid="7821010295153350533">"lejet"</string>
     <string name="search_keywords_data" msgid="5359602744325490523">"health connect, të dhënat e shëndetit, kategoritë e shëndetit, qasja te të dhënat, aktiviteti, matjet e trupit, monitorimi i ciklit menstrual, të ushqyerit, gjumi, të dhënat jetësore"</string>

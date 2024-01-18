@@ -75,6 +75,8 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"Այս տվյալները ներառում են տեղեկություններ, օրինակ, ակտիվ ժամանակի, վարժության տեսակի, պտույտների, կրկնությունների, ժամանակահատվածների և լողալու ընթացքում թիահարվածների մասին"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"Այս տվյալները ներառում են տեղեկություններ, օրինակ, քնի փուլերի և քնի ժամանակահատվածների մասին"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"Տեսնել բոլոր տվյալները"</string>
+    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
+    <skip />
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"Ջնջել այս տվյալները"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"ձեր առողջության մասին տվյալների հասանելիություն"</string>
@@ -240,6 +242,14 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"սրտի զարկերի հաճախականությունը հանգիստ վիճակում"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"Կարդալ հանգիստ վիճակում սրտի զարկերի հաճախականության մասին տվյալները"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"Գրանցել հանգիստ վիճակում սրտի զարկերի հաճախականության մասին տվյալները"</string>
+    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
+    <skip />
+    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
+    <skip />
+    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
+    <skip />
+    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
+    <skip />
     <string name="read_permission_category" msgid="6002099618259628632">"Թույլատրել <xliff:g id="APP_NAME">%1$s</xliff:g> հավելվածին կարդալ"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"Թույլատրել <xliff:g id="APP_NAME">%1$s</xliff:g> հավելվածին գրանցել"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"Չեղարկել"</string>
@@ -347,10 +357,8 @@
     <string name="delete_data_notification_title" msgid="7740230240986343347">"Health Connect-ի տվյալները ջնջվում են"</string>
     <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"Health Connect-ի տվյալները ջնջվում են"</string>
     <string name="delete_data_notification_channel_name" msgid="4499713830012802095">"Տվյալների ջնջում"</string>
-    <!-- no translation found for data_point_action_content_description (6881048311770784455) -->
-    <skip />
-    <!-- no translation found for delete_data_point (1004049578454616738) -->
-    <skip />
+    <string name="data_point_action_content_description" msgid="6881048311770784455">"Ջնջել գրառումը՝ <xliff:g id="ENTRY_TO_DELETE">%s</xliff:g>"</string>
+    <string name="delete_data_point" msgid="1004049578454616738">"Ջնջել գրառումը՝ <xliff:g id="ENTRY_TO_DELETE">%s</xliff:g>"</string>
     <string name="aggregation_total" msgid="5641333638662325184">"Ընդամենը՝ <xliff:g id="TOTAL_VALUE">%s</xliff:g>"</string>
     <string name="watt_format" msgid="8500953817369623803">"{value,plural, =1{1 Վտ}one{# Վտ}other{# Վտ}}"</string>
     <string name="watt_format_long" msgid="7107446926499116109">"{value,plural, =1{1 վատտ}one{# վատտ}other{# վատտ}}"</string>
@@ -712,11 +720,9 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Տեղափոխել ներքև"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Տեղափոխել սկիզբ"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Տեղափոխել վերջ"</string>
-    <!-- no translation found for reorder_button_content_description (3104832018446653623) -->
-    <skip />
+    <string name="reorder_button_content_description" msgid="3104832018446653623">"<xliff:g id="SELECTED_APP">%s</xliff:g> հավելվածի դիրքը առաջնահերթության ցանկում փոփոխելու կոճակ, կրկնակի հպեք և քաշեք՝ վերադասավորելու համար"</string>
     <string name="remove_button_content_description" msgid="6170490900032612048">"<xliff:g id="SELECTED_APP">%s</xliff:g>-ն առաջնահերթության ցանկից հեռացնելու կոճակ"</string>
-    <!-- no translation found for reorder_button_action_description (5197462036756192214) -->
-    <skip />
+    <string name="reorder_button_action_description" msgid="5197462036756192214">"Կրկնակի հպեք և քաշեք՝ վերադասավորելու համար"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"ֆիթնես, առողջություն"</string>
     <string name="search_keywords_permissions" msgid="7821010295153350533">"թույլտվություններ"</string>
     <string name="search_keywords_data" msgid="5359602744325490523">"health connect, առողջության մասին տվյալներ, առողջության կատեգորիաներ, տվյալների հասանելիություն, գործողություններ, մարմնի պարամետրեր, ցիկլի հետագծում, սնունդ, քուն, կենսական ցուցանիշներ"</string>

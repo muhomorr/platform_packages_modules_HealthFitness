@@ -75,6 +75,8 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"Data ini mengandungi maklumat seperti masa aktif, jenis senaman, pusingan, ulangan, sesi atau kuak renang."</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"Data ini mengandungi maklumat seperti peringkat tidur dan sesi tidur."</string>
     <string name="all_entries_button" msgid="5109091107239135235">"Lihat semua entri"</string>
+    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
+    <skip />
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"Padamkan data ini"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"akses data kesihatan anda"</string>
@@ -240,6 +242,14 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"kadar denyut jantung rehat"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"Baca kadar denyut jantung rehat"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"Tulis kadar denyut jantung rehat"</string>
+    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
+    <skip />
+    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
+    <skip />
+    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
+    <skip />
+    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
+    <skip />
     <string name="read_permission_category" msgid="6002099618259628632">"Benarkan “<xliff:g id="APP_NAME">%1$s</xliff:g>” membaca"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"Benarkan “<xliff:g id="APP_NAME">%1$s</xliff:g>” menulis"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"Batal"</string>
@@ -347,10 +357,8 @@
     <string name="delete_data_notification_title" msgid="7740230240986343347">"Memadamkan data Health Connect"</string>
     <string name="delete_data_notification_ticker_text" msgid="2604051567679235822">"Memadamkan data Health Connect"</string>
     <string name="delete_data_notification_channel_name" msgid="4499713830012802095">"Pemadaman data"</string>
-    <!-- no translation found for data_point_action_content_description (6881048311770784455) -->
-    <skip />
-    <!-- no translation found for delete_data_point (1004049578454616738) -->
-    <skip />
+    <string name="data_point_action_content_description" msgid="6881048311770784455">"Padamkan masukan data <xliff:g id="ENTRY_TO_DELETE">%s</xliff:g>"</string>
+    <string name="delete_data_point" msgid="1004049578454616738">"Padamkan masukan <xliff:g id="ENTRY_TO_DELETE">%s</xliff:g>"</string>
     <string name="aggregation_total" msgid="5641333638662325184">"Jumlah: <xliff:g id="TOTAL_VALUE">%s</xliff:g>"</string>
     <string name="watt_format" msgid="8500953817369623803">"{value,plural, =1{1 W}other{# W}}"</string>
     <string name="watt_format_long" msgid="7107446926499116109">"{value,plural, =1{1 watt}other{# watt}}"</string>
@@ -712,11 +720,9 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Alih ke bawah"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Alih ke atas sekali"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Alih ke bawah sekali"</string>
-    <!-- no translation found for reorder_button_content_description (3104832018446653623) -->
-    <skip />
+    <string name="reorder_button_content_description" msgid="3104832018446653623">"Butang untuk menyusun semula <xliff:g id="SELECTED_APP">%s</xliff:g> dalam senarai keutamaan, ketik dua kali dan seret untuk menyusun semula apl"</string>
     <string name="remove_button_content_description" msgid="6170490900032612048">"Butang mengalih keluar <xliff:g id="SELECTED_APP">%s</xliff:g> daripada senarai keutamaan"</string>
-    <!-- no translation found for reorder_button_action_description (5197462036756192214) -->
-    <skip />
+    <string name="reorder_button_action_description" msgid="5197462036756192214">"Ketik dua kali dan seret untuk menyusun semula apl"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"kecergasan, kesihatan"</string>
     <string name="search_keywords_permissions" msgid="7821010295153350533">"kebenaran"</string>
     <string name="search_keywords_data" msgid="5359602744325490523">"health connect, data kesihatan, kategori kesihatan, akses data, aktiviti, ukuran badan, penjejakan kitaran, pemakanan, tidur, vital"</string>
