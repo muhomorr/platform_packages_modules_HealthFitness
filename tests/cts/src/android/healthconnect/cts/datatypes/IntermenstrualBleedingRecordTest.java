@@ -16,6 +16,8 @@
 
 package android.healthconnect.cts.datatypes;
 
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import android.content.Context;
@@ -336,14 +338,13 @@ public class IntermenstrualBleedingRecordTest {
     @Test
     public void testIntermenstrualBleeding_buildSession_buildCorrectObject() {
         IntermenstrualBleedingRecord record =
-                new IntermenstrualBleedingRecord.Builder(TestUtils.generateMetadata(), TIME)
-                        .build();
+                new IntermenstrualBleedingRecord.Builder(generateMetadata(), TIME).build();
         assertThat(record.getTime()).isEqualTo(TIME);
     }
 
     @Test
     public void testIntermenstrualBleeding_buildEqualSessions_equalsReturnsTrue() {
-        Metadata metadata = TestUtils.generateMetadata();
+        Metadata metadata = generateMetadata();
         IntermenstrualBleedingRecord record =
                 new IntermenstrualBleedingRecord.Builder(metadata, TIME).build();
         IntermenstrualBleedingRecord record2 =
@@ -354,7 +355,7 @@ public class IntermenstrualBleedingRecordTest {
     @Test
     public void testIntermenstrualBleeding_buildSessionWithAllFields_buildCorrectObject() {
         IntermenstrualBleedingRecord record =
-                new IntermenstrualBleedingRecord.Builder(TestUtils.generateMetadata(), TIME)
+                new IntermenstrualBleedingRecord.Builder(generateMetadata(), TIME)
                         .setZoneOffset(ZoneOffset.MAX)
                         .build();
         assertThat(record.getZoneOffset()).isEqualTo(ZoneOffset.MAX);

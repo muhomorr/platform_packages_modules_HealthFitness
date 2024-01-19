@@ -17,8 +17,9 @@
 package android.healthconnect.cts.aggregation;
 
 import static android.health.connect.datatypes.ExerciseSessionRecord.EXERCISE_DURATION_TOTAL;
-import static android.healthconnect.cts.utils.TestUtils.SESSION_END_TIME;
-import static android.healthconnect.cts.utils.TestUtils.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_END_TIME;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -97,7 +98,7 @@ public class ExerciseDurationAggregationTest {
         TestUtils.setupAggregation(PACKAGE_NAME, HealthDataCategory.ACTIVITY);
         ExerciseSessionRecord session =
                 new ExerciseSessionRecord.Builder(
-                                TestUtils.generateMetadata(),
+                                generateMetadata(),
                                 SESSION_START_TIME,
                                 SESSION_END_TIME,
                                 ExerciseSessionType
@@ -122,7 +123,7 @@ public class ExerciseDurationAggregationTest {
 
         ExerciseSessionRecord session =
                 new ExerciseSessionRecord.Builder(
-                                TestUtils.generateMetadata(),
+                                generateMetadata(),
                                 SESSION_START_TIME.minusSeconds(10),
                                 SESSION_END_TIME,
                                 ExerciseSessionType
@@ -145,7 +146,7 @@ public class ExerciseDurationAggregationTest {
 
         ExerciseSessionRecord session =
                 new ExerciseSessionRecord.Builder(
-                                TestUtils.generateMetadata(),
+                                generateMetadata(),
                                 SESSION_START_TIME.minusSeconds(100),
                                 SESSION_END_TIME.plusSeconds(100),
                                 ExerciseSessionType
@@ -174,7 +175,7 @@ public class ExerciseDurationAggregationTest {
                         .build();
         ExerciseSessionRecord session =
                 new ExerciseSessionRecord.Builder(
-                                TestUtils.generateMetadata(),
+                                generateMetadata(),
                                 SESSION_START_TIME,
                                 SESSION_END_TIME,
                                 ExerciseSessionType.EXERCISE_SESSION_TYPE_CALISTHENICS)
@@ -211,7 +212,7 @@ public class ExerciseDurationAggregationTest {
         Instant endTime = SESSION_START_TIME.plus(10, ChronoUnit.HOURS);
         ExerciseSessionRecord session =
                 new ExerciseSessionRecord.Builder(
-                                TestUtils.generateMetadata(),
+                                generateMetadata(),
                                 SESSION_START_TIME,
                                 endTime,
                                 ExerciseSessionType.EXERCISE_SESSION_TYPE_BADMINTON)
@@ -247,7 +248,7 @@ public class ExerciseDurationAggregationTest {
         long sessionDurationSeconds = 3600;
         ExerciseSessionRecord session =
                 new ExerciseSessionRecord.Builder(
-                                TestUtils.generateMetadata(),
+                                generateMetadata(),
                                 endTime.minusSeconds(sessionDurationSeconds),
                                 endTime,
                                 ExerciseSessionType.EXERCISE_SESSION_TYPE_BADMINTON)
@@ -277,7 +278,7 @@ public class ExerciseDurationAggregationTest {
         Instant endTime = SESSION_START_TIME.plus(1, ChronoUnit.HOURS);
         ExerciseSessionRecord session =
                 new ExerciseSessionRecord.Builder(
-                                TestUtils.generateMetadata(),
+                                generateMetadata(),
                                 SESSION_START_TIME,
                                 endTime,
                                 ExerciseSessionType.EXERCISE_SESSION_TYPE_BADMINTON)

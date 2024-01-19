@@ -16,14 +16,14 @@
 
 package android.healthconnect.tests.backuprestore;
 
+import static android.healthconnect.cts.utils.PermissionHelper.getHealthDataHistoricalAccessStartDate;
+import static android.healthconnect.cts.utils.PermissionHelper.grantPermission;
+import static android.healthconnect.cts.utils.PermissionHelper.revokeAllPermissions;
+import static android.healthconnect.cts.utils.PermissionHelper.revokeAllPermissionsWithDelay;
 import static android.healthconnect.cts.utils.TestUtils.deleteAllStagedRemoteData;
 import static android.healthconnect.cts.utils.TestUtils.getHealthConnectDataRestoreState;
-import static android.healthconnect.cts.utils.TestUtils.getHealthDataHistoricalAccessStartDate;
-import static android.healthconnect.cts.utils.TestUtils.grantPermission;
 import static android.healthconnect.cts.utils.TestUtils.insertRecords;
 import static android.healthconnect.cts.utils.TestUtils.readRecords;
-import static android.healthconnect.cts.utils.TestUtils.revokeAllPermissions;
-import static android.healthconnect.cts.utils.TestUtils.revokeAllPermissionsWithDelay;
 import static android.healthconnect.cts.utils.TestUtils.verifyDeleteRecords;
 
 import static com.android.compatibility.common.util.BackupUtils.LOCAL_TRANSPORT_TOKEN;

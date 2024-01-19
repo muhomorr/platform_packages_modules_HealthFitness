@@ -126,10 +126,10 @@ public class BackgroundReadTest {
         mManager.insertRecords(
                 List.of(
                         new ActiveCaloriesBurnedRecord.Builder(
-                                        new Metadata.Builder().build(),
-                                        Instant.now().minusSeconds(60),
-                                        Instant.now(),
-                                        Energy.fromCalories(100.0))
+                                new Metadata.Builder().build(),
+                                Instant.now().minusSeconds(60),
+                                Instant.now(),
+                                Energy.fromCalories(100.0))
                                 .build()),
                 Executors.newSingleThreadExecutor(),
                 outcomeReceiver);

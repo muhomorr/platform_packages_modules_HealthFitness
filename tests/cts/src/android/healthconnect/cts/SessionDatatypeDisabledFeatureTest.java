@@ -16,6 +16,9 @@
 
 package android.healthconnect.cts;
 
+import static android.healthconnect.cts.utils.DataFactory.buildExerciseSession;
+import static android.healthconnect.cts.utils.DataFactory.buildSleepSession;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import android.app.UiAutomation;
@@ -67,7 +70,7 @@ public class SessionDatatypeDisabledFeatureTest {
     public void testWriteExerciseSession_insertWithDisableFeature_throwsException()
             throws InterruptedException {
         setSessionDatatypesFeatureEnabledFlag(false);
-        List<Record> records = List.of(TestUtils.buildExerciseSession());
+        List<Record> records = List.of(buildExerciseSession());
         try {
             TestUtils.insertRecords(records);
             Assert.fail("Writing exercise session when flag is disabled should not be allowed");
@@ -80,7 +83,7 @@ public class SessionDatatypeDisabledFeatureTest {
     @Test
     public void testReadExerciseSession_insertAndRead_sessionIsNotAvailable()
             throws InterruptedException {
-        List<Record> records = List.of(TestUtils.buildExerciseSession());
+        List<Record> records = List.of(buildExerciseSession());
         TestUtils.insertRecords(records);
         setSessionDatatypesFeatureEnabledFlag(false);
         ReadRecordsRequestUsingIds.Builder<ExerciseSessionRecord> request =
@@ -94,7 +97,7 @@ public class SessionDatatypeDisabledFeatureTest {
     public void testWriteSleepSession_insertWithDisableFeature_throwsException()
             throws InterruptedException {
         setSessionDatatypesFeatureEnabledFlag(false);
-        List<Record> records = List.of(TestUtils.buildSleepSession());
+        List<Record> records = List.of(buildSleepSession());
         try {
             TestUtils.insertRecords(records);
             Assert.fail("Writing sleep session when flag is disabled should not be allowed");
@@ -107,7 +110,7 @@ public class SessionDatatypeDisabledFeatureTest {
     @Test
     public void testReadSleepSession_insertAndRead_sessionIsNotAvailable()
             throws InterruptedException {
-        List<Record> records = List.of(TestUtils.buildSleepSession());
+        List<Record> records = List.of(buildSleepSession());
         TestUtils.insertRecords(records);
         setSessionDatatypesFeatureEnabledFlag(false);
 

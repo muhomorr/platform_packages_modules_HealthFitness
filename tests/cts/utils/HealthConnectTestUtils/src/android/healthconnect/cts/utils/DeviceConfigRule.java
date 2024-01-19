@@ -16,6 +16,9 @@
 
 package android.healthconnect.cts.utils;
 
+import static android.healthconnect.cts.utils.TestUtils.getDeviceConfigValue;
+import static android.healthconnect.cts.utils.TestUtils.setDeviceConfigValue;
+
 import org.junit.rules.ExternalResource;
 
 /** Sets a device config value for the duration of the test. */
@@ -31,12 +34,12 @@ public class DeviceConfigRule extends ExternalResource {
 
     @Override
     protected void before() throws Throwable {
-        mOriginalValue = TestUtils.getDeviceConfigValue(mKey);
-        TestUtils.setDeviceConfigValue(mKey, mValue);
+        mOriginalValue = getDeviceConfigValue(mKey);
+        setDeviceConfigValue(mKey, mValue);
     }
 
     @Override
     protected void after() {
-        TestUtils.setDeviceConfigValue(mKey, mOriginalValue);
+        setDeviceConfigValue(mKey, mOriginalValue);
     }
 }

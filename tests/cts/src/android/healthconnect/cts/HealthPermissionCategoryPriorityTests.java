@@ -22,7 +22,7 @@ import static android.health.connect.HealthDataCategory.CYCLE_TRACKING;
 import static android.health.connect.HealthDataCategory.NUTRITION;
 import static android.health.connect.HealthDataCategory.SLEEP;
 import static android.health.connect.HealthDataCategory.VITALS;
-import static android.healthconnect.cts.utils.TestUtils.MANAGE_HEALTH_DATA;
+import static android.healthconnect.cts.utils.PermissionHelper.MANAGE_HEALTH_DATA;
 import static android.healthconnect.cts.utils.TestUtils.getPriority;
 import static android.healthconnect.cts.utils.TestUtils.getPriorityWithManageHealthDataPermission;
 import static android.healthconnect.cts.utils.TestUtils.updatePriority;

@@ -24,12 +24,12 @@ import static android.healthconnect.cts.route.ExerciseRouteTestHelper.getExercis
 import static android.healthconnect.cts.route.ExerciseRouteTestHelper.getExerciseSessionWithoutRoute;
 import static android.healthconnect.cts.route.ExerciseRouteTestHelper.getRoute;
 import static android.healthconnect.cts.route.ExerciseRouteTestHelper.readAllExerciseSessionRecordsPrivileged;
+import static android.healthconnect.cts.utils.DataFactory.getEmptyMetadata;
+import static android.healthconnect.cts.utils.DataFactory.getMetadataForClientId;
+import static android.healthconnect.cts.utils.DataFactory.getMetadataForClientIdAndVersion;
+import static android.healthconnect.cts.utils.DataFactory.getMetadataForId;
 import static android.healthconnect.cts.utils.TestUtils.connectAppsWithGrantedPermissions;
 import static android.healthconnect.cts.utils.TestUtils.deleteAllStagedRemoteData;
-import static android.healthconnect.cts.utils.TestUtils.getEmptyMetadata;
-import static android.healthconnect.cts.utils.TestUtils.getMetadataForClientId;
-import static android.healthconnect.cts.utils.TestUtils.getMetadataForClientIdAndVersion;
-import static android.healthconnect.cts.utils.TestUtils.getMetadataForId;
 import static android.healthconnect.cts.utils.TestUtils.insertRecords;
 import static android.healthconnect.cts.utils.TestUtils.updateRecords;
 import static android.healthconnect.cts.utils.TestUtils.yesterdayAt;

@@ -19,6 +19,7 @@ package android.healthconnect.cts.datatypes;
 import static android.health.connect.datatypes.WeightRecord.WEIGHT_AVG;
 import static android.health.connect.datatypes.WeightRecord.WEIGHT_MAX;
 import static android.health.connect.datatypes.WeightRecord.WEIGHT_MIN;
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -799,13 +800,13 @@ public class WeightRecordTest {
                                 .build(),
                         List.of(
                                 new WeightRecord.Builder(
-                                                TestUtils.generateMetadata(),
+                                                generateMetadata(),
                                                 endTimeInstant,
                                                 Mass.fromGrams(10.0))
                                         .setZoneOffset(ZoneOffset.MIN)
                                         .build(),
                                 new WeightRecord.Builder(
-                                                TestUtils.generateMetadata(),
+                                                generateMetadata(),
                                                 endTimeInstant,
                                                 Mass.fromGrams(20.0))
                                         .setZoneOffset(ZoneOffset.MIN)
@@ -847,13 +848,13 @@ public class WeightRecordTest {
                                 .build(),
                         List.of(
                                 new WeightRecord.Builder(
-                                                TestUtils.generateMetadata(),
+                                                generateMetadata(),
                                                 endTimeInstant,
                                                 Mass.fromGrams(10.0))
                                         .setZoneOffset(offset)
                                         .build(),
                                 new WeightRecord.Builder(
-                                                TestUtils.generateMetadata(),
+                                                generateMetadata(),
                                                 endTimeInstant,
                                                 Mass.fromGrams(20.0))
                                         .setZoneOffset(offset)
@@ -878,7 +879,7 @@ public class WeightRecordTest {
         TestUtils.insertRecords(
                 List.of(
                         new WeightRecord.Builder(
-                                        TestUtils.generateMetadata(),
+                                        generateMetadata(),
                                         endTimeInstant.minus(20, DAYS),
                                         Mass.fromGrams(10.0))
                                 .setZoneOffset(ZoneOffset.MIN)

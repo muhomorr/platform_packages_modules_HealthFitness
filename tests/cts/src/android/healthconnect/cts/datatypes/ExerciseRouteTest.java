@@ -16,13 +16,15 @@
 
 package android.healthconnect.cts.datatypes;
 
+import static android.healthconnect.cts.utils.DataFactory.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.buildLocationTimePoint;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.junit.Assert.fail;
 
 import android.health.connect.datatypes.ExerciseRoute;
 import android.health.connect.datatypes.units.Length;
-import android.healthconnect.cts.utils.TestUtils;
 import android.os.Parcel;
 
 import androidx.test.runner.AndroidJUnit4;
@@ -117,8 +119,7 @@ public class ExerciseRouteTest {
     @Test
     public void testExerciseRouteLocation_buildRoute_success() {
         ExerciseRoute route =
-                new ExerciseRoute(
-                        List.of(TestUtils.buildLocationTimePoint(TestUtils.SESSION_START_TIME)));
+                new ExerciseRoute(List.of(buildLocationTimePoint(SESSION_START_TIME)));
         assertThat(route.getRouteLocations()).hasSize(1);
     }
 

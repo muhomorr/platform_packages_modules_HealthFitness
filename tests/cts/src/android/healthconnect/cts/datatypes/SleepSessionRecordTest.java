@@ -16,9 +16,10 @@
 
 package android.healthconnect.cts.datatypes;
 
-import static android.healthconnect.cts.utils.TestUtils.SESSION_END_TIME;
-import static android.healthconnect.cts.utils.TestUtils.SESSION_START_TIME;
-import static android.healthconnect.cts.utils.TestUtils.buildSleepSession;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_END_TIME;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.buildSleepSession;
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -100,7 +101,7 @@ public class SleepSessionRecordTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testSleepSession_sleepStageEndTimeIllegal_throwsException() {
-        new SleepSessionRecord.Builder(TestUtils.generateMetadata(), START_TIME, INTERMEDIATE_TIME)
+        new SleepSessionRecord.Builder(generateMetadata(), START_TIME, INTERMEDIATE_TIME)
                 .setStages(
                         List.of(
                                 new SleepSessionRecord.Stage(
@@ -113,7 +114,7 @@ public class SleepSessionRecordTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testSleepSession_stagesOverlap_throwsException() {
-        new SleepSessionRecord.Builder(TestUtils.generateMetadata(), START_TIME, END_TIME)
+        new SleepSessionRecord.Builder(generateMetadata(), START_TIME, END_TIME)
                 .setStages(
                         List.of(
                                 new SleepSessionRecord.Stage(
@@ -151,7 +152,7 @@ public class SleepSessionRecordTest {
                         END_TIME,
                         SleepSessionRecord.StageType.STAGE_TYPE_SLEEPING_DEEP);
         SleepSessionRecord record =
-                new SleepSessionRecord.Builder(TestUtils.generateMetadata(), START_TIME, END_TIME)
+                new SleepSessionRecord.Builder(generateMetadata(), START_TIME, END_TIME)
                         .setStages(List.of(stage1))
                         .setStages(List.of(stage2))
                         .build();
@@ -160,7 +161,7 @@ public class SleepSessionRecordTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testSleepSession_sleepStageStartTimeIllegal_throwsException() {
-        new SleepSessionRecord.Builder(TestUtils.generateMetadata(), INTERMEDIATE_TIME, END_TIME)
+        new SleepSessionRecord.Builder(generateMetadata(), INTERMEDIATE_TIME, END_TIME)
                 .setStages(
                         List.of(
                                 new SleepSessionRecord.Stage(
@@ -176,7 +177,7 @@ public class SleepSessionRecordTest {
     @Test
     public void testSleepSession_buildSession_buildsCorrectObject() {
         SleepSessionRecord record =
-                new SleepSessionRecord.Builder(TestUtils.generateMetadata(), START_TIME, END_TIME)
+                new SleepSessionRecord.Builder(generateMetadata(), START_TIME, END_TIME)
                         .setStages(
                                 List.of(
                                         new SleepSessionRecord.Stage(
@@ -223,7 +224,7 @@ public class SleepSessionRecordTest {
 
     @Test
     public void testReadById_insertAndReadByIdOne_recordsAreEqual() throws InterruptedException {
-        List<Record> records = List.of(TestUtils.buildSleepSession());
+        List<Record> records = List.of(buildSleepSession());
         TestUtils.insertRecords(records);
 
         ReadRecordsRequestUsingIds.Builder<SleepSessionRecord> request =
@@ -243,7 +244,7 @@ public class SleepSessionRecordTest {
 
     @Test
     public void testReadById_insertAndReadById_recordsAreEqual() throws InterruptedException {
-        List<Record> records = List.of(TestUtils.buildSleepSession(), buildSleepSessionMinimal());
+        List<Record> records = List.of(buildSleepSession(), buildSleepSessionMinimal());
         TestUtils.insertRecords(records);
 
         ReadRecordsRequestUsingIds.Builder<SleepSessionRecord> request =
@@ -257,7 +258,7 @@ public class SleepSessionRecordTest {
     @Test
     public void testReadByClientId_insertAndReadByClientId_recordsAreEqual()
             throws InterruptedException {
-        List<Record> records = List.of(TestUtils.buildSleepSession(), buildSleepSessionMinimal());
+        List<Record> records = List.of(buildSleepSession(), buildSleepSessionMinimal());
         TestUtils.insertRecords(records);
 
         ReadRecordsRequestUsingIds.Builder<SleepSessionRecord> request =
@@ -271,7 +272,7 @@ public class SleepSessionRecordTest {
     @Test
     public void testReadByClientId_insertAndReadByDefaultFilter_filteredAll()
             throws InterruptedException {
-        List<Record> records = List.of(TestUtils.buildSleepSession(), buildSleepSessionMinimal());
+        List<Record> records = List.of(buildSleepSession(), buildSleepSessionMinimal());
         TestUtils.insertRecords(records);
 
         List<SleepSessionRecord> readRecords =
@@ -284,7 +285,7 @@ public class SleepSessionRecordTest {
     @Test
     public void testDeleteRecords_insertAndDeleteById_recordsNotFoundAnymore()
             throws InterruptedException {
-        List<Record> records = List.of(TestUtils.buildSleepSession(), buildSleepSessionMinimal());
+        List<Record> records = List.of(buildSleepSession(), buildSleepSessionMinimal());
         List<Record> insertedRecords = TestUtils.insertRecords(records);
 
         TestUtils.assertRecordFound(records.get(0).getMetadata().getId(), SleepSessionRecord.class);
@@ -303,16 +304,13 @@ public class SleepSessionRecordTest {
             throws InterruptedException {
 
         List<Record> insertedRecords =
-                TestUtils.insertRecords(
-                        Arrays.asList(
-                                TestUtils.buildSleepSession(), TestUtils.buildSleepSession()));
+                TestUtils.insertRecords(Arrays.asList(buildSleepSession(), buildSleepSession()));
 
         // read inserted records and verify that the data is same as inserted.
         readAndAssertEquals(insertedRecords);
 
         // Generate a new set of records that will be used to perform the update operation.
-        List<Record> updateRecords =
-                Arrays.asList(TestUtils.buildSleepSession(), TestUtils.buildSleepSession());
+        List<Record> updateRecords = Arrays.asList(buildSleepSession(), buildSleepSession());
 
         // Modify the uid of the updateRecords to the uuid that was present in the insert
         // records.
@@ -335,16 +333,13 @@ public class SleepSessionRecordTest {
     public void testUpdateRecords_invalidInputRecords_noChangeInDataBase()
             throws InterruptedException {
         List<Record> insertedRecords =
-                TestUtils.insertRecords(
-                        Arrays.asList(
-                                TestUtils.buildSleepSession(), TestUtils.buildSleepSession()));
+                TestUtils.insertRecords(Arrays.asList(buildSleepSession(), buildSleepSession()));
 
         // read inserted records and verify that the data is same as inserted.
         readAndAssertEquals(insertedRecords);
 
         // Generate a second set of records that will be used to perform the update operation.
-        List<Record> updateRecords =
-                Arrays.asList(TestUtils.buildSleepSession(), TestUtils.buildSleepSession());
+        List<Record> updateRecords = Arrays.asList(buildSleepSession(), buildSleepSession());
 
         // Modify the Uid of the updateRecords to the UUID that was present in the insert records,
         // leaving out alternate records so that they have a new UUID which is not present in the
@@ -378,16 +373,13 @@ public class SleepSessionRecordTest {
     public void testUpdateRecords_recordWithInvalidPackageName_noChangeInDataBase()
             throws InterruptedException {
         List<Record> insertedRecords =
-                TestUtils.insertRecords(
-                        Arrays.asList(
-                                TestUtils.buildSleepSession(), TestUtils.buildSleepSession()));
+                TestUtils.insertRecords(Arrays.asList(buildSleepSession(), buildSleepSession()));
 
         // read inserted records and verify that the data is same as inserted.
         readAndAssertEquals(insertedRecords);
 
         // Generate a second set of records that will be used to perform the update operation.
-        List<Record> updateRecords =
-                Arrays.asList(TestUtils.buildSleepSession(), TestUtils.buildSleepSession());
+        List<Record> updateRecords = Arrays.asList(buildSleepSession(), buildSleepSession());
 
         // Modify the Uuid of the updateRecords to the uuid that was present in the insert records.
         for (int itr = 0; itr < updateRecords.size(); itr++) {
@@ -398,7 +390,7 @@ public class SleepSessionRecordTest {
                             insertedRecords.get(itr).getMetadata().getId(),
                             insertedRecords.get(itr).getMetadata().getClientRecordId()));
             //             adding an entry with invalid packageName.
-            updateRecords.set(itr, TestUtils.buildSleepSession());
+            updateRecords.set(itr, buildSleepSession());
         }
 
         try {
@@ -506,7 +498,7 @@ public class SleepSessionRecordTest {
 
     public static SleepSessionRecord buildSleepSessionMinimal() {
         return new SleepSessionRecord.Builder(
-                        TestUtils.generateMetadata(), SESSION_START_TIME, SESSION_END_TIME)
+                        generateMetadata(), SESSION_START_TIME, SESSION_END_TIME)
                 .build();
     }
 }

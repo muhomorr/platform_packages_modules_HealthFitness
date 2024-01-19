@@ -31,13 +31,17 @@ import android.healthconnect.cts.lib.UiTestUtils.clickOnText
 import android.healthconnect.cts.lib.UiTestUtils.scrollDownTo
 import android.healthconnect.cts.lib.UiTestUtils.waitDisplayed
 import android.healthconnect.cts.lib.UiTestUtils.waitNotDisplayed
+import android.healthconnect.cts.utils.DataFactory.getEmptyMetadata
+import android.healthconnect.cts.utils.PermissionHelper.READ_EXERCISE_ROUTES_ALL
+import android.healthconnect.cts.utils.PermissionHelper.getDeclaredHealthPermissions
+import android.healthconnect.cts.utils.PermissionHelper.grantPermission
+import android.healthconnect.cts.utils.PermissionHelper.runWithDeviceConfigForController
+import android.healthconnect.cts.utils.PermissionHelper.runWithRevokedPermission
+import android.healthconnect.cts.utils.PermissionHelper.runWithUserFixedPermission
 import android.healthconnect.cts.utils.ProxyActivity
 import android.healthconnect.cts.utils.RevokedHealthPermissionRule
 import android.healthconnect.cts.utils.TestUtils
-import android.healthconnect.cts.utils.TestUtils.READ_EXERCISE_ROUTES_ALL
-import android.healthconnect.cts.utils.TestUtils.grantPermission
 import android.healthconnect.cts.utils.TestUtils.insertRecordAndGetId
-import android.healthconnect.cts.utils.TestUtils.runWithRevokedPermission
 import androidx.test.uiautomator.By
 import com.google.common.truth.Truth.assertThat
 import java.time.Duration
@@ -261,7 +265,7 @@ class ExerciseRouteRequestTest : HealthConnectBaseTest() {
 
     @Test
     fun requestRoute_withoutReadAllRoutesDeclared_doesNotShowDialog_returnsNull() {
-        assertThat(TestUtils.getDeclaredHealthPermissions(context.packageName))
+        assertThat(getDeclaredHealthPermissions(context.packageName))
             .doesNotContain(READ_EXERCISE_ROUTES_ALL)
         val record = getExerciseSessionWithRoute()
         val recordId = insertRecordAndGetId(record)
@@ -284,7 +288,7 @@ class ExerciseRouteRequestTest : HealthConnectBaseTest() {
             Intent(ACTION_REQUEST_EXERCISE_ROUTE).putExtra(EXTRA_SESSION_ID, recordId)
 
         val result =
-            TestUtils.runWithUserFixedPermission(
+            runWithUserFixedPermission(
                 ROUTE_READER_WRITER_APP.getPackageName(), READ_EXERCISE_ROUTES_ALL) {
                     ROUTE_READER_WRITER_APP.startActivityForResult(requestIntent)
                 }
@@ -303,7 +307,7 @@ class ExerciseRouteRequestTest : HealthConnectBaseTest() {
             Intent(ACTION_REQUEST_EXERCISE_ROUTE).putExtra(EXTRA_SESSION_ID, recordId)
 
         val result =
-            TestUtils.runWithDeviceConfigForController(READ_ROUTES_ALL_FEATURE_FLAG, "false") {
+            runWithDeviceConfigForController(READ_ROUTES_ALL_FEATURE_FLAG, "false") {
                 ROUTE_READER_WRITER_APP.startActivityForResult(requestIntent) {
                     waitNotDisplayed(By.text("Allow all routes"))
                     waitDisplayed(By.text("Don't allow"))
@@ -371,7 +375,7 @@ class ExerciseRouteRequestTest : HealthConnectBaseTest() {
 
     private fun getExerciseSessionWithRoute(startTime: Instant) =
         ExerciseSessionRecord.Builder(
-                TestUtils.getEmptyMetadata(),
+                getEmptyMetadata(),
                 startTime,
                 startTime.plus(Duration.ofMinutes(30)),
                 ExerciseSessionType.EXERCISE_SESSION_TYPE_RUNNING)
@@ -385,7 +389,7 @@ class ExerciseRouteRequestTest : HealthConnectBaseTest() {
     private fun getExerciseSessionWithoutRoute(): ExerciseSessionRecord {
         val startTime = TestUtils.yesterdayAt("11:00")
         return ExerciseSessionRecord.Builder(
-                TestUtils.getEmptyMetadata(),
+                getEmptyMetadata(),
                 startTime,
                 startTime.plus(Duration.ofMinutes(30)),
                 ExerciseSessionType.EXERCISE_SESSION_TYPE_RUNNING)

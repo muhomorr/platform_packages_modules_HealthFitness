@@ -16,6 +16,8 @@
 
 package android.healthconnect.cts.datatypes;
 
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import android.content.Context;
@@ -338,14 +340,13 @@ public class HeartRateVariabilityRmssdRecordTest {
     @Test
     public void testHeartRateVariabilityRmssd_buildSession_buildCorrectObject() {
         HeartRateVariabilityRmssdRecord record =
-                new HeartRateVariabilityRmssdRecord.Builder(TestUtils.generateMetadata(), TIME, 1.3)
-                        .build();
+                new HeartRateVariabilityRmssdRecord.Builder(generateMetadata(), TIME, 1.3).build();
         assertThat(record.getTime()).isEqualTo(TIME);
     }
 
     @Test
     public void testHeartRateVariabilityRmssd_buildEqualSessions_equalsReturnsTrue() {
-        Metadata metadata = TestUtils.generateMetadata();
+        Metadata metadata = generateMetadata();
         HeartRateVariabilityRmssdRecord record =
                 new HeartRateVariabilityRmssdRecord.Builder(metadata, TIME, 1.3).build();
         HeartRateVariabilityRmssdRecord record2 =
@@ -356,7 +357,7 @@ public class HeartRateVariabilityRmssdRecordTest {
     @Test
     public void testHeartRateVariabilityRmssd_buildSessionWithAllFields_buildCorrectObject() {
         HeartRateVariabilityRmssdRecord record =
-                new HeartRateVariabilityRmssdRecord.Builder(TestUtils.generateMetadata(), TIME, 1.3)
+                new HeartRateVariabilityRmssdRecord.Builder(generateMetadata(), TIME, 1.3)
                         .setZoneOffset(ZoneOffset.MAX)
                         .build();
         assertThat(record.getZoneOffset()).isEqualTo(ZoneOffset.MAX);

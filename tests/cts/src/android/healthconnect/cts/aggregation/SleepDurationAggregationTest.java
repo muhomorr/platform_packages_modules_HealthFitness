@@ -17,8 +17,9 @@
 package android.healthconnect.cts.aggregation;
 
 import static android.health.connect.datatypes.SleepSessionRecord.SLEEP_DURATION_TOTAL;
-import static android.healthconnect.cts.utils.TestUtils.SESSION_END_TIME;
-import static android.healthconnect.cts.utils.TestUtils.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_END_TIME;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -81,7 +82,7 @@ public class SleepDurationAggregationTest {
         TestUtils.setupAggregation(PACKAGE_NAME, HealthDataCategory.SLEEP);
         SleepSessionRecord session =
                 new SleepSessionRecord.Builder(
-                                TestUtils.generateMetadata(), SESSION_START_TIME, SESSION_END_TIME)
+                                generateMetadata(), SESSION_START_TIME, SESSION_END_TIME)
                         .build();
         AggregateRecordsResponse<Long> response =
                 TestUtils.getAggregateResponse(mAggregateAllRecordsRequest, List.of(session));
@@ -107,7 +108,7 @@ public class SleepDurationAggregationTest {
                         SleepSessionRecord.StageType.STAGE_TYPE_AWAKE);
         SleepSessionRecord session =
                 new SleepSessionRecord.Builder(
-                                TestUtils.generateMetadata(), SESSION_START_TIME, SESSION_END_TIME)
+                                generateMetadata(), SESSION_START_TIME, SESSION_END_TIME)
                         .setStages(
                                 List.of(
                                         awakeStage,
@@ -149,8 +150,7 @@ public class SleepDurationAggregationTest {
 
         Instant endTime = SESSION_START_TIME.plus(10, ChronoUnit.HOURS);
         SleepSessionRecord session =
-                new SleepSessionRecord.Builder(
-                                TestUtils.generateMetadata(), SESSION_START_TIME, endTime)
+                new SleepSessionRecord.Builder(generateMetadata(), SESSION_START_TIME, endTime)
                         .build();
         TestUtils.insertRecords(List.of(session));
 

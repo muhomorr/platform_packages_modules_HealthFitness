@@ -19,11 +19,11 @@ package android.healthconnect.cts.route;
 import static android.healthconnect.cts.route.ExerciseRouteTestHelper.ROUTE_WRITER_APP;
 import static android.healthconnect.cts.route.ExerciseRouteTestHelper.assertCorrectHealthPermissions;
 import static android.healthconnect.cts.route.ExerciseRouteTestHelper.getExerciseSessionWithRoute;
-import static android.healthconnect.cts.utils.TestUtils.MANAGE_HEALTH_DATA;
+import static android.healthconnect.cts.utils.DataFactory.getEmptyMetadata;
+import static android.healthconnect.cts.utils.PermissionHelper.MANAGE_HEALTH_DATA;
 import static android.healthconnect.cts.utils.TestUtils.deleteAllStagedRemoteData;
 import static android.healthconnect.cts.utils.TestUtils.getChangeLogToken;
 import static android.healthconnect.cts.utils.TestUtils.getChangeLogs;
-import static android.healthconnect.cts.utils.TestUtils.getEmptyMetadata;
 import static android.healthconnect.cts.utils.TestUtils.readRecords;
 
 import static com.android.compatibility.common.util.SystemUtil.runWithShellPermissionIdentity;

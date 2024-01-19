@@ -16,8 +16,9 @@
 
 package android.healthconnect.cts.datatypes;
 
-import static android.healthconnect.cts.utils.TestUtils.SESSION_END_TIME;
-import static android.healthconnect.cts.utils.TestUtils.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_END_TIME;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -25,7 +26,6 @@ import android.health.connect.datatypes.ExerciseSegment;
 import android.health.connect.datatypes.ExerciseSegmentType;
 import android.health.connect.datatypes.ExerciseSessionRecord;
 import android.health.connect.datatypes.ExerciseSessionType;
-import android.healthconnect.cts.utils.TestUtils;
 
 import org.junit.Test;
 
@@ -81,7 +81,7 @@ public class ExerciseSegmentTest {
     @Test(expected = IllegalArgumentException.class)
     public void testExerciseSegment_lapStartTimeIllegal_throwsException() {
         new ExerciseSessionRecord.Builder(
-                        TestUtils.generateMetadata(),
+                        generateMetadata(),
                         SESSION_START_TIME,
                         SESSION_START_TIME.plusSeconds(200),
                         ExerciseSessionType.EXERCISE_SESSION_TYPE_BADMINTON)
@@ -98,7 +98,7 @@ public class ExerciseSegmentTest {
     @Test(expected = IllegalArgumentException.class)
     public void testExerciseSegment_lapEndTimeIllegal_throwsException() {
         new ExerciseSessionRecord.Builder(
-                        TestUtils.generateMetadata(),
+                        generateMetadata(),
                         SESSION_START_TIME,
                         SESSION_START_TIME.plusSeconds(200),
                         ExerciseSessionType.EXERCISE_SESSION_TYPE_BADMINTON)
@@ -115,7 +115,7 @@ public class ExerciseSegmentTest {
     @Test(expected = IllegalArgumentException.class)
     public void testExerciseSegment_segmentsOverlap_throwsException() {
         new ExerciseSessionRecord.Builder(
-                        TestUtils.generateMetadata(),
+                        generateMetadata(),
                         SESSION_START_TIME,
                         SESSION_END_TIME,
                         ExerciseSessionType.EXERCISE_SESSION_TYPE_HIGH_INTENSITY_INTERVAL_TRAINING)

@@ -21,8 +21,8 @@ import android.healthconnect.cts.lib.ActivityLauncher.launchMainActivity
 import android.healthconnect.cts.lib.TestAppProxy
 import android.healthconnect.cts.lib.UiTestUtils.clickOnText
 import android.healthconnect.cts.lib.UiTestUtils.waitDisplayed
+import android.healthconnect.cts.utils.DataFactory.getEmptyMetadata
 import android.healthconnect.cts.utils.TestUtils
-import android.healthconnect.cts.utils.TestUtils.getEmptyMetadata
 import android.healthconnect.cts.utils.TestUtils.verifyDeleteRecords
 import androidx.test.uiautomator.By
 import java.time.Instant

@@ -17,6 +17,9 @@
 package android.healthconnect.cts.ratelimiter;
 
 import static android.health.connect.datatypes.StepsRecord.STEPS_COUNT_TOTAL;
+import static android.healthconnect.cts.utils.DataFactory.buildDevice;
+import static android.healthconnect.cts.utils.DataFactory.getCompleteStepsRecord;
+import static android.healthconnect.cts.utils.DataFactory.getUpdatedStepsRecord;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
@@ -32,6 +35,9 @@ import android.health.connect.changelog.ChangeLogTokenRequest;
 import android.health.connect.changelog.ChangeLogTokenResponse;
 import android.health.connect.changelog.ChangeLogsRequest;
 import android.health.connect.datatypes.DataOrigin;
+import android.health.connect.datatypes.Device;
+import android.health.connect.datatypes.HeartRateRecord;
+import android.health.connect.datatypes.Metadata;
 import android.health.connect.datatypes.Record;
 import android.health.connect.datatypes.StepsRecord;
 import android.healthconnect.cts.utils.AssumptionCheckerRule;
@@ -56,6 +62,7 @@ import org.junit.runner.RunWith;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -102,7 +109,7 @@ public class RateLimiterTest {
 
     @Test
     public void testTryAcquireApiCallQuota_readCallsInLimit() throws InterruptedException {
-        List<Record> testRecord = List.of(TestUtils.getCompleteStepsRecord());
+        List<Record> testRecord = List.of(getCompleteStepsRecord());
 
         tryAcquireCallQuotaNTimesForRead(testRecord, TestUtils.insertRecords(testRecord));
     }
@@ -165,17 +172,37 @@ public class RateLimiterTest {
     }
 
     private void exceedChunkMemoryQuota() throws InterruptedException {
-        List<Record> testRecord = Collections.nCopies(30000, TestUtils.getCompleteStepsRecord());
+        List<Record> testRecord = Collections.nCopies(30000, getCompleteStepsRecord());
 
         TestUtils.insertRecords(testRecord);
     }
 
     private void exceedRecordMemoryQuota() throws InterruptedException {
-        TestUtils.insertRecords(List.of(TestUtils.getHugeHeartRateRecord()));
+        Device device = buildDevice();
+        DataOrigin dataOrigin =
+                new DataOrigin.Builder().setPackageName("android.healthconnect.cts").build();
+        Metadata.Builder testMetadataBuilder = new Metadata.Builder();
+        testMetadataBuilder.setDevice(device).setDataOrigin(dataOrigin);
+        testMetadataBuilder.setClientRecordId("HRR" + Math.random());
+        testMetadataBuilder.setRecordingMethod(Metadata.RECORDING_METHOD_ACTIVELY_RECORDED);
+
+        HeartRateRecord.HeartRateSample heartRateRecord =
+                new HeartRateRecord.HeartRateSample(10, Instant.now().plusMillis(100));
+        ArrayList<HeartRateRecord.HeartRateSample> heartRateRecords =
+                new ArrayList<>(Collections.nCopies(85000, heartRateRecord));
+
+        HeartRateRecord testHeartRateRecord =
+                new HeartRateRecord.Builder(
+                                testMetadataBuilder.build(),
+                                Instant.now(),
+                                Instant.now().plusMillis(500),
+                                heartRateRecords)
+                        .build();
+        TestUtils.insertRecords(List.of(testHeartRateRecord));
     }
 
     private void exceedRecordMemoryRollingQuotaBackgroundLimit() throws InterruptedException {
-        List<Record> testRecord = Collections.nCopies(350, TestUtils.getCompleteStepsRecord());
+        List<Record> testRecord = Collections.nCopies(350, getCompleteStepsRecord());
         for (int i = 0; i < 1000; i++) {
             TestUtils.insertRecords(testRecord);
         }
@@ -187,7 +214,7 @@ public class RateLimiterTest {
         Instant endTime = Instant.now();
         float quotaAcquired =
                 getQuotaAcquired(startTime, endTime, WINDOW_15M, MAX_FOREGROUND_WRITE_CALL_15M);
-        List<Record> testRecord = List.of(TestUtils.getCompleteStepsRecord());
+        List<Record> testRecord = List.of(getCompleteStepsRecord());
 
         while (quotaAcquired > 1) {
             TestUtils.insertRecords(testRecord);
@@ -195,7 +222,7 @@ public class RateLimiterTest {
         }
         int tryWriteWithBuffer = 20;
         while (tryWriteWithBuffer > 0) {
-            TestUtils.insertRecords(List.of(TestUtils.getCompleteStepsRecord()));
+            TestUtils.insertRecords(List.of(getCompleteStepsRecord()));
 
             tryWriteWithBuffer--;
         }
@@ -207,7 +234,7 @@ public class RateLimiterTest {
                         .setAscending(true)
                         .build();
         Instant startTime = Instant.now();
-        List<Record> testRecord = Arrays.asList(TestUtils.getCompleteStepsRecord());
+        List<Record> testRecord = Arrays.asList(getCompleteStepsRecord());
 
         List<Record> insertedRecords = TestUtils.insertRecords(testRecord);
         tryAcquireCallQuotaNTimesForRead(testRecord, insertedRecords);
@@ -286,19 +313,19 @@ public class RateLimiterTest {
      * quota is used by MultiAppTestUtils.verifyDeleteRecords.
      */
     private void tryAcquireCallQuotaNTimesForWrite(int nTimes) throws InterruptedException {
-        List<Record> testRecord = Arrays.asList(TestUtils.getCompleteStepsRecord());
+        List<Record> testRecord = Arrays.asList(getCompleteStepsRecord());
 
         List<Record> insertedRecords = List.of();
         for (int i = 0; i < nTimes; i++) {
             if (i % 3 == 0) {
                 insertedRecords = TestUtils.insertRecords(testRecord);
             } else if (i % 3 == 1) {
-                List<Record> updateRecords = Arrays.asList(TestUtils.getCompleteStepsRecord());
+                List<Record> updateRecords = Arrays.asList(getCompleteStepsRecord());
 
                 for (int itr = 0; itr < updateRecords.size(); itr++) {
                     updateRecords.set(
                             itr,
-                            TestUtils.getStepsRecord_update(
+                            getUpdatedStepsRecord(
                                     updateRecords.get(itr),
                                     insertedRecords.get(itr).getMetadata().getId(),
                                     insertedRecords.get(itr).getMetadata().getClientRecordId()));

@@ -16,6 +16,8 @@
 
 package android.healthconnect.cts.utils;
 
+import static android.healthconnect.cts.utils.PermissionHelper.getGrantedHealthPermissions;
+
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 import org.junit.rules.ExternalResource;
@@ -34,7 +36,7 @@ public class RevokedHealthPermissionRule extends ExternalResource {
 
     @Override
     protected void before() throws Throwable {
-        var grantedPermissions = TestUtils.getGrantedHealthPermissions(mPackageName);
+        var grantedPermissions = getGrantedHealthPermissions(mPackageName);
 
         mIsPermissionGranted = grantedPermissions.contains(mPermission);
 

@@ -20,6 +20,7 @@ import static android.health.connect.datatypes.HeartRateRecord.BPM_AVG;
 import static android.health.connect.datatypes.HeartRateRecord.BPM_MAX;
 import static android.health.connect.datatypes.HeartRateRecord.BPM_MIN;
 import static android.health.connect.datatypes.HeartRateRecord.HEART_MEASUREMENTS_COUNT;
+import static android.healthconnect.cts.utils.DataFactory.getHeartRateRecord;
 import static android.healthconnect.cts.utils.TestUtils.readRecordsWithPagination;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -231,8 +232,8 @@ public class HeartRateRecordTest {
     public void testReadHeartRateRecordUsingFilters_withPageSize() throws InterruptedException {
         List<Record> recordList =
                 Arrays.asList(
-                        TestUtils.getHeartRateRecord(72, Instant.now().minus(1, ChronoUnit.DAYS)),
-                        TestUtils.getHeartRateRecord(72, Instant.now().minus(2, ChronoUnit.DAYS)));
+                        getHeartRateRecord(72, Instant.now().minus(1, ChronoUnit.DAYS)),
+                        getHeartRateRecord(72, Instant.now().minus(2, ChronoUnit.DAYS)));
         TestUtils.insertRecords(recordList);
         ReadRecordsResponse<HeartRateRecord> newHeartRecords =
                 readRecordsWithPagination(
@@ -246,10 +247,10 @@ public class HeartRateRecordTest {
     public void testReadHeartRateRecordUsingFilters_withPageToken() throws InterruptedException {
         List<Record> recordList =
                 Arrays.asList(
-                        TestUtils.getHeartRateRecord(72, Instant.now().minusMillis(1000)),
-                        TestUtils.getHeartRateRecord(72, Instant.now().minusMillis(2000)),
-                        TestUtils.getHeartRateRecord(72, Instant.now().minusMillis(3000)),
-                        TestUtils.getHeartRateRecord(72, Instant.now().minusMillis(4000)));
+                        getHeartRateRecord(72, Instant.now().minusMillis(1000)),
+                        getHeartRateRecord(72, Instant.now().minusMillis(2000)),
+                        getHeartRateRecord(72, Instant.now().minusMillis(3000)),
+                        getHeartRateRecord(72, Instant.now().minusMillis(4000)));
         TestUtils.insertRecords(recordList);
         ReadRecordsResponse<HeartRateRecord> oldHeartRecords =
                 readRecordsWithPagination(
@@ -271,8 +272,7 @@ public class HeartRateRecordTest {
 
     @Test
     public void testReadHeartRateRecordUsingFilters_nextPageTokenEnd() throws InterruptedException {
-        List<Record> recordList =
-                Arrays.asList(TestUtils.getHeartRateRecord(), TestUtils.getHeartRateRecord());
+        List<Record> recordList = Arrays.asList(getHeartRateRecord(), getHeartRateRecord());
         TestUtils.insertRecords(recordList);
         ReadRecordsResponse<HeartRateRecord> oldHeartRecords =
                 readRecordsWithPagination(
@@ -548,9 +548,7 @@ public class HeartRateRecordTest {
 
         List<Record> records =
                 Arrays.asList(
-                        TestUtils.getHeartRateRecord(71),
-                        TestUtils.getHeartRateRecord(72),
-                        TestUtils.getHeartRateRecord(73));
+                        getHeartRateRecord(71), getHeartRateRecord(72), getHeartRateRecord(73));
         AggregateRecordsResponse<Long> response =
                 TestUtils.getAggregateResponse(
                         new AggregateRecordsRequest.Builder<Long>(
@@ -617,9 +615,7 @@ public class HeartRateRecordTest {
 
         List<Record> records =
                 Arrays.asList(
-                        TestUtils.getHeartRateRecord(71),
-                        TestUtils.getHeartRateRecord(72),
-                        TestUtils.getHeartRateRecord(73));
+                        getHeartRateRecord(71), getHeartRateRecord(72), getHeartRateRecord(73));
         AggregateRecordsResponse<Long> response =
                 TestUtils.getAggregateResponse(
                         new AggregateRecordsRequest.Builder<Long>(
@@ -1019,12 +1015,9 @@ public class HeartRateRecordTest {
         for (int i = numDays; i > 0; i--) {
             List<Record> records =
                     Arrays.asList(
-                            TestUtils.getHeartRateRecord(
-                                    71, Instant.now().minus(i, ChronoUnit.DAYS)),
-                            TestUtils.getHeartRateRecord(
-                                    72, Instant.now().minus(i, ChronoUnit.DAYS)),
-                            TestUtils.getHeartRateRecord(
-                                    73, Instant.now().minus(i, ChronoUnit.DAYS)));
+                            getHeartRateRecord(71, Instant.now().minus(i, ChronoUnit.DAYS)),
+                            getHeartRateRecord(72, Instant.now().minus(i, ChronoUnit.DAYS)),
+                            getHeartRateRecord(73, Instant.now().minus(i, ChronoUnit.DAYS)));
 
             TestUtils.insertRecords(records);
         }

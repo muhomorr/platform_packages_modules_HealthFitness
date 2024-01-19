@@ -16,6 +16,8 @@
 
 package android.healthconnect.cts;
 
+import static android.healthconnect.cts.utils.DataFactory.buildExerciseSession;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import android.app.UiAutomation;
@@ -56,7 +58,7 @@ public class ExerciseRouteDisabledFeatureTest {
     public void testWriteRoute_insertWithDisableFeature_throwsException()
             throws InterruptedException {
         setExerciseRouteFeatureEnabledFlag(false);
-        List<Record> records = List.of(TestUtils.buildExerciseSession());
+        List<Record> records = List.of(buildExerciseSession());
         try {
             TestUtils.insertRecords(records);
             Assert.fail("Writing route when flag is disabled should not be allowed");
@@ -68,7 +70,7 @@ public class ExerciseRouteDisabledFeatureTest {
 
     @Test
     public void testReadRoute_insertAndRead_routeIsNotAvailable() throws InterruptedException {
-        List<Record> records = List.of(TestUtils.buildExerciseSession());
+        List<Record> records = List.of(buildExerciseSession());
         TestUtils.insertRecords(records);
         setExerciseRouteFeatureEnabledFlag(false);
         ExerciseSessionRecord insertedRecord = (ExerciseSessionRecord) records.get(0);

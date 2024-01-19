@@ -16,6 +16,9 @@
 
 package android.healthconnect.cts;
 
+import static android.healthconnect.cts.utils.DataFactory.getStepsRecord;
+import static android.healthconnect.cts.utils.DataFactory.getTestRecords;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import android.content.Context;
@@ -67,7 +70,7 @@ public class HealthConnectAccessLogsTest {
     @Test
     public void testAccessLogs_read_singleRecordType() throws InterruptedException {
         List<AccessLog> oldAccessLogsResponse = TestUtils.queryAccessLogs();
-        List<Record> testRecord = Collections.singletonList(TestUtils.getStepsRecord());
+        List<Record> testRecord = Collections.singletonList(getStepsRecord());
         TestUtils.insertRecords(testRecord);
         TestUtils.readRecords(
                 new ReadRecordsRequestUsingFilters.Builder<>(StepsRecord.class).build());
@@ -86,7 +89,7 @@ public class HealthConnectAccessLogsTest {
     @Test
     public void testAccessLogs_read_multipleRecordTypes() throws InterruptedException {
         List<AccessLog> oldAccessLogsResponse = TestUtils.queryAccessLogs();
-        List<Record> testRecord = TestUtils.getTestRecords();
+        List<Record> testRecord = getTestRecords();
         TestUtils.insertRecords(testRecord);
         TestUtils.readRecords(
                 new ReadRecordsRequestUsingFilters.Builder<>(StepsRecord.class).build());
@@ -104,7 +107,7 @@ public class HealthConnectAccessLogsTest {
     @Test
     public void testAccessLogs_afterInsert() throws InterruptedException {
         List<AccessLog> oldAccessLogsResponse = TestUtils.queryAccessLogs();
-        List<Record> testRecord = TestUtils.getTestRecords();
+        List<Record> testRecord = getTestRecords();
         TestUtils.insertRecords(testRecord);
         // Wait for some time before fetching access logs as they are updated in the background.
         Thread.sleep(500);

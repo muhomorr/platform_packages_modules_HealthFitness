@@ -16,7 +16,8 @@
 
 package android.healthconnect.cts;
 
-import static android.healthconnect.cts.utils.TestUtils.MANAGE_HEALTH_DATA;
+import static android.healthconnect.cts.utils.DataFactory.getTestRecords;
+import static android.healthconnect.cts.utils.PermissionHelper.MANAGE_HEALTH_DATA;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -115,7 +116,7 @@ public class GetApplicationInfoTest {
     public void testGetApplicationInfo() throws InterruptedException {
         Context context = ApplicationProvider.getApplicationContext();
         CountDownLatch latch = new CountDownLatch(1);
-        TestUtils.insertRecords(TestUtils.getTestRecords());
+        TestUtils.insertRecords(getTestRecords());
         sUiAutomation.adoptShellPermissionIdentity(MANAGE_HEALTH_DATA);
 
         try {

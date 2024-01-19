@@ -16,6 +16,8 @@
 
 package android.healthconnect.cts.datatypes;
 
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import android.content.Context;
@@ -310,15 +312,14 @@ public class BodyWaterMassRecordTest {
     @Test
     public void testBodyWaterMass_buildSession_buildCorrectObject() {
         BodyWaterMassRecord record =
-                new BodyWaterMassRecord.Builder(
-                                TestUtils.generateMetadata(), TIME, Mass.fromGrams(40))
+                new BodyWaterMassRecord.Builder(generateMetadata(), TIME, Mass.fromGrams(40))
                         .build();
         assertThat(record.getTime()).isEqualTo(TIME);
     }
 
     @Test
     public void testBodyWaterMass_buildEqualSessions_equalsReturnsTrue() {
-        Metadata metadata = TestUtils.generateMetadata();
+        Metadata metadata = generateMetadata();
         BodyWaterMassRecord record =
                 new BodyWaterMassRecord.Builder(metadata, TIME, Mass.fromGrams(40)).build();
         BodyWaterMassRecord record2 =
@@ -329,8 +330,7 @@ public class BodyWaterMassRecordTest {
     @Test
     public void testBodyWaterMass_buildSessionWithAllFields_buildCorrectObject() {
         BodyWaterMassRecord record =
-                new BodyWaterMassRecord.Builder(
-                                TestUtils.generateMetadata(), TIME, Mass.fromGrams(40))
+                new BodyWaterMassRecord.Builder(generateMetadata(), TIME, Mass.fromGrams(40))
                         .setZoneOffset(ZoneOffset.MAX)
                         .build();
         assertThat(record.getZoneOffset()).isEqualTo(ZoneOffset.MAX);

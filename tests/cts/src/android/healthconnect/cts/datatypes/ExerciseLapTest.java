@@ -16,8 +16,9 @@
 
 package android.healthconnect.cts.datatypes;
 
-import static android.healthconnect.cts.utils.TestUtils.SESSION_END_TIME;
-import static android.healthconnect.cts.utils.TestUtils.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_END_TIME;
+import static android.healthconnect.cts.utils.DataFactory.SESSION_START_TIME;
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -25,7 +26,6 @@ import android.health.connect.datatypes.ExerciseLap;
 import android.health.connect.datatypes.ExerciseSessionRecord;
 import android.health.connect.datatypes.ExerciseSessionType;
 import android.health.connect.datatypes.units.Length;
-import android.healthconnect.cts.utils.TestUtils;
 
 import org.junit.Test;
 
@@ -71,7 +71,7 @@ public class ExerciseLapTest {
     @Test(expected = IllegalArgumentException.class)
     public void testLaps_lapStartTimeIllegal_throwsException() {
         new ExerciseSessionRecord.Builder(
-                        TestUtils.generateMetadata(),
+                        generateMetadata(),
                         SESSION_START_TIME,
                         SESSION_START_TIME.plusSeconds(200),
                         ExerciseSessionType.EXERCISE_SESSION_TYPE_CALISTHENICS)
@@ -87,7 +87,7 @@ public class ExerciseLapTest {
     @Test(expected = IllegalArgumentException.class)
     public void testLaps_lapEndTimeIllegal_throwsException() {
         new ExerciseSessionRecord.Builder(
-                        TestUtils.generateMetadata(),
+                        generateMetadata(),
                         SESSION_START_TIME,
                         SESSION_START_TIME.plusSeconds(200),
                         ExerciseSessionType.EXERCISE_SESSION_TYPE_CALISTHENICS)
@@ -103,7 +103,7 @@ public class ExerciseLapTest {
     @Test(expected = IllegalArgumentException.class)
     public void testLaps_lapsOverlaps_throwsException() {
         new ExerciseSessionRecord.Builder(
-                        TestUtils.generateMetadata(),
+                        generateMetadata(),
                         SESSION_START_TIME,
                         SESSION_END_TIME,
                         ExerciseSessionType.EXERCISE_SESSION_TYPE_CALISTHENICS)

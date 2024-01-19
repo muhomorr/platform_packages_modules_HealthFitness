@@ -30,7 +30,8 @@ import static android.health.connect.datatypes.RecordTypeIdentifier.RECORD_TYPE_
 import static android.health.connect.datatypes.RecordTypeIdentifier.RECORD_TYPE_HEART_RATE;
 import static android.health.connect.datatypes.RecordTypeIdentifier.RECORD_TYPE_STEPS;
 import static android.health.connect.datatypes.StepsRecord.STEPS_COUNT_TOTAL;
-import static android.healthconnect.cts.utils.TestUtils.MANAGE_HEALTH_DATA;
+import static android.healthconnect.cts.utils.DataFactory.getRecordsAndIdentifiers;
+import static android.healthconnect.cts.utils.PermissionHelper.MANAGE_HEALTH_DATA;
 import static android.healthconnect.cts.utils.TestUtils.getRecordById;
 import static android.healthconnect.cts.utils.TestUtils.insertRecords;
 
@@ -81,6 +82,7 @@ import android.health.connect.datatypes.units.Power;
 import android.health.connect.datatypes.units.Volume;
 import android.health.connect.restore.StageRemoteDataException;
 import android.healthconnect.cts.utils.AssumptionCheckerRule;
+import android.healthconnect.cts.utils.DataFactory;
 import android.healthconnect.cts.utils.TestUtils;
 import android.os.OutcomeReceiver;
 import android.os.ParcelFileDescriptor;
@@ -173,8 +175,7 @@ public class HealthConnectManagerTest {
 
     @Test
     public void testRecordIdentifiers() {
-        for (TestUtils.RecordAndIdentifier recordAndIdentifier :
-                TestUtils.getRecordsAndIdentifiers()) {
+        for (TestUtils.RecordAndIdentifier recordAndIdentifier : getRecordsAndIdentifiers()) {
             assertThat(recordAndIdentifier.getRecordClass().getRecordType())
                     .isEqualTo(recordAndIdentifier.getId());
         }
@@ -201,7 +202,8 @@ public class HealthConnectManagerTest {
     public void testRandomIdWithInsert() throws Exception {
         // Insert a sample record of each data type.
         List<Record> insertRecords =
-                TestUtils.insertRecords(Collections.singletonList(TestUtils.getStepsRecord("abc")));
+                TestUtils.insertRecords(
+                        Collections.singletonList(DataFactory.getStepsRecord("abc")));
         assertThat(insertRecords.get(0).getMetadata().getId()).isNotNull();
         assertThat(insertRecords.get(0).getMetadata().getId()).isNotEqualTo("abc");
     }
@@ -1636,7 +1638,7 @@ public class HealthConnectManagerTest {
                 },
                 Manifest.permission.MIGRATE_HEALTH_CONNECT_DATA);
 
-        StepsRecord testRecord = TestUtils.getStepsRecord();
+        StepsRecord testRecord = DataFactory.getStepsRecord();
 
         try {
             TestUtils.insertRecords(Collections.singletonList(testRecord));
@@ -1795,7 +1797,7 @@ public class HealthConnectManagerTest {
     public void testGetRecordTypeInfo_InsertRecords_correctContributingPackages() throws Exception {
         // Insert a set of test records for StepRecords, ExerciseSessionRecord, HeartRateRecord,
         // BasalMetabolicRateRecord.
-        List<Record> testRecords = TestUtils.getTestRecords();
+        List<Record> testRecords = DataFactory.getTestRecords();
         TestUtils.insertRecords(testRecords);
 
         // Populate expected records. This method puts empty lists as contributing packages for all
@@ -1856,7 +1858,7 @@ public class HealthConnectManagerTest {
             throws Exception {
         // Insert a sets of test records for StepRecords, ExerciseSessionRecord, HeartRateRecord,
         // BasalMetabolicRateRecord.
-        List<Record> testRecords = TestUtils.getTestRecords();
+        List<Record> testRecords = DataFactory.getTestRecords();
         TestUtils.insertRecords(testRecords);
 
         // Populate expected records. This method puts empty lists as contributing packages for all
@@ -1921,10 +1923,10 @@ public class HealthConnectManagerTest {
             throws Exception {
         // Insert 2 sets of test records for StepRecords, ExerciseSessionRecord, HeartRateRecord,
         // BasalMetabolicRateRecord.
-        List<Record> testRecords = TestUtils.getTestRecords();
+        List<Record> testRecords = DataFactory.getTestRecords();
         TestUtils.insertRecords(testRecords);
 
-        List<Record> testRecords2 = TestUtils.getTestRecords();
+        List<Record> testRecords2 = DataFactory.getTestRecords();
         TestUtils.insertRecords(testRecords2);
 
         // When recordTypes are modified the appInfo also gets updated and this update happens on

@@ -16,6 +16,8 @@
 
 package android.healthconnect.cts.datatypes;
 
+import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import android.content.Context;
@@ -311,8 +313,7 @@ public class MenstruationPeriodRecordTest {
         final ZoneOffset startZoneOffset = ZoneOffset.UTC;
         final ZoneOffset endZoneOffset = ZoneOffset.MAX;
         MenstruationPeriodRecord.Builder builder =
-                new MenstruationPeriodRecord.Builder(
-                                TestUtils.generateMetadata(), START_TIME, END_TIME)
+                new MenstruationPeriodRecord.Builder(generateMetadata(), START_TIME, END_TIME)
                         .setEndZoneOffset(ZoneOffset.MAX)
                         .setStartZoneOffset(ZoneOffset.MIN);
 
@@ -329,8 +330,7 @@ public class MenstruationPeriodRecordTest {
     @Test
     public void testMenstruationPeriod_buildSession_buildCorrectObject() {
         MenstruationPeriodRecord record =
-                new MenstruationPeriodRecord.Builder(
-                                TestUtils.generateMetadata(), START_TIME, END_TIME)
+                new MenstruationPeriodRecord.Builder(generateMetadata(), START_TIME, END_TIME)
                         .build();
         assertThat(record.getStartTime()).isEqualTo(START_TIME);
         assertThat(record.getEndTime()).isEqualTo(END_TIME);
@@ -338,7 +338,7 @@ public class MenstruationPeriodRecordTest {
 
     @Test
     public void testMenstruationPeriod_buildEqualSessions_equalsReturnsTrue() {
-        Metadata metadata = TestUtils.generateMetadata();
+        Metadata metadata = generateMetadata();
         MenstruationPeriodRecord record =
                 new MenstruationPeriodRecord.Builder(metadata, START_TIME, END_TIME).build();
         MenstruationPeriodRecord record2 =
@@ -349,8 +349,7 @@ public class MenstruationPeriodRecordTest {
     @Test
     public void testMenstruationPeriod_buildSessionWithAllFields_buildCorrectObject() {
         MenstruationPeriodRecord record =
-                new MenstruationPeriodRecord.Builder(
-                                TestUtils.generateMetadata(), START_TIME, END_TIME)
+                new MenstruationPeriodRecord.Builder(generateMetadata(), START_TIME, END_TIME)
                         .setEndZoneOffset(ZoneOffset.MAX)
                         .setStartZoneOffset(ZoneOffset.MIN)
                         .build();

@@ -19,10 +19,10 @@ package android.healthconnect.cts.route;
 import static android.health.connect.HealthPermissions.READ_EXERCISE;
 import static android.health.connect.HealthPermissions.WRITE_EXERCISE;
 import static android.health.connect.HealthPermissions.WRITE_EXERCISE_ROUTE;
-import static android.healthconnect.cts.utils.TestUtils.READ_EXERCISE_ROUTES_ALL;
-import static android.healthconnect.cts.utils.TestUtils.READ_EXERCISE_ROUTE_PERMISSION;
-import static android.healthconnect.cts.utils.TestUtils.READ_HEALTH_DATA_IN_BACKGROUND;
-import static android.healthconnect.cts.utils.TestUtils.getGrantedHealthPermissions;
+import static android.healthconnect.cts.utils.PermissionHelper.READ_EXERCISE_ROUTES_ALL;
+import static android.healthconnect.cts.utils.PermissionHelper.READ_EXERCISE_ROUTE_PERMISSION;
+import static android.healthconnect.cts.utils.PermissionHelper.READ_HEALTH_DATA_IN_BACKGROUND;
+import static android.healthconnect.cts.utils.PermissionHelper.getGrantedHealthPermissions;
 import static android.healthconnect.cts.utils.TestUtils.readRecords;
 import static android.healthconnect.cts.utils.TestUtils.yesterdayAt;
 
