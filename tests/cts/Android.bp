@@ -30,6 +30,10 @@ android_test {
         ":healthfitness-cts-testapp-srcs",
         ":healthfitness-permissions-testapp-srcs",
         "src/android/healthconnect/cts/*.java",
+        "src/android/healthconnect/cts/aggregation/*.java",
+        "src/android/healthconnect/cts/changelogs/*.java",
+        "src/android/healthconnect/cts/datatypes/**/*.java",
+        "src/android/healthconnect/cts/migration/*.java",
     ],
     // Tag this module as a cts test artifact
     test_suites: [
