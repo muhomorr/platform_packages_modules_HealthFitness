@@ -152,7 +152,13 @@ public final class BackupRestore {
     @VisibleForTesting
     static final long DATA_MERGING_TIMEOUT_INTERVAL_MILLIS = 5 * DateUtils.DAY_IN_MILLIS;
 
-    private static final long DATA_MERGING_RETRY_DELAY_MILLIS = 12 * DateUtils.HOUR_IN_MILLIS;
+    @VisibleForTesting
+    static final long DATA_MERGING_RETRY_DELAY_MILLIS = 12 * DateUtils.HOUR_IN_MILLIS;
+
+    // Used in #setOverrideDeadline to set a minimum window of 24 hours. See b/311402873,
+    // b/319721118
+    @VisibleForTesting
+    static final long MINIMUM_LATENCY_WINDOW_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS;
 
     @VisibleForTesting static final String DATA_DOWNLOAD_TIMEOUT_KEY = "data_download_timeout_key";
 
@@ -719,8 +725,8 @@ public final class BackupRestore {
 
         // We might be here because the device rebooted or the user switched. If a timer was already
         // going on then we want to continue that timer.
-        long timeout =
-                getRemainingTimeout(
+        long timeoutMillis =
+                getRemainingTimeoutMillis(
                         DATA_DOWNLOAD_TIMEOUT_KEY,
                         DATA_DOWNLOAD_TIMEOUT_CANCELLED_KEY,
                         DATA_DOWNLOAD_TIMEOUT_INTERVAL_MILLIS);
@@ -734,9 +740,11 @@ public final class BackupRestore {
                                 BackupRestoreJobService.BACKUP_RESTORE_JOB_ID + userId,
                                 new ComponentName(mContext, BackupRestoreJobService.class))
                         .setExtras(extras)
-                        .setMinimumLatency(timeout)
-                        .setOverrideDeadline(timeout << 1);
-        Slog.i(TAG, "Scheduling download state timeout job with period: " + timeout);
+                        .setMinimumLatency(timeoutMillis)
+                        .setOverrideDeadline(timeoutMillis + MINIMUM_LATENCY_WINDOW_MILLIS);
+        Slog.i(
+                TAG,
+                "Scheduling download state timeout job with period: " + timeoutMillis + " millis");
         BackupRestoreJobService.schedule(mContext, jobInfoBuilder.build(), this);
 
         // Set the start time
@@ -776,8 +784,8 @@ public final class BackupRestore {
 
         // We might be here because the device rebooted or the user switched. If a timer was already
         // going on then we want to continue that timer.
-        long timeout =
-                getRemainingTimeout(
+        long timeoutMillis =
+                getRemainingTimeoutMillis(
                         DATA_STAGING_TIMEOUT_KEY,
                         DATA_STAGING_TIMEOUT_CANCELLED_KEY,
                         DATA_STAGING_TIMEOUT_INTERVAL_MILLIS);
@@ -791,9 +799,9 @@ public final class BackupRestore {
                                 BackupRestoreJobService.BACKUP_RESTORE_JOB_ID + userId,
                                 new ComponentName(mContext, BackupRestoreJobService.class))
                         .setExtras(extras)
-                        .setMinimumLatency(timeout)
-                        .setOverrideDeadline(timeout << 1);
-        Slog.i(TAG, "Scheduling staging timeout job with period: " + timeout);
+                        .setMinimumLatency(timeoutMillis)
+                        .setOverrideDeadline(timeoutMillis + MINIMUM_LATENCY_WINDOW_MILLIS);
+        Slog.i(TAG, "Scheduling staging timeout job with period: " + timeoutMillis + " millis");
         BackupRestoreJobService.schedule(mContext, jobInfoBuilder.build(), this);
 
         // Set the start time
@@ -832,8 +840,8 @@ public final class BackupRestore {
 
         // We might be here because the device rebooted or the user switched. If a timer was already
         // going on then we want to continue that timer.
-        long timeout =
-                getRemainingTimeout(
+        long timeoutMillis =
+                getRemainingTimeoutMillis(
                         DATA_MERGING_TIMEOUT_KEY,
                         DATA_MERGING_TIMEOUT_CANCELLED_KEY,
                         DATA_MERGING_TIMEOUT_INTERVAL_MILLIS);
@@ -847,9 +855,9 @@ public final class BackupRestore {
                                 BackupRestoreJobService.BACKUP_RESTORE_JOB_ID + userId,
                                 new ComponentName(mContext, BackupRestoreJobService.class))
                         .setExtras(extras)
-                        .setMinimumLatency(timeout)
-                        .setOverrideDeadline(timeout << 1);
-        Slog.i(TAG, "Scheduling merging timeout job with period: " + timeout);
+                        .setMinimumLatency(timeoutMillis)
+                        .setOverrideDeadline(timeoutMillis + MINIMUM_LATENCY_WINDOW_MILLIS);
+        Slog.i(TAG, "Scheduling merging timeout job with period: " + timeoutMillis + " millis");
         BackupRestoreJobService.schedule(mContext, jobInfoBuilder.build(), this);
 
         // Set the start time
@@ -891,8 +899,8 @@ public final class BackupRestore {
 
         // We might be here because the device rebooted or the user switched. If a timer was already
         // going on then we want to continue that timer.
-        long timeout =
-                getRemainingTimeout(
+        long timeoutMillis =
+                getRemainingTimeoutMillis(
                         DATA_MERGING_RETRY_KEY,
                         DATA_MERGING_RETRY_CANCELLED_KEY,
                         DATA_MERGING_RETRY_DELAY_MILLIS);
@@ -901,9 +909,9 @@ public final class BackupRestore {
                                 BackupRestoreJobService.BACKUP_RESTORE_JOB_ID + userId,
                                 new ComponentName(mContext, BackupRestoreJobService.class))
                         .setExtras(extras)
-                        .setMinimumLatency(timeout)
-                        .setOverrideDeadline(timeout << 1);
-        Slog.i(TAG, "Scheduling retry merging job with period: " + timeout);
+                        .setMinimumLatency(timeoutMillis)
+                        .setOverrideDeadline(timeoutMillis + MINIMUM_LATENCY_WINDOW_MILLIS);
+        Slog.i(TAG, "Scheduling retry merging job with period: " + timeoutMillis + " millis");
         BackupRestoreJobService.schedule(mContext, jobInfoBuilder.build(), this);
 
         // Set the start time
@@ -941,7 +949,7 @@ public final class BackupRestore {
         });
     }
 
-    private long getRemainingTimeout(
+    private long getRemainingTimeoutMillis(
             String startTimeKey, String cancelledTimeKey, long stdTimeout) {
         String startTimeStr = PreferenceHelper.getInstance().getPreference(startTimeKey);
         if (startTimeStr == null || startTimeStr.trim().isEmpty()) {

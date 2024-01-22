@@ -27,13 +27,17 @@ import static com.android.server.healthconnect.backuprestore.BackupRestore.Backu
 import static com.android.server.healthconnect.backuprestore.BackupRestore.BackupRestoreJobService.EXTRA_JOB_NAME_KEY;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_DOWNLOAD_STATE_KEY;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_DOWNLOAD_TIMEOUT_CANCELLED_KEY;
+import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_DOWNLOAD_TIMEOUT_INTERVAL_MILLIS;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_DOWNLOAD_TIMEOUT_KEY;
+import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_MERGING_RETRY_DELAY_MILLIS;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_MERGING_RETRY_KEY;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_MERGING_TIMEOUT_CANCELLED_KEY;
+import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_MERGING_TIMEOUT_INTERVAL_MILLIS;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_MERGING_TIMEOUT_KEY;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_RESTORE_ERROR_KEY;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_RESTORE_STATE_KEY;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_STAGING_TIMEOUT_CANCELLED_KEY;
+import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_STAGING_TIMEOUT_INTERVAL_MILLIS;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.DATA_STAGING_TIMEOUT_KEY;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.INTERNAL_RESTORE_STATE_MERGING_DONE_OLD_CODE;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.INTERNAL_RESTORE_STATE_MERGING_DONE;
@@ -41,6 +45,7 @@ import static com.android.server.healthconnect.backuprestore.BackupRestore.INTER
 import static com.android.server.healthconnect.backuprestore.BackupRestore.INTERNAL_RESTORE_STATE_STAGING_DONE;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.INTERNAL_RESTORE_STATE_STAGING_IN_PROGRESS;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.INTERNAL_RESTORE_STATE_WAITING_FOR_STAGING;
+import static com.android.server.healthconnect.backuprestore.BackupRestore.MINIMUM_LATENCY_WINDOW_MILLIS;
 import static com.android.server.healthconnect.backuprestore.BackupRestore.STAGED_DATABASE_NAME;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -48,10 +53,8 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.clearInvocations;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -222,8 +225,6 @@ public class BackupRestoreTest {
         @HealthConnectManager.DataDownloadState int testDownloadStateSet = DATA_DOWNLOAD_STARTED;
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_DOWNLOAD_STATE_KEY, String.valueOf(testDownloadStateSet));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_DOWNLOAD_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         mBackupRestore.updateDataDownloadState(testDownloadStateSet);
 
@@ -246,8 +247,6 @@ public class BackupRestoreTest {
         @HealthConnectManager.DataDownloadState int testDownloadStateSet = DATA_DOWNLOAD_RETRY;
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_DOWNLOAD_STATE_KEY, String.valueOf(testDownloadStateSet));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_DOWNLOAD_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         mBackupRestore.updateDataDownloadState(testDownloadStateSet);
         ExtendedMockito.verify(
@@ -267,8 +266,6 @@ public class BackupRestoreTest {
     public void testSetInternalRestoreState_waitingForStaging_schedulesStagingTimeoutJob() {
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_WAITING_FOR_STAGING));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         // forcing the state because we want to this state to set even when it's already set.
         mBackupRestore.setInternalRestoreState(INTERNAL_RESTORE_STATE_WAITING_FOR_STAGING, true);
@@ -289,8 +286,6 @@ public class BackupRestoreTest {
     public void testSetInternalRestoreState_stagingInProgress_schedulesStagingTimeoutJob() {
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_STAGING_IN_PROGRESS));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         // forcing the state because we want to this state to set even when it's already set.
         mBackupRestore.setInternalRestoreState(INTERNAL_RESTORE_STATE_STAGING_IN_PROGRESS, true);
@@ -312,8 +307,6 @@ public class BackupRestoreTest {
     public void testSetInternalRestoreState_mergingInProgress_schedulesMergingTimeoutJob() {
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_MERGING_IN_PROGRESS));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         // forcing the state because we want to this state to set even when it's already set.
         mBackupRestore.setInternalRestoreState(INTERNAL_RESTORE_STATE_MERGING_IN_PROGRESS, true);
@@ -335,8 +328,6 @@ public class BackupRestoreTest {
         @HealthConnectManager.DataDownloadState int testDownloadStateSet = DATA_DOWNLOAD_STARTED;
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_DOWNLOAD_STATE_KEY, String.valueOf(testDownloadStateSet));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_DOWNLOAD_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         mBackupRestore.scheduleAllJobs();
         ExtendedMockito.verify(
@@ -355,8 +346,6 @@ public class BackupRestoreTest {
         @HealthConnectManager.DataDownloadState int testDownloadStateSet = DATA_DOWNLOAD_RETRY;
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_DOWNLOAD_STATE_KEY, String.valueOf(testDownloadStateSet));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_DOWNLOAD_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         mBackupRestore.scheduleAllJobs();
         ExtendedMockito.verify(
@@ -371,11 +360,55 @@ public class BackupRestoreTest {
     }
 
     @Test
+    public void testDownloadTimeoutJob_downloadLatencyNotElapsed_usesDefaultLatency() {
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_DOWNLOAD_STATE_KEY, String.valueOf(DATA_DOWNLOAD_STARTED));
+
+        mBackupRestore.scheduleAllJobs();
+        ExtendedMockito.verify(
+                () ->
+                        BackupRestore.BackupRestoreJobService.schedule(
+                                eq(mServiceContext),
+                                mJobInfoArgumentCaptor.capture(),
+                                eq(mBackupRestore)));
+        JobInfo jobInfo = mJobInfoArgumentCaptor.getValue();
+
+        assertThat(jobInfo.getMinLatencyMillis()).isEqualTo(DATA_DOWNLOAD_TIMEOUT_INTERVAL_MILLIS);
+        assertThat(jobInfo.getMaxExecutionDelayMillis())
+                .isEqualTo(DATA_DOWNLOAD_TIMEOUT_INTERVAL_MILLIS + MINIMUM_LATENCY_WINDOW_MILLIS);
+        assertThat(jobInfo.getExtras().getString(EXTRA_JOB_NAME_KEY))
+                .isEqualTo(DATA_DOWNLOAD_TIMEOUT_KEY);
+    }
+
+    @Test
+    public void testDownloadTimeoutJob_downloadLatencyElapsed_usesMinimumLatency() {
+        Instant now = Instant.now();
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_DOWNLOAD_STATE_KEY, String.valueOf(DATA_DOWNLOAD_STARTED));
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_DOWNLOAD_TIMEOUT_KEY,
+                String.valueOf(
+                        now.minusMillis(DATA_DOWNLOAD_TIMEOUT_INTERVAL_MILLIS).toEpochMilli()));
+
+        mBackupRestore.scheduleAllJobs();
+        ExtendedMockito.verify(
+                () ->
+                        BackupRestore.BackupRestoreJobService.schedule(
+                                eq(mServiceContext),
+                                mJobInfoArgumentCaptor.capture(),
+                                eq(mBackupRestore)));
+        JobInfo jobInfo = mJobInfoArgumentCaptor.getValue();
+
+        assertThat(jobInfo.getMinLatencyMillis()).isEqualTo(0);
+        assertThat(jobInfo.getMaxExecutionDelayMillis()).isEqualTo(MINIMUM_LATENCY_WINDOW_MILLIS);
+        assertThat(jobInfo.getExtras().getString(EXTRA_JOB_NAME_KEY))
+                .isEqualTo(DATA_DOWNLOAD_TIMEOUT_KEY);
+    }
+
+    @Test
     public void testScheduleAllPendingJobs_waitingForStaging_schedulesStagingTimeoutJob() {
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_WAITING_FOR_STAGING));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         mBackupRestore.scheduleAllJobs();
         ExtendedMockito.verify(
@@ -393,8 +426,6 @@ public class BackupRestoreTest {
     public void testScheduleAllPendingJobs_stagingInProgress_schedulesStagingTimeoutJob() {
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_STAGING_IN_PROGRESS));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         mBackupRestore.scheduleAllJobs();
         ExtendedMockito.verify(
@@ -409,11 +440,55 @@ public class BackupRestoreTest {
     }
 
     @Test
+    public void testStagingTimeoutJob_stagingLatencyNotElapsed_usesStagingLatency() {
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_WAITING_FOR_STAGING));
+
+        mBackupRestore.scheduleAllJobs();
+        ExtendedMockito.verify(
+                () ->
+                        BackupRestore.BackupRestoreJobService.schedule(
+                                eq(mServiceContext),
+                                mJobInfoArgumentCaptor.capture(),
+                                eq(mBackupRestore)));
+        JobInfo jobInfo = mJobInfoArgumentCaptor.getValue();
+
+        assertThat(jobInfo.getMinLatencyMillis()).isEqualTo(DATA_STAGING_TIMEOUT_INTERVAL_MILLIS);
+        assertThat(jobInfo.getMaxExecutionDelayMillis())
+                .isEqualTo(DATA_STAGING_TIMEOUT_INTERVAL_MILLIS + MINIMUM_LATENCY_WINDOW_MILLIS);
+        assertThat(jobInfo.getExtras().getString(EXTRA_JOB_NAME_KEY))
+                .isEqualTo(DATA_STAGING_TIMEOUT_KEY);
+    }
+
+    @Test
+    public void testStagingTimeoutJob_stagingLatencyElapsed_usesMinimumLatency() {
+        Instant now = Instant.now();
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_WAITING_FOR_STAGING));
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_STAGING_TIMEOUT_KEY,
+                String.valueOf(
+                        now.minusMillis(DATA_STAGING_TIMEOUT_INTERVAL_MILLIS).toEpochMilli()));
+
+        mBackupRestore.scheduleAllJobs();
+        ExtendedMockito.verify(
+                () ->
+                        BackupRestore.BackupRestoreJobService.schedule(
+                                eq(mServiceContext),
+                                mJobInfoArgumentCaptor.capture(),
+                                eq(mBackupRestore)));
+        JobInfo jobInfo = mJobInfoArgumentCaptor.getValue();
+
+        assertThat(jobInfo.getMinLatencyMillis()).isEqualTo(0);
+        assertThat(jobInfo.getMaxExecutionDelayMillis()).isEqualTo(MINIMUM_LATENCY_WINDOW_MILLIS);
+        assertThat(jobInfo.getExtras().getString(EXTRA_JOB_NAME_KEY))
+                .isEqualTo(DATA_STAGING_TIMEOUT_KEY);
+    }
+
+    @Test
     public void testScheduleAllPendingJobs_mergingInProgress_schedulesMergingTimeoutJob() {
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_MERGING_IN_PROGRESS));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         mBackupRestore.scheduleAllJobs();
         ExtendedMockito.verify(
@@ -431,8 +506,6 @@ public class BackupRestoreTest {
     public void testScheduleAllTimeoutJobs_stagingDone_triggersMergingJob() throws Exception {
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_STAGING_DONE));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         when(mTransactionManager.getDatabaseVersion()).thenReturn(1);
 
@@ -447,11 +520,55 @@ public class BackupRestoreTest {
     }
 
     @Test
+    public void testMergingTimeoutJob_mergingLatencyElapsed_usesMergingLatency() {
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_MERGING_IN_PROGRESS));
+
+        mBackupRestore.scheduleAllJobs();
+        ExtendedMockito.verify(
+                () ->
+                        BackupRestore.BackupRestoreJobService.schedule(
+                                eq(mServiceContext),
+                                mJobInfoArgumentCaptor.capture(),
+                                eq(mBackupRestore)));
+        JobInfo jobInfo = mJobInfoArgumentCaptor.getValue();
+
+        assertThat(jobInfo.getMinLatencyMillis()).isEqualTo(DATA_MERGING_TIMEOUT_INTERVAL_MILLIS);
+        assertThat(jobInfo.getMaxExecutionDelayMillis())
+                .isEqualTo(DATA_MERGING_TIMEOUT_INTERVAL_MILLIS + MINIMUM_LATENCY_WINDOW_MILLIS);
+        assertThat(jobInfo.getExtras().getString(EXTRA_JOB_NAME_KEY))
+                .isEqualTo(DATA_MERGING_TIMEOUT_KEY);
+    }
+
+    @Test
+    public void testMergingTimeoutJob_mergingLatencyElapsed_usesMinimumLatency() {
+        Instant now = Instant.now();
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_MERGING_IN_PROGRESS));
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_MERGING_TIMEOUT_KEY,
+                String.valueOf(
+                        now.minusMillis(DATA_MERGING_TIMEOUT_INTERVAL_MILLIS).toEpochMilli()));
+
+        mBackupRestore.scheduleAllJobs();
+        ExtendedMockito.verify(
+                () ->
+                        BackupRestore.BackupRestoreJobService.schedule(
+                                eq(mServiceContext),
+                                mJobInfoArgumentCaptor.capture(),
+                                eq(mBackupRestore)));
+        JobInfo jobInfo = mJobInfoArgumentCaptor.getValue();
+
+        assertThat(jobInfo.getMinLatencyMillis()).isEqualTo(0);
+        assertThat(jobInfo.getMaxExecutionDelayMillis()).isEqualTo(MINIMUM_LATENCY_WINDOW_MILLIS);
+        assertThat(jobInfo.getExtras().getString(EXTRA_JOB_NAME_KEY))
+                .isEqualTo(DATA_MERGING_TIMEOUT_KEY);
+    }
+
+    @Test
     public void testScheduleAllTimeoutJobs_stagingDoneAndMigration_schedulesRetryMergingJob() {
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_STAGING_DONE));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         when(mMigrationStateManager.isMigrationInProgress()).thenReturn(true);
 
@@ -473,8 +590,6 @@ public class BackupRestoreTest {
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY,
                 String.valueOf(INTERNAL_RESTORE_STATE_MERGING_DONE_OLD_CODE));
-        mFakePreferenceHelper.insertOrReplacePreference(
-                DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
 
         when(mMigrationStateManager.isMigrationInProgress()).thenReturn(true);
 
@@ -487,6 +602,58 @@ public class BackupRestoreTest {
                                 eq(mBackupRestore)),
                 timeout(2000));
         JobInfo jobInfo = mJobInfoArgumentCaptor.getValue();
+        assertThat(jobInfo.getExtras().getString(EXTRA_JOB_NAME_KEY))
+                .isEqualTo(DATA_MERGING_RETRY_KEY);
+    }
+
+    @Test
+    public void testRetryMergingTimeoutJob_retryLatencyElapsed_usesRetryLatency() {
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_STAGING_DONE));
+
+        when(mMigrationStateManager.isMigrationInProgress()).thenReturn(true);
+
+        mBackupRestore.scheduleAllJobs();
+        ExtendedMockito.verify(
+                () ->
+                        BackupRestore.BackupRestoreJobService.schedule(
+                                eq(mServiceContext),
+                                mJobInfoArgumentCaptor.capture(),
+                                eq(mBackupRestore)),
+                timeout(2000));
+        JobInfo jobInfo = mJobInfoArgumentCaptor.getValue();
+
+        assertThat(jobInfo.getMinLatencyMillis()).isEqualTo(DATA_MERGING_RETRY_DELAY_MILLIS);
+        assertThat(jobInfo.getMaxExecutionDelayMillis())
+                .isEqualTo(DATA_MERGING_RETRY_DELAY_MILLIS + MINIMUM_LATENCY_WINDOW_MILLIS);
+        assertThat(jobInfo.getExtras().getString(EXTRA_JOB_NAME_KEY))
+                .isEqualTo(DATA_MERGING_RETRY_KEY);
+    }
+
+    @Test
+    public void testRetryMergingTimeoutJob_retryLatencyElapsed_usesMinimumLatency() {
+        Instant now = Instant.now();
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_STAGING_DONE));
+        mFakePreferenceHelper.insertOrReplacePreference(
+                DATA_MERGING_RETRY_KEY,
+                String.valueOf(
+                        now.minusMillis(DATA_MERGING_TIMEOUT_INTERVAL_MILLIS).toEpochMilli()));
+
+        when(mMigrationStateManager.isMigrationInProgress()).thenReturn(true);
+
+        mBackupRestore.scheduleAllJobs();
+        ExtendedMockito.verify(
+                () ->
+                        BackupRestore.BackupRestoreJobService.schedule(
+                                eq(mServiceContext),
+                                mJobInfoArgumentCaptor.capture(),
+                                eq(mBackupRestore)),
+                timeout(2000));
+        JobInfo jobInfo = mJobInfoArgumentCaptor.getValue();
+
+        assertThat(jobInfo.getMinLatencyMillis()).isEqualTo(0);
+        assertThat(jobInfo.getMaxExecutionDelayMillis()).isEqualTo(MINIMUM_LATENCY_WINDOW_MILLIS);
         assertThat(jobInfo.getExtras().getString(EXTRA_JOB_NAME_KEY))
                 .isEqualTo(DATA_MERGING_RETRY_KEY);
     }
@@ -543,7 +710,7 @@ public class BackupRestoreTest {
 
     @Test
     public void testOnStartJob_forWaitingStagingJob_executesStagingJob() {
-       mFakePreferenceHelper.insertOrReplacePreference(
+        mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_RESTORE_STATE_KEY, String.valueOf(INTERNAL_RESTORE_STATE_WAITING_FOR_STAGING));
         mFakePreferenceHelper.insertOrReplacePreference(
                 DATA_STAGING_TIMEOUT_KEY, String.valueOf(Instant.now().toEpochMilli()));
