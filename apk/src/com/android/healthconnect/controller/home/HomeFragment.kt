@@ -69,8 +69,7 @@ class HomeFragment : Hilt_HomeFragment() {
         this.setPageName(PageName.HOME_PAGE)
     }
 
-    @Inject
-    lateinit var featureUtils: FeatureUtils
+    @Inject lateinit var featureUtils: FeatureUtils
 
     private val recentAccessViewModel: RecentAccessViewModel by viewModels()
     private val homeFragmentViewModel: HomeFragmentViewModel by viewModels()
@@ -109,7 +108,8 @@ class HomeFragment : Hilt_HomeFragment() {
             true
         }
 
-        if (featureUtils.isNewAppPriorityEnabled() || featureUtils.isNewInformationArchitectureEnabled()) {
+        if (featureUtils.isNewAppPriorityEnabled() ||
+            featureUtils.isNewInformationArchitectureEnabled()) {
             mManageDataPreference?.logName = HomePageElement.MANAGE_DATA_BUTTON
             mManageDataPreference?.setOnPreferenceClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_manageDataFragment)
@@ -261,7 +261,9 @@ class HomeFragment : Hilt_HomeFragment() {
 
         if (recentAppsList.isEmpty()) {
             mRecentAccessPreference?.addPreference(
-                Preference(requireContext()).also { it.setSummary(R.string.no_recent_access) })
+                Preference(requireContext())
+                    .also { it.setSummary(R.string.no_recent_access) }
+                    .also { it.isSelectable = false })
         } else {
             recentAppsList.forEach { recentApp ->
                 val newRecentAccessPreference =

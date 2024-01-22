@@ -144,6 +144,7 @@ class RecentAccessFragment : Hilt_RecentAccessFragment() {
             mRecentAccessYesterdayPreferenceGroup?.isVisible = false
             mRecentAccessTodayPreferenceGroup?.isVisible = false
             mRecentAccessNoDataPreference?.isVisible = true
+            mRecentAccessNoDataPreference?.isSelectable = false
             fab.isVisible = false
         } else {
             // if the first entry is yesterday, we don't need the 'Today' section
