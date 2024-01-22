@@ -74,7 +74,7 @@
         android:id="@+id/action_icon"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.3"
+        android:layout_weight="0.32"
         android:minWidth="@dimen/button_size"
         android:layout_gravity="center_vertical">
 
@@ -82,6 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
+            android:longClickable="false"
             android:id="@+id/action_icon_background"
             android:minHeight="@dimen/icon_size"
             android:minWidth="@dimen/icon_size"

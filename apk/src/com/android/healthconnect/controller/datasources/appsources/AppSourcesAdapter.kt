@@ -19,7 +19,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -160,19 +159,6 @@ class AppSourcesAdapter(
             appNameView.text = appMetadata.appName
             actionIconBackground.contentDescription =
                 context.getString(R.string.reorder_button_content_description, appNameView.text)
-            actionIconBackground.accessibilityDelegate =
-                object : View.AccessibilityDelegate() {
-                    override fun onInitializeAccessibilityNodeInfo(
-                        host: View,
-                        info: AccessibilityNodeInfo
-                    ) {
-                        super.onInitializeAccessibilityNodeInfo(host, info)
-                        info.addAction(
-                            AccessibilityNodeInfo.AccessibilityAction(
-                                DataSourcesElement.REORDER_APP_SOURCE_BUTTON.impressionId,
-                                context.getString(R.string.reorder_button_action_description)))
-                    }
-                }
 
             if (appUtils.isDefaultApp(context, appMetadata.packageName)) {
                 appSourceSummary.visibility = View.VISIBLE
