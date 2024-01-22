@@ -347,7 +347,7 @@ public class HealthConnectDeviceConfigManager implements DeviceConfig.OnProperti
         }
     }
 
-    /** Returns true if READ_EXERCISE_ROUTES_ALL permission is effective. */
+    /** Returns true if READ_EXERCISE_ROUTES permission is effective. */
     public boolean isExerciseRoutesReadAllFeatureEnabled() {
         mLock.readLock().lock();
         try {

@@ -52,10 +52,9 @@ constructor(
 
     companion object {
         private const val TAG = "ExerciseRouteViewModel"
-        // TODO(b/300270771): use HealthPermissions.READ_EXERCISE_ROUTES_ALL when the API becomes
+        // TODO(b/300270771): use HealthPermissions.READ_EXERCISE_ROUTES when the API becomes
         // unhidden.
-        private const val READ_EXERCISE_ROUTES_ALL =
-            "android.permission.health.READ_EXERCISE_ROUTES_ALL"
+        private const val READ_EXERCISE_ROUTES = "android.permission.health.READ_EXERCISE_ROUTES"
     }
 
     private val _exerciseSession = MutableLiveData<SessionWithAttribution?>()
@@ -87,11 +86,11 @@ constructor(
 
     fun isReadRoutesPermissionGranted(packageName: String): Boolean {
         val grantedPermissions = getGrantedHealthPermissionsUseCase(packageName)
-        return grantedPermissions.contains(READ_EXERCISE_ROUTES_ALL)
+        return grantedPermissions.contains(READ_EXERCISE_ROUTES)
     }
 
     fun isReadRoutesPermissionUserFixed(packageName: String): Boolean {
-        val permission = READ_EXERCISE_ROUTES_ALL
+        val permission = READ_EXERCISE_ROUTES
         val flags = getHealthPermissionsFlagsUseCase(packageName, listOf(permission))
 
         return flags[permission]!!.and(PackageManager.FLAG_PERMISSION_USER_FIXED) != 0
@@ -104,7 +103,7 @@ constructor(
                     packageName,
                     PackageManager.PackageInfoFlags.of(PackageManager.GET_PERMISSIONS.toLong()))
 
-            return appInfo.requestedPermissions.contains(READ_EXERCISE_ROUTES_ALL)
+            return appInfo.requestedPermissions.contains(READ_EXERCISE_ROUTES)
         } catch (e: PackageManager.NameNotFoundException) {
             Log.e(TAG, "isPermissionDeclared error", e)
             return false
@@ -112,7 +111,7 @@ constructor(
     }
 
     fun grantReadRoutesPermission(packageName: String) {
-        grantHealthPermissionUseCase.invoke(packageName, READ_EXERCISE_ROUTES_ALL)
+        grantHealthPermissionUseCase.invoke(packageName, READ_EXERCISE_ROUTES)
     }
 
     fun isSessionInaccessible(packageName: String, session: ExerciseSessionRecord): Boolean {

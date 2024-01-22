@@ -19,7 +19,7 @@ package android.healthconnect.cts.route;
 import static android.health.connect.HealthPermissions.READ_EXERCISE;
 import static android.health.connect.HealthPermissions.WRITE_EXERCISE;
 import static android.health.connect.HealthPermissions.WRITE_EXERCISE_ROUTE;
-import static android.healthconnect.cts.utils.PermissionHelper.READ_EXERCISE_ROUTES_ALL;
+import static android.healthconnect.cts.utils.PermissionHelper.READ_EXERCISE_ROUTES;
 import static android.healthconnect.cts.utils.PermissionHelper.READ_EXERCISE_ROUTE_PERMISSION;
 import static android.healthconnect.cts.utils.PermissionHelper.READ_HEALTH_DATA_IN_BACKGROUND;
 import static android.healthconnect.cts.utils.PermissionHelper.getGrantedHealthPermissions;
@@ -73,7 +73,7 @@ final class ExerciseRouteTestHelper {
         assertThat(getGrantedHealthPermissions(ROUTES_READER_WRITER_APP.getPackageName()))
                 .containsExactly(
                         READ_EXERCISE,
-                        READ_EXERCISE_ROUTES_ALL,
+                        READ_EXERCISE_ROUTES,
                         READ_HEALTH_DATA_IN_BACKGROUND,
                         WRITE_EXERCISE,
                         WRITE_EXERCISE_ROUTE);

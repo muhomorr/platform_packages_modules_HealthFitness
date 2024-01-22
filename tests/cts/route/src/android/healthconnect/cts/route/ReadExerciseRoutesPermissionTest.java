@@ -45,7 +45,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ExerciseRouteReadAllTest {
+public class ReadExerciseRoutesPermissionTest {
 
     @Rule
     public AssumptionCheckerRule mSupportedHardwareRule =

@@ -61,7 +61,7 @@ public class HealthPermissionsTest {
                     HealthPermissions.READ_DISTANCE,
                     HealthPermissions.READ_ELEVATION_GAINED,
                     HealthPermissions.READ_EXERCISE,
-                    HealthPermissions.READ_EXERCISE_ROUTES_ALL,
+                    HealthPermissions.READ_EXERCISE_ROUTES,
                     HealthPermissions.READ_FLOORS_CLIMBED,
                     HealthPermissions.READ_STEPS,
                     HealthPermissions.READ_TOTAL_CALORIES_BURNED,

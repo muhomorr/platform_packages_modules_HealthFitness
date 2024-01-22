@@ -129,31 +129,30 @@ constructor(
 
     private fun shouldHidePermission(permission: String): Boolean {
         return shouldHideExerciseRoute(permission) ||
-            shouldHideExerciseRouteAll(permission) ||
+            shouldHideReadExerciseRoutes(permission) ||
             shouldHideSessionTypes(permission) ||
             shouldHideBackgroundReadPermission(permission) ||
             shouldHideSkinTemperaturePermissions(permission)
-
     }
 
     private fun shouldHideExerciseRoute(permission: String): Boolean {
         return permission in exerciseRoutePermissions && !featureUtils.isExerciseRouteEnabled()
     }
 
-    private fun shouldHideExerciseRouteAll(permission: String): Boolean {
-        // TODO(b/300270771): use HealthPermissions.READ_EXERCISE_ROUTES_ALL when the API becomes
+    private fun shouldHideReadExerciseRoutes(permission: String): Boolean {
+        // TODO(b/300270771): use HealthPermissions.READ_EXERCISE_ROUTES when the API becomes
         // unhidden.
-        return permission == "android.permission.health.READ_EXERCISE_ROUTES_ALL"
+        return permission == "android.permission.health.READ_EXERCISE_ROUTES"
     }
 
     private fun shouldHideSkinTemperaturePermissions(permission: String): Boolean {
         // TODO(b/319602927): use skin temperature permissions when the API becomes unhidden.
-        return permission == "android.permission.health.READ_SKIN_TEMPERATURE" || permission == "android.permission.health.WRITE_SKIN_TEMPERATURE"
+        return permission == "android.permission.health.READ_SKIN_TEMPERATURE" ||
+            permission == "android.permission.health.WRITE_SKIN_TEMPERATURE"
     }
 
     private fun shouldHideSessionTypes(permission: String): Boolean {
-        return permission in sessionTypePermissions
-                && !featureUtils.isSessionTypesEnabled()
+        return permission in sessionTypePermissions && !featureUtils.isSessionTypesEnabled()
     }
 
     private fun shouldHideBackgroundReadPermission(permission: String): Boolean {

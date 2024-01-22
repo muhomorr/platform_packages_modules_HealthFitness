@@ -27,7 +27,7 @@ import static android.healthconnect.cts.route.ExerciseRouteTestHelper.readAllExe
 import static android.healthconnect.cts.utils.DataFactory.getEmptyMetadata;
 import static android.healthconnect.cts.utils.DataFactory.getMetadataForClientId;
 import static android.healthconnect.cts.utils.DataFactory.getMetadataForId;
-import static android.healthconnect.cts.utils.PermissionHelper.READ_EXERCISE_ROUTES_ALL;
+import static android.healthconnect.cts.utils.PermissionHelper.READ_EXERCISE_ROUTES;
 import static android.healthconnect.cts.utils.PermissionHelper.runWithRevokedPermissions;
 import static android.healthconnect.cts.utils.TestUtils.connectAppsWithGrantedPermissions;
 import static android.healthconnect.cts.utils.TestUtils.deleteAllStagedRemoteData;
@@ -242,7 +242,7 @@ public class ExerciseRouteNoReadWritePermissionTest {
                                                         ExerciseSessionRecord.class)
                                                 .build()),
                         ROUTES_READER_WRITER_APP.getPackageName(),
-                        READ_EXERCISE_ROUTES_ALL,
+                        READ_EXERCISE_ROUTES,
                         WRITE_EXERCISE_ROUTE);
 
         assertThat(records).hasSize(1);
@@ -265,7 +265,7 @@ public class ExerciseRouteNoReadWritePermissionTest {
                                                 .addId(sessionId)
                                                 .build()),
                         ROUTES_READER_WRITER_APP.getPackageName(),
-                        READ_EXERCISE_ROUTES_ALL,
+                        READ_EXERCISE_ROUTES,
                         WRITE_EXERCISE_ROUTE);
 
         assertThat(records).hasSize(1);
@@ -290,7 +290,7 @@ public class ExerciseRouteNoReadWritePermissionTest {
                                 ROUTES_READER_WRITER_APP.getChangeLogs(
                                         new ChangeLogsRequest.Builder(token).build()),
                         ROUTES_READER_WRITER_APP.getPackageName(),
-                        READ_EXERCISE_ROUTES_ALL,
+                        READ_EXERCISE_ROUTES,
                         WRITE_EXERCISE_ROUTE);
 
         List<ExerciseSessionRecord> records =

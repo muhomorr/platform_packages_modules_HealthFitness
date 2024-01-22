@@ -19,7 +19,7 @@ package com.android.server.healthconnect.storage.datatypehelpers;
 import static android.health.connect.Constants.DEFAULT_LONG;
 import static android.health.connect.HealthConnectException.ERROR_UNSUPPORTED_OPERATION;
 import static android.health.connect.HealthPermissions.READ_EXERCISE_ROUTE;
-import static android.health.connect.HealthPermissions.READ_EXERCISE_ROUTES_ALL;
+import static android.health.connect.HealthPermissions.READ_EXERCISE_ROUTES;
 import static android.health.connect.HealthPermissions.WRITE_EXERCISE_ROUTE;
 import static android.health.connect.datatypes.AggregationType.AggregationTypeIdentifier.EXERCISE_SESSION_DURATION_TOTAL;
 
@@ -308,7 +308,7 @@ public final class ExerciseSessionRecordHelper
     /** Returns permissions required to read extra record data. */
     @Override
     public List<String> getExtraReadPermissions() {
-        return List.of(READ_EXERCISE_ROUTE, READ_EXERCISE_ROUTES_ALL);
+        return List.of(READ_EXERCISE_ROUTE, READ_EXERCISE_ROUTES);
     }
 
     public List<String> getExtraWritePermissions() {
@@ -458,7 +458,7 @@ public final class ExerciseSessionRecordHelper
         boolean canReadAllRoutes =
                 isInForeground
                         && isReadExerciseRouteAllFeatureEnabled()
-                        && grantedExtraReadPermissions.contains(READ_EXERCISE_ROUTES_ALL);
+                        && grantedExtraReadPermissions.contains(READ_EXERCISE_ROUTES);
 
         return canReadAllRoutes ? ROUTE_READ_ACCESS_TYPE_ALL : ROUTE_READ_ACCESS_TYPE_OWN;
     }

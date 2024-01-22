@@ -185,8 +185,8 @@ public final class HealthPermissions {
      *
      * @hide
      */
-    public static final String READ_EXERCISE_ROUTES_ALL =
-            "android.permission.health.READ_EXERCISE_ROUTES_ALL";
+    public static final String READ_EXERCISE_ROUTES =
+            "android.permission.health.READ_EXERCISE_ROUTES";
 
     /**
      * Allows an application to read the user's floors climbed data.
