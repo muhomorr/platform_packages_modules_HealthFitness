@@ -56,6 +56,7 @@ import java.time.Instant
 class DeletionFragment : Hilt_DeletionFragment() {
 
     private val viewModel: DeletionViewModel by activityViewModels()
+    private var progressDialogFragment: ProgressDialogFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -164,8 +165,11 @@ class DeletionFragment : Hilt_DeletionFragment() {
     }
 
     private fun showProgressDialogFragment() {
-        ProgressDialogFragment(titleRes = R.string.delete_progress_indicator)
-            .show(childFragmentManager, ProgressDialogFragment.TAG)
+        if (progressDialogFragment == null) {
+            progressDialogFragment =
+                ProgressDialogFragment(titleRes = R.string.delete_progress_indicator)
+        }
+        progressDialogFragment?.show(childFragmentManager, ProgressDialogFragment.TAG)
     }
 
     private fun showSuccessDialogFragment() {
@@ -190,8 +194,8 @@ class DeletionFragment : Hilt_DeletionFragment() {
     }
 
     private fun hideProgressDialog() {
-        (childFragmentManager.findFragmentByTag(ProgressDialogFragment.TAG)
-                as ProgressDialogFragment?)
-            ?.dismiss()
+        if (progressDialogFragment != null) {
+            progressDialogFragment?.dismiss()
+        }
     }
 }
