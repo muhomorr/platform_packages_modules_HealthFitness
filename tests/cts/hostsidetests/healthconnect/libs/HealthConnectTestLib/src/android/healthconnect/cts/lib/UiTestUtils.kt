@@ -35,7 +35,6 @@ import com.android.compatibility.common.util.SystemUtil.runWithShellPermissionId
 import com.android.compatibility.common.util.UiAutomatorUtils2.getUiDevice
 import com.android.compatibility.common.util.UiAutomatorUtils2.waitFindObject
 import com.android.compatibility.common.util.UiAutomatorUtils2.waitFindObjectOrNull
-import java.lang.Exception
 import java.time.Duration
 import java.time.Instant
 import java.util.concurrent.TimeoutException
@@ -75,6 +74,14 @@ object UiTestUtils {
 
     fun scrollDownTo(selector: BySelector) {
         waitFindObject(By.scrollable(true)).scrollUntil(Direction.DOWN, Until.findObject(selector))
+    }
+
+    fun scrollDownToAndClick(selector: BySelector) {
+        getUiDevice()
+            .findObject(By.scrollable(true))
+            .scrollUntil(Direction.DOWN, Until.findObject(selector))
+            .click()
+        getUiDevice().waitForIdle()
     }
 
     fun skipOnboardingIfAppears() {

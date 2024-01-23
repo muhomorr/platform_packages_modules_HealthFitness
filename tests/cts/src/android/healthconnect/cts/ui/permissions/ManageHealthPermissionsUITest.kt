@@ -24,6 +24,7 @@ import android.healthconnect.cts.lib.UiTestUtils.clickOnContentDescription
 import android.healthconnect.cts.lib.UiTestUtils.clickOnText
 import android.healthconnect.cts.lib.UiTestUtils.grantPermissionViaPackageManager
 import android.healthconnect.cts.lib.UiTestUtils.revokePermissionViaPackageManager
+import android.healthconnect.cts.lib.UiTestUtils.scrollDownTo
 import android.healthconnect.cts.lib.UiTestUtils.waitDisplayed
 import android.healthconnect.cts.ui.HealthConnectBaseTest
 import androidx.test.uiautomator.By
@@ -39,6 +40,7 @@ class ManageHealthPermissionsUITest : HealthConnectBaseTest() {
         context.launchMainActivity {
             navigateToManagePermissions()
 
+            scrollDownTo(By.text("Health Connect cts test app"))
             waitDisplayed(By.text("Health Connect cts test app"))
         }
     }
