@@ -140,9 +140,7 @@ constructor(
     }
 
     private fun shouldHideReadExerciseRoutes(permission: String): Boolean {
-        // TODO(b/300270771): use HealthPermissions.READ_EXERCISE_ROUTES when the API becomes
-        // unhidden.
-        return permission == "android.permission.health.READ_EXERCISE_ROUTES"
+        return permission == HealthPermissions.READ_EXERCISE_ROUTES
     }
 
     private fun shouldHideSkinTemperaturePermissions(permission: String): Boolean {

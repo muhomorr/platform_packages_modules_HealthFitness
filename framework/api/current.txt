@@ -81,6 +81,7 @@ package android.health.connect {
     field public static final String READ_DISTANCE = "android.permission.health.READ_DISTANCE";
     field public static final String READ_ELEVATION_GAINED = "android.permission.health.READ_ELEVATION_GAINED";
     field public static final String READ_EXERCISE = "android.permission.health.READ_EXERCISE";
+    field @FlaggedApi("com.android.healthconnect.flags.read_exercise_routes_all_enabled") public static final String READ_EXERCISE_ROUTES = "android.permission.health.READ_EXERCISE_ROUTES";
     field public static final String READ_FLOORS_CLIMBED = "android.permission.health.READ_FLOORS_CLIMBED";
     field public static final String READ_HEART_RATE = "android.permission.health.READ_HEART_RATE";
     field public static final String READ_HEART_RATE_VARIABILITY = "android.permission.health.READ_HEART_RATE_VARIABILITY";

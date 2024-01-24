@@ -181,10 +181,18 @@ public final class HealthPermissions {
             "android.permission.health.READ_EXERCISE_ROUTE";
 
     /**
-     * Allows an application to read any {@link ExerciseRoute}.
+     * Allows an application to read {@link ExerciseRoute}.
      *
-     * @hide
+     * <p>This permission can only be granted manually by a user in Health Connect settings or in
+     * the route request activity which can be launched using {@link ACTION_REQUEST_EXERCISE_ROUTE}.
+     * Attempts to request the permission by applications will be ignored.
+     *
+     * <p>Applications should check if the permission has been granted before reading {@link
+     * ExerciseRoute}.
+     *
+     * <p>Protection level: dangerous.
      */
+    @FlaggedApi("com.android.healthconnect.flags.read_exercise_routes_all_enabled")
     public static final String READ_EXERCISE_ROUTES =
             "android.permission.health.READ_EXERCISE_ROUTES";
 
