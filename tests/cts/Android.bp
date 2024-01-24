@@ -34,7 +34,6 @@ android_test {
         "src/android/healthconnect/cts/changelogs/*.java",
         "src/android/healthconnect/cts/datatypes/**/*.java",
         "src/android/healthconnect/cts/migration/*.java",
-        "src/android/healthconnect/cts/readdata/*.java",
     ],
     // Tag this module as a cts test artifact
     test_suites: [

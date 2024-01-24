@@ -566,7 +566,7 @@ public class HealthConnectManagerTest {
     }
 
     @Test
-    public void testInsertRecords_instantDifferentClientIdsAndSameTime_doesNotOverwrite()
+    public void testInsertRecords_instantDifferentClientIdsAndSameTime_doesNotOwerwrite()
             throws InterruptedException {
         final Power bmr1 = Power.fromWatts(100.0);
         final Power bmr2 = Power.fromWatts(110.0);
@@ -651,6 +651,24 @@ public class HealthConnectManagerTest {
         assertThat(records).hasSize(2);
         assertThat(getRecordById(records, id1).getProtein()).isEqualTo(protein1);
         assertThat(getRecordById(records, id2).getProtein()).isEqualTo(protein2);
+    }
+
+    @Test
+    public void testReadRecords_readByIdMaxPageSizeExceeded_throws() {
+        int maxPageSize = 5000;
+        ReadRecordsRequestUsingIds.Builder<StepsRecord> request =
+                new ReadRecordsRequestUsingIds.Builder<>(StepsRecord.class);
+        for (int i = 0; i < maxPageSize; i++) {
+            request.addClientRecordId("client.id" + i);
+        }
+        Throwable thrown =
+                assertThrows(IllegalArgumentException.class, () -> request.addId("extra_id"));
+        assertThat(thrown.getMessage()).contains("Maximum allowed pageSize is 5000");
+        thrown =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> request.addClientRecordId("extra_client_id"));
+        assertThat(thrown.getMessage()).contains("Maximum allowed pageSize is 5000");
     }
 
     @Test

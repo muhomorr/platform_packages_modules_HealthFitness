@@ -27,7 +27,6 @@ import android.content.Context;
 import android.health.connect.datatypes.BasalMetabolicRateRecord;
 import android.health.connect.datatypes.DataOrigin;
 import android.health.connect.datatypes.Device;
-import android.health.connect.datatypes.DistanceRecord;
 import android.health.connect.datatypes.ExerciseLap;
 import android.health.connect.datatypes.ExerciseRoute;
 import android.health.connect.datatypes.ExerciseSegment;
@@ -39,11 +38,8 @@ import android.health.connect.datatypes.Metadata;
 import android.health.connect.datatypes.Record;
 import android.health.connect.datatypes.SleepSessionRecord;
 import android.health.connect.datatypes.StepsRecord;
-import android.health.connect.datatypes.TotalCaloriesBurnedRecord;
-import android.health.connect.datatypes.units.Energy;
 import android.health.connect.datatypes.units.Length;
 import android.health.connect.datatypes.units.Power;
-import android.healthconnect.cts.utils.TestUtils.RecordAndIdentifier;
 
 import androidx.test.core.app.ApplicationProvider;
 
@@ -212,21 +208,13 @@ public final class DataFactory {
         return getHeartRateRecord(72);
     }
 
-    public static HeartRateRecord getHeartRateRecord(int heartRate, String clientId) {
-        return getHeartRateRecord(heartRate, Instant.now().plusMillis(100), clientId);
-    }
-
     public static HeartRateRecord getHeartRateRecord(int heartRate) {
         return getHeartRateRecord(heartRate, Instant.now().plusMillis(100));
     }
 
     public static HeartRateRecord getHeartRateRecord(int heartRate, Instant instant) {
-        return getHeartRateRecord(heartRate, instant, "HR" + Math.random());
-    }
-
-    public static HeartRateRecord getHeartRateRecord(
-            int heartRate, Instant instant, String clientId) {
         String packageName = ApplicationProvider.getApplicationContext().getPackageName();
+        double clientId = Math.random();
         HeartRateRecord.HeartRateSample heartRateSample =
                 new HeartRateRecord.HeartRateSample(heartRate, instant);
         ArrayList<HeartRateRecord.HeartRateSample> heartRateSamples = new ArrayList<>();
@@ -239,7 +227,7 @@ public final class DataFactory {
                         new Metadata.Builder()
                                 .setDevice(device)
                                 .setDataOrigin(dataOrigin)
-                                .setClientRecordId(clientId)
+                                .setClientRecordId("HR" + clientId)
                                 .build(),
                         instant.minusMillis(100),
                         instant.plusMillis(100),
@@ -248,21 +236,8 @@ public final class DataFactory {
     }
 
     public static StepsRecord getStepsRecord() {
-        return getStepsRecord(10);
-    }
-
-    public static StepsRecord getStepsRecord(int steps) {
         return new StepsRecord.Builder(
-                        generateMetadata(), Instant.now(), Instant.now().plusMillis(1000), steps)
-                .build();
-    }
-
-    public static StepsRecord getStepsRecord(int steps, String clientId) {
-        return new StepsRecord.Builder(
-                        getMetadataForClientId(clientId),
-                        Instant.now(),
-                        Instant.now().plusMillis(1000),
-                        steps)
+                        generateMetadata(), Instant.now(), Instant.now().plusMillis(1000), 10)
                 .build();
     }
 
@@ -316,24 +291,6 @@ public final class DataFactory {
                 .build();
     }
 
-    public static DistanceRecord getDistanceRecord() {
-        return new DistanceRecord.Builder(
-                        getEmptyMetadata(),
-                        Instant.now(),
-                        Instant.now().plusMillis(1000),
-                        Length.fromMeters(10.0))
-                .build();
-    }
-
-    public static TotalCaloriesBurnedRecord getTotalCaloriesBurnedRecord(String clientId) {
-        return new TotalCaloriesBurnedRecord.Builder(
-                        getMetadataForClientId(clientId),
-                        Instant.now(),
-                        Instant.now().plusMillis(1000),
-                        Energy.fromCalories(10.0))
-                .build();
-    }
-
     public static List<Record> getTestRecords() {
         return Arrays.asList(
                 getStepsRecord(),
@@ -342,11 +299,11 @@ public final class DataFactory {
                 buildExerciseSession());
     }
 
-    public static List<RecordAndIdentifier> getRecordsAndIdentifiers() {
+    public static List<TestUtils.RecordAndIdentifier> getRecordsAndIdentifiers() {
         return Arrays.asList(
-                new RecordAndIdentifier(RECORD_TYPE_STEPS, getStepsRecord()),
-                new RecordAndIdentifier(RECORD_TYPE_HEART_RATE, getHeartRateRecord()),
-                new RecordAndIdentifier(
+                new TestUtils.RecordAndIdentifier(RECORD_TYPE_STEPS, getStepsRecord()),
+                new TestUtils.RecordAndIdentifier(RECORD_TYPE_HEART_RATE, getHeartRateRecord()),
+                new TestUtils.RecordAndIdentifier(
                         RECORD_TYPE_BASAL_METABOLIC_RATE, getBasalMetabolicRateRecord()));
     }
 

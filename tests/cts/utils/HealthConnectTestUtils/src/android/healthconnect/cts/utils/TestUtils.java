@@ -302,26 +302,16 @@ public final class TestUtils {
 
     public static <T extends Record> List<T> readRecords(ReadRecordsRequest<T> request)
             throws InterruptedException {
-        return getReadRecordsResponse(request).getRecords();
+        return readRecords(request, ApplicationProvider.getApplicationContext());
     }
 
     public static <T extends Record> List<T> readRecords(
-            ReadRecordsRequest<T> request, Context context) throws InterruptedException {
-        return getReadRecordsResponse(request, context).getRecords();
-    }
-
-    public static <T extends Record> ReadRecordsResponse<T> getReadRecordsResponse(
-            ReadRecordsRequest<T> request) throws InterruptedException {
-        return getReadRecordsResponse(request, ApplicationProvider.getApplicationContext());
-    }
-
-    public static <T extends Record> ReadRecordsResponse<T> getReadRecordsResponse(
             ReadRecordsRequest<T> request, Context context) throws InterruptedException {
         assertThat(request.getRecordType()).isNotNull();
         HealthConnectReceiver<ReadRecordsResponse<T>> receiver = new HealthConnectReceiver<>();
         getHealthConnectManager(context)
                 .readRecords(request, Executors.newSingleThreadExecutor(), receiver);
-        return receiver.getResponse();
+        return receiver.getResponse().getRecords();
     }
 
     public static <T extends Record> void assertRecordNotFound(String uuid, Class<T> recordType)
