@@ -51,6 +51,7 @@ constructor(
         priorityList = dataSourcesViewModel.getEditedPriorityList()
         potentialAppSourcesList = dataSourcesViewModel.getEditedPotentialAppSources()
         priorityListView = holder.findViewById(R.id.linear_layout_recycle_view) as RecyclerView
+        priorityListView.isNestedScrollingEnabled = false
 
         adapter =
             AppSourcesAdapter(
