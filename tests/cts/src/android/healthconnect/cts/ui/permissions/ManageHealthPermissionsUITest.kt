@@ -23,8 +23,6 @@ import android.healthconnect.cts.lib.UiTestUtils.TEST_APP_PACKAGE_NAME
 import android.healthconnect.cts.lib.UiTestUtils.clickOnContentDescription
 import android.healthconnect.cts.lib.UiTestUtils.clickOnText
 import android.healthconnect.cts.lib.UiTestUtils.grantPermissionViaPackageManager
-import android.healthconnect.cts.lib.UiTestUtils.revokePermissionViaPackageManager
-import android.healthconnect.cts.lib.UiTestUtils.scrollDownTo
 import android.healthconnect.cts.lib.UiTestUtils.waitDisplayed
 import android.healthconnect.cts.ui.HealthConnectBaseTest
 import androidx.test.uiautomator.By
@@ -39,8 +37,6 @@ class ManageHealthPermissionsUITest : HealthConnectBaseTest() {
     fun showsListOfHealthConnectApps() {
         context.launchMainActivity {
             navigateToManagePermissions()
-
-            scrollDownTo(By.text("Health Connect cts test app"))
             waitDisplayed(By.text("Health Connect cts test app"))
         }
     }
@@ -85,11 +81,11 @@ class ManageHealthPermissionsUITest : HealthConnectBaseTest() {
 
     @After
     fun tearDown() {
-        revokePermissionViaPackageManager(
+        grantPermissionViaPackageManager(
             context, TEST_APP_PACKAGE_NAME, HealthPermissions.READ_HEIGHT)
-        revokePermissionViaPackageManager(
+        grantPermissionViaPackageManager(
             context, TEST_APP_PACKAGE_NAME, HealthPermissions.WRITE_HEIGHT)
-        revokePermissionViaPackageManager(
+        grantPermissionViaPackageManager(
             context, TEST_APP_PACKAGE_NAME, HealthPermissions.WRITE_BODY_FAT)
     }
 

@@ -68,6 +68,7 @@
     <uses-permission android:name="android.permission.health.READ_WHEELCHAIR_PUSHES"/>
     <uses-permission android:name="android.permission.health.READ_DISTANCE"/>
     <uses-permission android:name="android.permission.health.READ_EXERCISE"/>
+    <uses-permission android:name="android.permission.health.READ_EXERCISE_ROUTES"/>
     <uses-permission android:name="android.permission.health.READ_VO2_MAX"/>
     <uses-permission android:name="android.permission.health.READ_POWER"/>
     <uses-permission android:name="android.permission.health.READ_SPEED"/>
@@ -104,6 +105,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.VIEW_PERMISSION_USAGE"/>
                 <category android:name="android.intent.category.HEALTH_PERMISSIONS"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name="android.healthconnect.cts.utils.ProxyActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.healthconnect.cts.ACTION_START_ACTIVITY_FOR_RESULT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 

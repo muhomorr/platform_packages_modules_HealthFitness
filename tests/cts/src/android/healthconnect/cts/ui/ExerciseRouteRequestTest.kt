@@ -56,7 +56,7 @@ class ExerciseRouteRequestTest : HealthConnectBaseTest() {
     companion object {
         private const val READ_ROUTES_ALL_FEATURE_FLAG = "exercise_routes_read_all_enable"
         private val ROUTE_READER_WRITER_APP =
-            TestAppProxy.forPackageName("android.healthconnect.cts.route.testapp.readerWriter")
+            TestAppProxy.forPackageName("android.healthconnect.cts.testapp.readWritePerms.A")
 
         @JvmStatic
         @AfterClass
