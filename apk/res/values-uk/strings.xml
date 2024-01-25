@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"Це дані про тривалість активності, тип вправ, кількість сеансів, кіл, повторів, гребків тощо"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"Це дані про фази та сеанси сну тощо"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"Переглянути всі записи"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"змінити"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"Видалити ці дані"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"доступ до даних про здоров’я"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"маршрут тренування"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"Записувати маршрут тренування"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"Зчитувати маршрут тренування"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"Переглядати всі маршрути тренувань"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"Відстань"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"відстань"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"Зчитувати відстань"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"пульс у стані спокою"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"Зчитувати дані про пульс у стані спокою"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"Записувати дані про пульс у стані спокою"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"Температура шкіри"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"температура шкіри"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"Переглядати температуру шкіри"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"Записувати температуру шкіри"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"Дозволити додатку <xliff:g id="APP_NAME">%1$s</xliff:g> зчитувати дані"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"Дозволити додатку <xliff:g id="APP_NAME">%1$s</xliff:g> записувати дані"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"Скасувати"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Перемістити нижче"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Перемістити вгору"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Перемістити вниз"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"Кнопка зміни місця додатка <xliff:g id="SELECTED_APP">%s</xliff:g> у списку пріоритетних. Двічі торкніться й перетягніть, щоб змінити порядок."</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"Кнопка видалення додатка <xliff:g id="SELECTED_APP">%s</xliff:g> зі списку пріоритетних"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"Двічі торкніться й потягніть, щоб змінити порядок"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"фітнес, оздоровлення"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"Лише додатки, яким ви надали доступ до маршрутів тренувань"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"Як можна керувати доступом?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"Ви можете керувати доступом додатків до маршрутів тренувань у налаштуваннях Health Connect"</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"Назад"</string>
     <string name="loading" msgid="2526615755685950317">"Завантаження…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"Триває інтеграція"</string>

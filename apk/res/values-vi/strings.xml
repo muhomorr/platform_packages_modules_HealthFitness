@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"Dữ liệu này bao gồm thông tin như thời gian hoạt động, loại bài tập, số vòng, số lần lặp lại, số phiên hoặc kiểu bơi"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"Dữ liệu này bao gồm thông tin như các giai đoạn ngủ và giấc ngủ"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"Xem tất cả các mục"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"thay đổi"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"Xoá dữ liệu này"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"truy cập vào dữ liệu sức khoẻ của bạn"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"tuyến đường tập thể dục"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"Ghi dữ liệu về tuyến đường tập thể dục"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"Đọc dữ liệu về lộ trình tập luyện"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"Đọc tất cả tuyến đường tập thể dục"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"Quãng đường"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"quãng đường"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"Đọc dữ liệu về quãng đường"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"nhịp tim lúc nghỉ ngơi"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"Đọc dữ liệu về nhịp tim lúc nghỉ ngơi"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"Ghi dữ liệu về nhịp tim lúc nghỉ ngơi"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"Nhiệt độ trên da"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"nhiệt độ trên da"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"Đọc dữ liệu về nhiệt độ trên da"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"Ghi dữ liệu về nhiệt độ trên da"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"Cho phép \"<xliff:g id="APP_NAME">%1$s</xliff:g>\" đọc dữ liệu"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"Cho phép \"<xliff:g id="APP_NAME">%1$s</xliff:g>\" ghi dữ liệu"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"Huỷ"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Chuyển xuống"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Chuyển lên trên cùng"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Chuyển xuống dưới cùng"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"Nút sắp xếp lại <xliff:g id="SELECTED_APP">%s</xliff:g> trong danh sách ưu tiên, nhấn đúp và kéo để sắp xếp lại"</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"Nút để xoá <xliff:g id="SELECTED_APP">%s</xliff:g> khỏi danh sách ưu tiên"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"Nhấn đúp và kéo để sắp xếp lại"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"thể chất, sức khoẻ"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"Chỉ những ứng dụng bạn cho phép truy cập vào tuyến đường tập thể dục của mình"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"Làm cách nào để quản lý quyền truy cập?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"Bạn có thể quản lý quyền truy cập của ứng dụng vào các tuyến đường tập thể dục trong phần cài đặt của Health Connect"</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"Quay lại"</string>
     <string name="loading" msgid="2526615755685950317">"Đang tải…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"Đang trong quá trình tích hợp"</string>

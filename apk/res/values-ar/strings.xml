@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"تشتمل هذه البيانات على معلومات، مثل وقت ممارسة النشاط البدني أو نوع التمرين الرياضي أو دورات التمرين أو التكرارات أو الجلسات أو عدد ضربات السباحة."</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"تشتمل هذه البيانات على معلومات، مثل مراحل النوم وجلسات النوم."</string>
     <string name="all_entries_button" msgid="5109091107239135235">"عرض جميع الإدخالات"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"تغيير"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"حذف هذه البيانات"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"الوصول إلى البيانات الصحية"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"مسار التمرين الرياضي"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"كتابة مسار التمرين الرياضي"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"قراءة مسار التمرين الرياضي"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"قراءة جميع مسارات التمارين الرياضية"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"المسافة"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"المسافة"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"قراءة بيانات المسافة"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"معدّل النبض أثناء الراحة"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"قراءة بيانات معدّل النبض أثناء الراحة"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"كتابة بيانات معدّل النبض أثناء الراحة"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"درجة حرارة الجلد"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"درجة حرارة الجلد"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"قراءة بيانات درجة حرارة الجلد"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"كتابة بيانات درجة حرارة الجلد"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"منح تطبيق \"<xliff:g id="APP_NAME">%1$s</xliff:g>\" الإذن بالقراءة"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"منح التطبيق \"<xliff:g id="APP_NAME">%1$s</xliff:g>\" الإذن بالكتابة"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"إلغاء"</string>
@@ -311,7 +307,7 @@
     <string name="manage_your_settings" msgid="7391184508015127137">"إدارة الإعدادات والخصوصية"</string>
     <string name="manage_your_settings_description" msgid="557943168930365334">"يمكنك تغيير أذونات التطبيق وإدارة البيانات في أي وقت."</string>
     <string name="onboarding_go_back_button_text" msgid="5020083846511184625">"الرجوع"</string>
-    <string name="onboarding_get_started_button_text" msgid="2348061971090731336">"البدء"</string>
+    <string name="onboarding_get_started_button_text" msgid="2348061971090731336">"بدء"</string>
     <string name="delete_button_content_description" msgid="9125115327455379618">"حذف البيانات"</string>
     <string name="time_range_title" msgid="6831605283322600165">"اختيار البيانات المُراد حذفها"</string>
     <string name="time_range_next_button" msgid="5849096934896557888">"التالي"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"نقل التطبيق للأسفل"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"نقل التطبيق إلى أعلى القائمة"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"نقل التطبيق إلى أسفل القائمة"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"يُعيد هذا الزر ترتيب \"<xliff:g id="SELECTED_APP">%s</xliff:g>\" في قائمة أولوية التطبيقات. انقر مرّتين واسحب لإعادة ترتيبه."</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"يُزيل هذا الزر \"<xliff:g id="SELECTED_APP">%s</xliff:g>\" من قائمة أولوية التطبيقات."</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"انقر مرّتين واسحب لإعادة ترتيب التطبيق المحدّد."</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"اللياقة البدنية، الحالة الصحية"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"التطبيقات فقط التي تسمح لها بالوصول إلى مسارات التمارين الرياضية"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"كيف يمكنني إدارة أذونات الوصول؟"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"يمكنك إدارة أذونات وصول التطبيقات إلى مسارات التمارين الرياضية في إعدادات Health Connect."</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"رجوع"</string>
     <string name="loading" msgid="2526615755685950317">"جارٍ التحميل…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"جارٍ تنفيذ عملية الدمج"</string>

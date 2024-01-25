@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"ይህ ውሂብ እንደ ገቢር የሆነበት ጊዜ፣ የልምምድ ዓይነት፣ ዙሮች፣ ድግግሞሾች፣ ክፍለ-ጊዜዎች ወይም የዋና ቀዘፋዎች ያለ መረጃን ያካትታል"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"ይህ ውሂብ እንደ የእንቅልፍ ደረጃዎች እና የእንቅልፍ ክፍለ-ጊዜዎች ያለ መረጃን ያካትታል"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"ሁሉንም ግቤቶች አሳይ"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"ቀይር"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"ይህን ውሂብ ሰርዝ"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"የጤና አገናኝ"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"የጤና ውሂብዎን ይድረሱበት"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"የልምምድ መስመር"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"የልምምድ አቅጣጫን መጻፍ"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"የአካላዊ ልምምድ አቅጣጫን ያንብቡ"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"ሁሉንም የልምምድ መስመሮች ያንብቡ"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"ርቀት"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"ርቀት"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"ርቀትን ያነባል"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"የእረፍት ጊዜ የልብ ምት"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"የእረፍት ጊዜ የልብ ምትን ያነባል"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"የእረፍት ጊዜ የልብ ምትን ይጽፋል"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"የቆዳ ሙቀት መጠን"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"የቆዳ ሙቀት መጠን"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"የቆዳ ሙቀት መጠንን አንብብ"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"የቆዳ ሙቀት መጠንን ጻፍ"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"«<xliff:g id="APP_NAME">%1$s</xliff:g>» እንዲያነብ ይፍቀዱለት"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"«<xliff:g id="APP_NAME">%1$s</xliff:g>» እንዲጽፍ ይፍቀዱለት"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"ይቅር"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"ወደ ታች ውሰድ"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"ወደ ራስጌ ውሰድ"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"ወደ ግርጌ ውሰድ"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"ቅድሚያ በሚሰጠው ዝርዝር ውስጥ <xliff:g id="SELECTED_APP">%s</xliff:g>ን ዳግም ለመደርደር፣ ሁለቴ መታ አድርገው ይጎትቱ"</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"ከቅድሚያ ዝርዝር <xliff:g id="SELECTED_APP">%s</xliff:g> ማስወገጃ አዝራር"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"ዳግም ለመደርደር ሁለቴ መታ አድርገው ይጎትቱ"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"የአካል ብቃት፣ ጤናማነት"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"እርስዎ የልምምድ መስመሮችዎን እንዲደርሱ የሚፈቅዱላቸው መተግበሪያዎች ብቻ"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"መዳረሻን እንዴት ማስተዳደር እችላለሁ?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"የልምምድ መስመሮችን የመተግበሪያ መዳረሻ በጤና አገናኝ ቅንብሮች ውስጥ ማስተዳደር ይችላሉ"</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"ተመለስ"</string>
     <string name="loading" msgid="2526615755685950317">"በመጫን ላይ…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"ውህደት በሂደት ላይ"</string>

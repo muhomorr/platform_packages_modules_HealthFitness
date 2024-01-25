@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"Tato data zahrnují informace jako čas aktivity, druh cvičení, počet kol, počet sérií nebo počet plaveckých temp"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"Tato data zahrnují informace jako fáze spánku a období spánku"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"Zobrazit všechny záznamy"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"změnit"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"Smazat tato data"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"přístup ke zdravotním údajům"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"tréninková trasa"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"Zapsat tréninkovou trasu"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"Čtení průběhu cvičení"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"Číst všechny tréninkové trasy"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"Vzdálenost"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"vzdálenost"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"Číst vzdálenost"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"srdeční tep v klidu"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"Číst srdeční tep v klidu"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"Zapisovat srdeční tep v klidu"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"Teplota kůže"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"teplota kůže"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"Čtení teploty kůže"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"Zápis teploty kůže"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"Povolit aplikaci <xliff:g id="APP_NAME">%1$s</xliff:g> čtení"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"Povolit aplikaci <xliff:g id="APP_NAME">%1$s</xliff:g> zápis"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"Zrušit"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Přesunout dolů"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Přesunout na začátek"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Přesunout na konec"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"Tlačítko k zařazení aplikace <xliff:g id="SELECTED_APP">%s</xliff:g> do priority, dvojitým klepnutím a přetažením změníte prioritu"</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"Tlačítko k odstranění aplikace <xliff:g id="SELECTED_APP">%s</xliff:g> z priority"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"Dvojitým klepnutím a přetažením změníte pořadí"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"fitness, wellness"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"Pouze aplikace, kterým povolíte přístup ke svým tréninkovým trasám"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"Jak mohu spravovat přístup?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"Přístup aplikace k tréninkovým trasám můžete spravovat v nastavení Health Connect"</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"Zpět"</string>
     <string name="loading" msgid="2526615755685950317">"Načítání…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"Probíhá integrace"</string>

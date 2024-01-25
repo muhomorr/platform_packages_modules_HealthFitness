@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"Aquestes dades inclouen informació com ara el temps d\'activitat, el tipus d\'exercici, les voltes, les repeticions, les sessions o les braçades"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"Aquestes dades inclouen informació com ara les fases del son i les sessions de son"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"Mostra totes les entrades"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"canvia"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"Suprimeix aquestes dades"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Salut connectada"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"accedir a les teves dades de salut"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"ruta d\'exercici"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"Escriu la ruta d\'exercici"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"Llegeix la ruta d\'exercici"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"Llegeix totes les rutes d\'exercici"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"Distància"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"distància"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"Llegir la distància"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"freqüència cardíaca en repòs"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"Llegir la freqüència cardíaca en repòs"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"Escriure la freqüència cardíaca en repòs"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"Temperatura de la pell"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"temperatura de la pell"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"Llegir la temperatura de la pell"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"Escriure la temperatura de la pell"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"Permet que <xliff:g id="APP_NAME">%1$s</xliff:g> llegeixi"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"Permet que <xliff:g id="APP_NAME">%1$s</xliff:g> escrigui"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"Cancel·la"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Mou cap avall"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Mou al principi"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Mou al final"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"Botó per reordenar <xliff:g id="SELECTED_APP">%s</xliff:g> a la llista prioritària; fes doble toc i arrossega-la"</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"Botó per suprimir <xliff:g id="SELECTED_APP">%s</xliff:g> de la llista prioritària"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"Fes doble toc i arrossega per reordenar"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"fitnes, benestar"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"Només les aplicacions a què donis accés a les teves rutes d\'exercici"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"Com puc gestionar l\'accés?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"Pots gestionar l\'accés de les aplicacions a les rutes d\'exercici a la configuració de Salut connectada"</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"Enrere"</string>
     <string name="loading" msgid="2526615755685950317">"S\'està carregant…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"Integració en curs"</string>

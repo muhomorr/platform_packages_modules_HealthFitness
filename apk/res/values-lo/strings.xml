@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"ຂໍ້ມູນນີ້ຮວມມີຂໍ້ມູນຕ່າງໆ ເຊັ່ນ: ເວລາເຄື່ອນໄຫວຮ່າງກາຍ, ປະເພດການອອກກຳລັງກາຍ, ຈຳນວນຮອບ, ຈຳນວນເທື່ອທີ່ເຮັດຊ້ຳ, ເຊດຊັນ ຫຼື ສະໂຕຣກການລອຍນ້ຳ"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"ຂໍ້ມູນນີ້ຮວມມີຂໍ້ມູນຕ່າງໆ ເຊັ່ນ: ໄລຍະການນອນຫຼັບ ແລະ ຊ່ວງເວລານອນຕ່າງໆ"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"ເບິ່ງລາຍການຂໍ້ມູນທັງໝົດ"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"ປ່ຽນ"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"ລຶບຂໍ້ມູນນີ້ອອກ"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"ເຂົ້າເຖິງຂໍ້ມູນສຸຂະພາບຂອງທ່ານ"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"ເສັ້ນທາງອອກກຳລັງກາຍ"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"ຂຽນເສັ້ນທາງອອກກຳລັງກາຍ"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"ອ່ານເສັ້ນທາງອອກກຳລັງກາຍ"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"ອ່ານເສັ້ນທາງການອອກກຳລັງກາຍທັງໝົດ"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"ໄລຍະທາງ"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"ໄລຍະທາງ"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"ອ່ານຂໍ້ມູນໄລຍະທາງ"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"ອັດຕາການເຕັ້ນຫົວໃຈໃນເວລາພັກຜ່ອນ"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"ອ່ານຂໍ້ມູນອັດຕາການເຕັ້ນຫົວໃຈເວລາພັກຜ່ອນ"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"ຂຽນຂໍ້ມູນອັດຕາການເຕັ້ນຫົວໃຈໃນເວລາພັກຜ່ອນ"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"ອຸນຫະພູມຜິວໜັງ"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"ອຸນຫະພູມຜິວໜັງ"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"ອ່ານຂໍ້ມູນອຸນຫະພູມຜິວໜັງ"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"ຂຽນຂໍ້ມູນອຸນຫະພູມຜິວໜັງ"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"ອະນຸຍາດໃຫ້ “<xliff:g id="APP_NAME">%1$s</xliff:g>” ອ່ານ"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"ອະນຸຍາດໃຫ້ “<xliff:g id="APP_NAME">%1$s</xliff:g>” ຂຽນ"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"ຍົກເລີກ"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"ຍ້າຍລົງ"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"ຍ້າຍໄປເທິງສຸດ"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"ຍ້າຍໄປລຸ່ມສຸດ"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"ປຸ່ມສຳລັບຈັດຮຽງ <xliff:g id="SELECTED_APP">%s</xliff:g> ຄືນໃໝ່ໃນລາຍຊື່ສຳຄັນ,. ແຕະສອງເທື່ອແລ້ວລາກເພື່ອຈັດຮຽງຄືນໃໝ່"</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"ປຸ່ມສຳລັບລຶບ <xliff:g id="SELECTED_APP">%s</xliff:g> ອອກຈາກລາຍຊື່ສຳຄັນ"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"ແຕະສອງເທື່ອແລ້ວລາກເພື່ອຈັດຮຽງຄືນໃໝ່"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"ການອອກກຳລັງກາຍ, ສຸຂະພາບ"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"ມີແຕ່ແອັບທີ່ທ່ານອະນຸຍາດໃຫ້ເຂົ້າເຖິງເສັ້ນທາງອອກກຳລັງກາຍຂອງທ່ານເທົ່ານັ້ນ"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"ຂ້ອຍສາມາດຈັດການສິດເຂົ້າເຖິງໄດ້ແນວໃດ?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"ທ່ານສາມາດຈັດການສິດເຂົ້າເຖິງເສັ້ນທາງການອອກກຳລັງກາຍຂອງແອັບໄດ້ໃນການຕັ້ງຄ່າ Health Connect"</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"ກັບຄືນ"</string>
     <string name="loading" msgid="2526615755685950317">"ກຳລັງໂຫຼດ…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"ກຳລັງດຳເນີນການເຊື່ອມໂຍງ"</string>

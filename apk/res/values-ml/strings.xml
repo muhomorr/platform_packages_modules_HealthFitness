@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"സജീവമായ സമയം, വ്യായാമ തരം, ലാപ്പുകൾ, ആവർത്തനങ്ങൾ, സെഷനുകൾ, നീന്തൽ സ്‌ട്രോക്കുകൾ എന്നിവ പോലുള്ള വിവരങ്ങൾ ഈ ഡാറ്റയിൽ ഉൾപ്പെടുന്നു"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"ഉറക്ക ഘട്ടങ്ങൾ, ഉറക്ക സെഷനുകൾ എന്നിവ പോലുള്ള വിവരങ്ങൾ ഈ ഡാറ്റയിൽ ഉൾപ്പെടുന്നു"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"എല്ലാ എൻട്രികളും കാണുക"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"മാറ്റുക"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"ഈ ഡാറ്റ ഇല്ലാതാക്കുക"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"നിങ്ങളുടെ ആരോഗ്യ ഡാറ്റ ആക്സസ് ചെയ്യുക"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"വ്യായാമ റൂട്ട്"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"വ്യായാമ റൂട്ട് റൈറ്റ് ചെയ്യുക"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"വ്യായാമ റൂട്ട് റീഡ് ചെയ്യുക"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"വ്യായാമ സെഷന്റെ വഴികൾ"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"ദൂരം"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"ദൂരം"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"ദൂരം റീഡ് ചെയ്യുക"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"വിശ്രമ സമയത്തെ ഹൃദയമിടിപ്പ്"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"വിശ്രമ സമയത്തെ ഹൃദയമിടിപ്പ് സംബന്ധിച്ച ഡാറ്റ റീഡ് ചെയ്യുക"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"വിശ്രമ സമയത്തെ ഹൃദയമിടിപ്പ് സംബന്ധിച്ച ഡാറ്റ റൈറ്റ് ചെയ്യുക"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"ചർമ്മത്തിലെ താപനില"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"ചർമ്മത്തിലെ താപനില"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"ചർമ്മത്തിലെ താപനില വായിക്കുക"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"ചർമ്മത്തിലെ താപനില എഴുതുക"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"റീഡ് ചെയ്യാൻ “<xliff:g id="APP_NAME">%1$s</xliff:g>” ആപ്പിനെ അനുവദിക്കുക"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"റൈറ്റ് ചെയ്യാൻ “<xliff:g id="APP_NAME">%1$s</xliff:g>” ആപ്പിനെ അനുവദിക്കുക"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"റദ്ദാക്കുക"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"താഴേക്ക് നീക്കുക"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"ഏറ്റവും മുകളിലേക്ക് നീക്കുക"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"ഏറ്റവും താഴേക്ക് നീക്കുക"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"മുൻഗണനാ ലിസ്റ്റിൽ <xliff:g id="SELECTED_APP">%s</xliff:g> പുനഃക്രമീകരിക്കാനുള്ള ബട്ടൺ, ഡബിൾ ടാപ്പുചെയ്ത് വീണ്ടും ക്രമപ്പെടുത്താൻ വലിച്ചിടൂ"</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"മുൻഗണനാ ലിസ്റ്റിൽ നിന്ന് <xliff:g id="SELECTED_APP">%s</xliff:g> നീക്കം ചെയ്യാനുള്ള ബട്ടൺ"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"പുനഃക്രമീകരിക്കാൻ ഡബിൾ ടാപ്പ് ചെയ്‌ത് വലിച്ചിടുക"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"ഫിറ്റ്‌നസ്, ആരോഗ്യം"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"വ്യായാമ സെഷന്റെ വഴികൾ ആക്‌സസ് ചെയ്യാൻ നിങ്ങൾ അനുവദിച്ചിട്ടുള്ള ആപ്പുകൾക്ക് മാത്രം"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"എനിക്ക് എങ്ങനെ ആക്‌സസ് മാനേജ് ചെയ്യാനാകും?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"നിങ്ങൾക്ക് വ്യായാമ സെഷന്റെ വഴികളിലേക്കുള്ള ആപ്പ് ആക്‌സസ് Health Connect ക്രമീകരണത്തിൽ മാനേജ് ചെയ്യാം"</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"മടങ്ങുക"</string>
     <string name="loading" msgid="2526615755685950317">"ലോഡ് ചെയ്യുന്നു…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"സംയോജനം പുരോഗമിക്കുന്നു"</string>

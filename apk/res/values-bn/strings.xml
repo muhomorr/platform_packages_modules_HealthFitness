@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"কতক্ষণ ব্যায়াম করেছেন, ব্যায়ামের ধরন, ল্যাপের সংখ্যা, রিপিট হওয়া, সেশন বা সাঁতারের স্ট্রোকের মতো তথ্য এই ডেটায় অন্তর্ভুক্ত থাকে"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"ঘুমের বিভিন্ন পর্যায় ও স্লিপ সেশনের মতো তথ্য এই ডেটায় অন্তর্ভুক্ত থাকে"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"সব এন্ট্রি দেখুন"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"পরিবর্তন করুন"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"এই ডেটা মুছুন"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"আপনার স্বাস্থ্য সংক্রান্ত ডেটা অ্যাক্সেস করুন"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"ব্যায়ামের পদ্ধতি"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"ব্যায়ামের পদ্ধতি লিখুন"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"ব্যায়ামের রুটিন দেখা"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"আপনার ব্যায়াম করার সমস্ত উপায় পড়ার অনুমতি দিন"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"দূরত্ব"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"দূরত্ব"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"দূরত্ব সংক্রান্ত ডেটা দেখুন"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"বিশ্রামকালীন হার্ট রেট সংক্রান্ত ডেটা"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"বিশ্রামকালীন হার্ট রেট সংক্রান্ত ডেটা দেখুন"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"বিশ্রামকালীন হার্ট রেট সংক্রান্ত ডেটা এডিট করুন"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"শরীরের তাপমাত্রার ডেটা"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"শরীরের তাপমাত্রার ডেটা"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"শরীরের তাপমাত্রার ডেটা দেখার অনুমতি"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"শরীরের তাপমাত্রার ডেটা এডিট করার অনুমতি"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"“<xliff:g id="APP_NAME">%1$s</xliff:g>”-কে দেখার অনুমতি দিন"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"“<xliff:g id="APP_NAME">%1$s</xliff:g>”-কে এডিট করার অনুমতি দিন"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"বাতিল করুন"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"নিচে নামান"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"উপরে সরান"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"নিচে সরিয়ে দিন"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"অগ্রাধিকারের তালিকা থেকে <xliff:g id="SELECTED_APP">%s</xliff:g> অ্যাপকে আবার সাজানোর বোতাম, নতুন করে সাজাতে ডবল ট্যাপ করে টেনে আনুন"</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"অগ্রাধিকারের তালিকা থেকে <xliff:g id="SELECTED_APP">%s</xliff:g> সরানোর বোতাম"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"নতুন করে সাজাতে, ডবল ট্যাপ করে টেনে আনুন"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"ফিটনেস, সুস্থতা"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"শুধুমাত্র যেসব অ্যাপকে আপনি এক্সারসাইজ রুট অ্যাক্সেস করার অনুমতি দিয়েছেন"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"কীভাবে আমি অ্যাক্সেস ম্যানেজ করব?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"Health Connect-এর সেটিংসে গিয়ে, এক্সারসাইজ রুটে অ্যাপের অ্যাক্সেস ম্যানেজ করতে পারবেন"</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"ফিরে যান"</string>
     <string name="loading" msgid="2526615755685950317">"লোড হচ্ছে…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"ইন্টিগ্রেশনের কাজ চলছে"</string>

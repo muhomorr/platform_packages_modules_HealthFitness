@@ -96,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"exercise route"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"Write exercise route"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"Read exercise route"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"Read all exercise routes"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"Distance"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"distance"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"Read distance"</string>
@@ -715,7 +716,7 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Move down"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Move to top"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Move to bottom"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"Button to reorder <xliff:g id="SELECTED_APP">%s</xliff:g> in the priority list, double tap and drag to reorder"</string>
+    <string name="reorder_button_content_description" msgid="2685032520710743533">"Button to drag and reorder <xliff:g id="SELECTED_APP">%s</xliff:g> in the priority list"</string>
     <string name="remove_button_content_description" msgid="6170490900032612048">"Button to remove <xliff:g id="SELECTED_APP">%s</xliff:g> from the priority list"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"Double tap and drag to reorder"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"fitness, wellness"</string>
@@ -734,6 +735,9 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"Only apps you allow to access your exercise routes"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"How can I manage access?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"You can manage app access to exercise routes in Health Connect settings"</string>
+    <string name="request_route_allow" msgid="4427372851821847274">"Allow this route"</string>
+    <string name="request_route_allow_all" msgid="314830698958736916">"Allow all routes"</string>
+    <string name="request_route_dont_allow" msgid="1186236234664957228">"Don\'t allow"</string>
     <string name="back_button" msgid="780519527385993407">"Back"</string>
     <string name="loading" msgid="2526615755685950317">"Loading…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"Integration in progress"</string>

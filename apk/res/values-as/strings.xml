@@ -75,8 +75,7 @@
     <string name="data_access_exercise_description" msgid="6868583522699443570">"এই ডেটাত সক্ৰিয় হৈ থকাৰ সময়, ব্যায়ামৰ ধৰণ, দৌৰি ঘূৰি অহা পাকৰ সংখ্যা, পুনৰাবৃত্তি, ছেশ্বন অথবা ছুইমিং ষ্ট্ৰোক অন্তৰ্ভুক্ত"</string>
     <string name="data_access_sleep_description" msgid="74293126050011153">"এই ডেটাত শোৱাৰ স্তৰ আৰু শোৱাৰ ছেশ্বনৰ দৰে তথ্য অন্তৰ্ভুক্ত"</string>
     <string name="all_entries_button" msgid="5109091107239135235">"আটাইবোৰ প্ৰবিষ্টি চাওক"</string>
-    <!-- no translation found for selected_date_view_action_description (6237240886988225664) -->
-    <skip />
+    <string name="selected_date_view_action_description" msgid="6237240886988225664">"সলনি কৰক"</string>
     <string name="delete_permission_type_data_button" msgid="2270819954943391797">"এই ডেটাখিনি মচক"</string>
     <string name="permgrouplab_health" msgid="468961137496587966">"Health Connect"</string>
     <string name="permgroupdesc_health" msgid="252080476917407273">"আপোনাৰ স্বাস্থ্য সম্পৰ্কীয় ডেটাৰ এক্সেছ"</string>
@@ -97,7 +96,8 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"ব্যায়াম কৰাৰ পথ"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"ব্যায়াম কৰাৰ পথটো লিখক"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"ব্যায়াম কৰাৰ পদ্ধতি পঢ়ক"</string>
-    <string name="exercise_routes_all_read_content_description" msgid="5799035808926978381">"আপোনাৰ আটাইবোৰ ব্যায়ামৰ পথ পঢ়ক"</string>
+    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
+    <skip />
     <string name="distance_uppercase_label" msgid="1420705424462077174">"দূৰত্ব"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"দূৰত্ব"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"দূৰত্বৰ ডেটা পঢ়ক"</string>
@@ -242,14 +242,10 @@
     <string name="resting_heart_rate_lowercase_label" msgid="4533866739695973169">"বিশ্ৰামৰ সময়ত হৃদস্পন্দনৰ হাৰ"</string>
     <string name="resting_heart_rate_read_content_description" msgid="1068160055773401020">"বিশ্ৰামৰ সময়ত হৃদস্পন্দনৰ হাৰৰ ডেটা পঢ়ক"</string>
     <string name="resting_heart_rate_write_content_description" msgid="8848198128082739995">"বিশ্ৰামৰ সময়ত হৃদস্পন্দনৰ হাৰৰ ডেটা লিখক"</string>
-    <!-- no translation found for skin_temperature_uppercase_label (4880306019368461268) -->
-    <skip />
-    <!-- no translation found for skin_temperature_lowercase_label (7456421703641980581) -->
-    <skip />
-    <!-- no translation found for skin_temperature_read_content_description (1896127631429717621) -->
-    <skip />
-    <!-- no translation found for skin_temperature_write_content_description (6448587289116206085) -->
-    <skip />
+    <string name="skin_temperature_uppercase_label" msgid="4880306019368461268">"ছালৰ তাপমাত্ৰা"</string>
+    <string name="skin_temperature_lowercase_label" msgid="7456421703641980581">"ছালৰ তাপমাত্ৰা"</string>
+    <string name="skin_temperature_read_content_description" msgid="1896127631429717621">"ছালৰ তাপমাত্ৰা জোখক"</string>
+    <string name="skin_temperature_write_content_description" msgid="6448587289116206085">"ছালৰ তাপমাত্ৰা লিখক"</string>
     <string name="read_permission_category" msgid="6002099618259628632">"“<xliff:g id="APP_NAME">%1$s</xliff:g>”ক পঢ়িবলৈ দিয়ক"</string>
     <string name="write_permission_category" msgid="1529702804865008111">"“<xliff:g id="APP_NAME">%1$s</xliff:g>”ক লিখিবলৈ দিয়ক"</string>
     <string name="request_permissions_cancel" msgid="1787483997235365393">"বাতিল কৰক"</string>
@@ -720,7 +716,8 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"তললৈ নিয়ক"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"একেবাৰে ওপৰলৈ নিয়ক"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"একেবাৰে তললৈ নিয়ক"</string>
-    <string name="reorder_button_content_description" msgid="3104832018446653623">"অগ্ৰাধিকাৰৰ সূচীখনত <xliff:g id="SELECTED_APP">%s</xliff:g>ৰ ক্ৰম সলনি কৰিবলৈ বুটাম, ক্ৰম সলনি কৰিবলৈ দুবাৰ টিপক আৰু টানি আনক"</string>
+    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
+    <skip />
     <string name="remove_button_content_description" msgid="6170490900032612048">"অগ্ৰাধিকাৰৰ সূচীখনৰ পৰা <xliff:g id="SELECTED_APP">%s</xliff:g> আঁতৰাবলৈ বুটাম"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"ক্ৰম সলনি কৰিবলৈ দুবাৰ টিপক আৰু টানি আনক"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"ফিটনেছ, সুস্থতা"</string>
@@ -739,6 +736,12 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"কেৱল আপুনি আপোনাৰ ব্যায়ামৰ পথসমূহ এক্সেছ কৰিবলৈ অনুমতি দিয়া এপ্"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"মই এক্সেছ কেনেকৈ পৰিচালনা কৰিব পাৰোঁ?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"আপুনি Health Connectৰ ছেটিঙত ব্যায়ামৰ পথসমূহৰ বাবে এপৰ এক্সেছ পৰিচালনা কৰিব পাৰে"</string>
+    <!-- no translation found for request_route_allow (4427372851821847274) -->
+    <skip />
+    <!-- no translation found for request_route_allow_all (314830698958736916) -->
+    <skip />
+    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
+    <skip />
     <string name="back_button" msgid="780519527385993407">"উভতি যাওক"</string>
     <string name="loading" msgid="2526615755685950317">"ল’ড হৈ আছে…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"একত্ৰিত কৰি থকা হৈছে"</string>
