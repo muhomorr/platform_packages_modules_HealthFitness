@@ -26,6 +26,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.health.connect.Constants;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Log;
@@ -52,6 +53,7 @@ public class FirstGrantTimeManager implements PackageManager.OnPermissionsChange
     private static final int CURRENT_VERSION = 1;
 
     private final PackageManager mPackageManager;
+    private final UserManager mUserManager;
     private final HealthPermissionIntentAppsTracker mTracker;
 
     private final ReentrantReadWriteLock mGrantTimeLock = new ReentrantReadWriteLock();
@@ -75,6 +77,7 @@ public class FirstGrantTimeManager implements PackageManager.OnPermissionsChange
         mTracker = tracker;
         mDatastore = datastore;
         mPackageManager = context.getPackageManager();
+        mUserManager = context.getSystemService(UserManager.class);
         mUidToGrantTimeCache = new UidToGrantTimeCache();
         mContext = context;
         mPackageInfoHelper = PackageInfoUtils.getInstance();
@@ -136,6 +139,13 @@ public class FirstGrantTimeManager implements PackageManager.OnPermissionsChange
 
     @Override
     public void onPermissionsChanged(int uid) {
+        if (!mUserManager.isUserUnlocked()) {
+            // onPermissionsChanged(uid) is called as soon as the system boots up, even before the
+            // user has unlock the device for the first time.
+            // Side note: this method is also called on both primary user and work profile user.
+            return;
+        }
+
         String[] packageNames = mPackageManager.getPackagesForUid(uid);
         if (packageNames == null) {
             Log.w(TAG, "onPermissionsChanged: no known packages for UID: " + uid);
@@ -143,12 +153,16 @@ public class FirstGrantTimeManager implements PackageManager.OnPermissionsChange
         }
 
         UserHandle user = UserHandle.getUserHandleForUid(uid);
-        initAndValidateUserStateIfNeedLocked(user);
 
         if (!checkSupportPermissionsUsageIntent(packageNames, user)) {
             logIfInDebugMode("Cannot find health intent declaration in ", packageNames[0]);
             return;
         }
+
+        // call this method after `checkSupportPermissionsUsageIntent` so we are sure that we are
+        // not initializing user state when onPermissionsChanged(uid) is called for non HC client
+        // apps.
+        initAndValidateUserStateIfNeedLocked(user);
 
         mGrantTimeLock.writeLock().lock();
         try {
@@ -323,6 +337,13 @@ public class FirstGrantTimeManager implements PackageManager.OnPermissionsChange
 
     /** Initialize first grant time state for given user. */
     private void initAndValidateUserStateIfNeedLocked(UserHandle user) {
+        if (!mUserManager.isUserUnlocked()) {
+            // only init first grant time state when device is unlocked, because before that, we
+            // cannot access any files, which leads to `mUidToGrantTimeCache` being empty and never
+            // get re-initialized.
+            return;
+        }
+
         if (userStateIsInitializedReadLocked(user)) {
             // This user state is already inited and validated
             return;

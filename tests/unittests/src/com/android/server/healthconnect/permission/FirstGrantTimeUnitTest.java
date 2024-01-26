@@ -23,6 +23,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,6 +41,7 @@ import android.health.connect.datatypes.StepsRecord;
 import android.os.OutcomeReceiver;
 import android.os.Process;
 import android.os.UserHandle;
+import android.os.UserManager;
 
 import androidx.test.InstrumentationRegistry;
 
@@ -70,6 +72,7 @@ public class FirstGrantTimeUnitTest {
 
     @Mock private HealthPermissionIntentAppsTracker mTracker;
     @Mock private PackageManager mPackageManager;
+    @Mock private UserManager mUserManager;
     @Mock private Context mContext;
 
     private FirstGrantTimeManager mGrantTimeManager;
@@ -92,6 +95,8 @@ public class FirstGrantTimeUnitTest {
         when(mContext.createContextAsUser(any(), anyInt())).thenReturn(context);
         when(mContext.getApplicationContext()).thenReturn(context);
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
+        when(mContext.getSystemService(UserManager.class)).thenReturn(mUserManager);
+        when(mUserManager.isUserUnlocked()).thenReturn(true);
 
         mUiAutomation.adoptShellPermissionIdentity(
                 "android.permission.OBSERVE_GRANT_REVOKE_PERMISSIONS");
@@ -113,6 +118,30 @@ public class FirstGrantTimeUnitTest {
         when(mTracker.supportsPermissionUsageIntent(SELF_PACKAGE_NAME, CURRENT_USER))
                 .thenReturn(false);
         assertThat(mGrantTimeManager.getFirstGrantTime(SELF_PACKAGE_NAME, CURRENT_USER)).isNull();
+    }
+
+    @Test
+    public void testOnPermissionsChangedCalledWhileDeviceIsLocked_getGrantTimeNotNullAfterUnlock() {
+        // before device is unlocked
+        when(mUserManager.isUserUnlocked()).thenReturn(false);
+        when(mDatastore.readForUser(CURRENT_USER, DATA_TYPE_CURRENT)).thenReturn(null);
+        when(mDatastore.readForUser(CURRENT_USER, DATA_TYPE_STAGED)).thenReturn(null);
+        int uid = 123;
+        String[] packageNames = {"package.name"};
+        when(mPackageManager.getPackagesForUid(uid)).thenReturn(packageNames);
+        when(mTracker.supportsPermissionUsageIntent(eq(packageNames[0]), ArgumentMatchers.any()))
+                .thenReturn(true);
+        mGrantTimeManager.onPermissionsChanged(uid);
+        // after device is unlocked
+        when(mUserManager.isUserUnlocked()).thenReturn(true);
+        UserGrantTimeState currentGrantTimeState = new UserGrantTimeState(DEFAULT_VERSION);
+        Instant now = Instant.parse("2023-02-14T10:00:00Z");
+        currentGrantTimeState.setPackageGrantTime(SELF_PACKAGE_NAME, now);
+        when(mDatastore.readForUser(CURRENT_USER, DATA_TYPE_CURRENT))
+                .thenReturn(currentGrantTimeState);
+
+        assertThat(mGrantTimeManager.getFirstGrantTime(SELF_PACKAGE_NAME, CURRENT_USER))
+                .isEqualTo(now);
     }
 
     @Test
