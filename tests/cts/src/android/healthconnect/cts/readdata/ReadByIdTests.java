@@ -17,7 +17,6 @@
 package android.healthconnect.cts.readdata;
 
 import static android.healthconnect.cts.utils.DataFactory.getDistanceRecord;
-import static android.healthconnect.cts.utils.DataFactory.getStepsRecord;
 import static android.healthconnect.cts.utils.DataFactory.getTotalCaloriesBurnedRecord;
 import static android.healthconnect.cts.utils.TestUtils.getReadRecordsResponse;
 import static android.healthconnect.cts.utils.TestUtils.insertRecords;
@@ -37,6 +36,8 @@ import android.health.connect.datatypes.TotalCaloriesBurnedRecord;
 import android.healthconnect.cts.utils.AssumptionCheckerRule;
 import android.healthconnect.cts.utils.TestUtils;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -49,6 +50,16 @@ public class ReadByIdTests {
     public AssumptionCheckerRule mSupportedHardwareRule =
             new AssumptionCheckerRule(
                     TestUtils::isHardwareSupported, "Tests should run on supported hardware only.");
+
+    @Before
+    public void setup() {
+        TestUtils.deleteAllStagedRemoteData();
+    }
+
+    @After
+    public void tearDown() {
+        TestUtils.deleteAllStagedRemoteData();
+    }
 
     @Test
     public void readDataById_noPageTokenSet() throws Exception {

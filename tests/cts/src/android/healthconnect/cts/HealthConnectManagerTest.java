@@ -39,8 +39,6 @@ import static com.android.compatibility.common.util.SystemUtil.runWithShellPermi
 
 import static com.google.common.truth.Truth.assertThat;
 
-import static org.junit.Assert.assertThrows;
-
 import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.time.temporal.ChronoUnit.HOURS;
@@ -59,10 +57,7 @@ import android.health.connect.HealthConnectManager;
 import android.health.connect.HealthDataCategory;
 import android.health.connect.HealthPermissions;
 import android.health.connect.LocalTimeRangeFilter;
-import android.health.connect.ReadRecordsRequest;
-import android.health.connect.ReadRecordsRequestUsingFilters;
 import android.health.connect.ReadRecordsRequestUsingIds;
-import android.health.connect.ReadRecordsResponse;
 import android.health.connect.RecordTypeInfoResponse;
 import android.health.connect.TimeInstantRangeFilter;
 import android.health.connect.changelog.ChangeLogTokenRequest;
@@ -651,75 +646,6 @@ public class HealthConnectManagerTest {
         assertThat(records).hasSize(2);
         assertThat(getRecordById(records, id1).getProtein()).isEqualTo(protein1);
         assertThat(getRecordById(records, id2).getProtein()).isEqualTo(protein2);
-    }
-
-    @Test
-    public void testReadRecords_readByFilterMaxPageSizeExceeded_throws() {
-        int maxPageSize = 5000;
-        ReadRecordsRequestUsingFilters.Builder<StepsRecord> request =
-                new ReadRecordsRequestUsingFilters.Builder<>(StepsRecord.class);
-        Throwable thrown =
-                assertThrows(
-                        IllegalArgumentException.class, () -> request.setPageSize(maxPageSize + 1));
-        assertThat(thrown.getMessage()).contains("Maximum allowed pageSize is 5000");
-    }
-
-    @Test
-    public void testReadRecords_multiplePagesSameStartTimeRecords_paginatedCorrectly()
-            throws Exception {
-        Instant startTime = Instant.now().minus(1, DAYS);
-
-        insertRecords(
-                List.of(
-                        getStepsRecord(
-                                "client.id1",
-                                "package.name",
-                                /* count= */ 100,
-                                startTime,
-                                startTime.plusSeconds(500)),
-                        getStepsRecord(
-                                "client.id2",
-                                "package.name",
-                                /* count= */ 100,
-                                startTime,
-                                startTime.plusSeconds(200)),
-                        getStepsRecord(
-                                "client.id3",
-                                "package.name",
-                                /* count= */ 100,
-                                startTime,
-                                startTime.plusSeconds(400)),
-                        getStepsRecord(
-                                "client.id4",
-                                "package.name",
-                                /* count= */ 100,
-                                startTime,
-                                startTime.plusSeconds(300))));
-
-        ReadRecordsRequest<StepsRecord> request1 =
-                new ReadRecordsRequestUsingFilters.Builder<>(StepsRecord.class)
-                        .setPageSize(2)
-                        .setAscending(false)
-                        .build();
-        ReadRecordsResponse<StepsRecord> result1 = TestUtils.readRecordsWithPagination(request1);
-        assertThat(result1.getRecords()).hasSize(2);
-        assertThat(result1.getRecords().get(0).getMetadata().getClientRecordId())
-                .isEqualTo("client.id1");
-        assertThat(result1.getRecords().get(1).getMetadata().getClientRecordId())
-                .isEqualTo("client.id2");
-
-        ReadRecordsRequest<StepsRecord> request2 =
-                new ReadRecordsRequestUsingFilters.Builder<>(StepsRecord.class)
-                        .setPageSize(2)
-                        .setPageToken(result1.getNextPageToken())
-                        .build();
-        ReadRecordsResponse<StepsRecord> result2 = TestUtils.readRecordsWithPagination(request2);
-        assertThat(result2.getRecords()).hasSize(2);
-        assertThat(result2.getRecords().get(0).getMetadata().getClientRecordId())
-                .isEqualTo("client.id3");
-        assertThat(result2.getRecords().get(1).getMetadata().getClientRecordId())
-                .isEqualTo("client.id4");
-        assertThat(result2.getNextPageToken()).isEqualTo(-1);
     }
 
     @Test

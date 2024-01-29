@@ -128,8 +128,8 @@ public class ExerciseSessionRecordTest {
     @Test
     public void testExerciseSession_buildSessionWithAllFields_buildCorrectObject() {
         ExerciseRoute route = buildExerciseRoute();
-        CharSequence notes = "rain";
-        CharSequence title = "Morning training";
+        String notes = "rain";
+        String title = "Morning training";
         List<ExerciseSegment> segmentList =
                 List.of(
                         new ExerciseSegment.Builder(
@@ -165,10 +165,10 @@ public class ExerciseSessionRecordTest {
         assertThat(record.getStartZoneOffset()).isEqualTo(ZoneOffset.MIN);
         assertThat(record.getExerciseType())
                 .isEqualTo(ExerciseSessionType.EXERCISE_SESSION_TYPE_FOOTBALL_AMERICAN);
-        assertThat(record.getNotes()).isEqualTo(notes);
+        assertThat(record.getNotes().toString()).isEqualTo(notes);
         assertThat(record.getSegments()).isEqualTo(segmentList);
         assertThat(record.getLaps()).isEqualTo(lapsList);
-        assertThat(record.getTitle()).isEqualTo(title);
+        assertThat(record.getTitle().toString()).isEqualTo(title);
     }
 
     @Test

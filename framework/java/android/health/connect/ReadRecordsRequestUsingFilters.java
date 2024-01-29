@@ -19,6 +19,7 @@ package android.health.connect;
 import static android.health.connect.Constants.DEFAULT_LONG;
 import static android.health.connect.Constants.DEFAULT_PAGE_SIZE;
 import static android.health.connect.Constants.MAXIMUM_PAGE_SIZE;
+import static android.health.connect.Constants.MINIMUM_PAGE_SIZE;
 
 import android.annotation.IntRange;
 import android.annotation.NonNull;
@@ -163,9 +164,11 @@ public final class ReadRecordsRequestUsingFilters<T extends Record> extends Read
          */
         @NonNull
         public Builder<T> setPageSize(@IntRange(from = 1, to = 5000) int pageSize) {
-            if (pageSize > MAXIMUM_PAGE_SIZE) {
+            if (pageSize < MINIMUM_PAGE_SIZE || pageSize > MAXIMUM_PAGE_SIZE) {
                 throw new IllegalArgumentException(
-                        "Maximum allowed pageSize is "
+                        "Valid pageSize range is "
+                                + MINIMUM_PAGE_SIZE
+                                + " - "
                                 + MAXIMUM_PAGE_SIZE
                                 + ", requested "
                                 + pageSize);

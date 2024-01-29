@@ -80,39 +80,31 @@ public class ExerciseRouteTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testExerciseRouteLocation_latitudeIsInvalid_throwsException() {
-        ExerciseRoute.Location point =
-                new ExerciseRoute.Location.Builder(
-                                DEFAULT_TIME, /* latitude= */ -120, DEFAULT_LONGITUDE)
-                        .build();
+        new ExerciseRoute.Location.Builder(DEFAULT_TIME, /* latitude= */ -120, DEFAULT_LONGITUDE)
+                .build();
         fail("Must return error if latitude is illegal");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testExerciseRouteLocation_longitudeIsInvalid_throwsException() {
-        ExerciseRoute.Location point =
-                new ExerciseRoute.Location.Builder(
-                                DEFAULT_TIME, DEFAULT_LATITUDE, /* longitude= */ 400)
-                        .build();
+        new ExerciseRoute.Location.Builder(DEFAULT_TIME, DEFAULT_LATITUDE, /* longitude= */ 400)
+                .build();
         fail("Must return error if longitude is illegal");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testExerciseRouteLocation_horizontalAccuracyIsInvalid_throwsException() {
-        ExerciseRoute.Location point =
-                new ExerciseRoute.Location.Builder(
-                                DEFAULT_TIME, DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
-                        .setHorizontalAccuracy(Length.fromMeters(-5))
-                        .build();
+        new ExerciseRoute.Location.Builder(DEFAULT_TIME, DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
+                .setHorizontalAccuracy(Length.fromMeters(-5))
+                .build();
         fail("Must return error if horizontal accuracy is illegal");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testExerciseRouteLocation_verticalAccuracyIsInvalid_throwsException() {
-        ExerciseRoute.Location point =
-                new ExerciseRoute.Location.Builder(
-                                DEFAULT_TIME, DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
-                        .setHorizontalAccuracy(Length.fromMeters(-5))
-                        .build();
+        new ExerciseRoute.Location.Builder(DEFAULT_TIME, DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
+                .setHorizontalAccuracy(Length.fromMeters(-5))
+                .build();
         fail("Must return error if vertical accuracy is illegal");
     }
 
