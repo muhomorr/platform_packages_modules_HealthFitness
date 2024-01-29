@@ -41,6 +41,7 @@ import com.android.healthconnect.controller.onboarding.OnboardingActivity.Compan
 import com.android.healthconnect.controller.permissions.data.HealthPermission
 import com.android.healthconnect.controller.permissions.data.PermissionState
 import com.android.healthconnect.controller.shared.HealthPermissionReader
+import com.android.healthconnect.controller.utils.DeviceInfoUtils
 import com.android.healthconnect.controller.utils.activity.EmbeddingUtils.maybeRedirectIntoTwoPaneSettings
 import com.android.healthconnect.controller.utils.increaseViewTouchTargetSize
 import com.android.healthconnect.controller.utils.logging.HealthConnectLogger
@@ -60,6 +61,8 @@ class PermissionsActivity : Hilt_PermissionsActivity() {
 
     @Inject lateinit var healthPermissionReader: HealthPermissionReader
 
+    @Inject lateinit var deviceInfoUtils: DeviceInfoUtils
+
     private val requestPermissionsViewModel: RequestPermissionViewModel by viewModels()
 
     private val migrationViewModel: MigrationViewModel by viewModels()
@@ -74,16 +77,24 @@ class PermissionsActivity : Hilt_PermissionsActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_permissions)
+        // Handles unsupported devices and user profiles.
+        if (!deviceInfoUtils.isHealthConnectAvailable(this)) {
+            Log.e(TAG, "Health connect is not available for this user or hardware, finishing!")
+            finish()
+            return
+        }
 
         if (!intent.hasExtra(EXTRA_PACKAGE_NAME)) {
             Log.e(TAG, "Invalid Intent Extras, finishing")
             finish()
+            return
         }
 
         if (maybeRedirectIntoTwoPaneSettings(this)) {
             return
         }
+
+        setContentView(R.layout.activity_permissions)
 
         if (savedInstanceState == null && shouldRedirectToOnboardingActivity(this)) {
             openOnboardingActivity.launch(OnboardingActivity.createIntent(this))

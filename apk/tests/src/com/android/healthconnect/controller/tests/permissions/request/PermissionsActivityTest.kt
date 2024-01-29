@@ -23,6 +23,9 @@ import android.app.Activity.RESULT_CANCELED
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.EXTRA_PACKAGE_NAME
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager.EXTRA_REQUEST_PERMISSIONS_NAMES
 import android.content.pm.PackageManager.EXTRA_REQUEST_PERMISSIONS_RESULTS
 import android.content.pm.PackageManager.PERMISSION_DENIED
@@ -48,6 +51,7 @@ import com.android.healthconnect.controller.R
 import com.android.healthconnect.controller.migration.MigrationViewModel
 import com.android.healthconnect.controller.migration.MigrationViewModel.MigrationFragmentState.WithData
 import com.android.healthconnect.controller.migration.api.MigrationState
+import com.android.healthconnect.controller.navigation.TrampolineActivity
 import com.android.healthconnect.controller.onboarding.OnboardingActivity.Companion.ONBOARDING_SHOWN_PREF_KEY
 import com.android.healthconnect.controller.onboarding.OnboardingActivity.Companion.USER_ACTIVITY_TRACKER
 import com.android.healthconnect.controller.permissions.api.HealthPermissionManager
@@ -56,8 +60,11 @@ import com.android.healthconnect.controller.service.HealthPermissionManagerModul
 import com.android.healthconnect.controller.tests.utils.TEST_APP_NAME
 import com.android.healthconnect.controller.tests.utils.TEST_APP_PACKAGE_NAME
 import com.android.healthconnect.controller.tests.utils.UNSUPPORTED_TEST_APP_PACKAGE_NAME
+import com.android.healthconnect.controller.tests.utils.di.FakeDeviceInfoUtils
 import com.android.healthconnect.controller.tests.utils.di.FakeHealthPermissionManager
 import com.android.healthconnect.controller.tests.utils.whenever
+import com.android.healthconnect.controller.utils.DeviceInfoUtils
+import com.android.healthconnect.controller.utils.DeviceInfoUtilsModule
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -69,9 +76,9 @@ import org.hamcrest.Matchers.`is`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito
+import org.mockito.Mockito.mock
 
-@UninstallModules(HealthPermissionManagerModule::class)
+@UninstallModules(HealthPermissionManagerModule::class, DeviceInfoUtilsModule::class)
 @HiltAndroidTest
 class PermissionsActivityTest {
 
@@ -83,9 +90,8 @@ class PermissionsActivityTest {
     @get:Rule val hiltRule = HiltAndroidRule(this)
 
     @BindValue val permissionManager: HealthPermissionManager = FakeHealthPermissionManager()
-
-    @BindValue
-    val migrationViewModel: MigrationViewModel = Mockito.mock(MigrationViewModel::class.java)
+    @BindValue val deviceInfoUtils: DeviceInfoUtils = FakeDeviceInfoUtils()
+    @BindValue val migrationViewModel: MigrationViewModel = mock(MigrationViewModel::class.java)
 
     private lateinit var context: Context
 
@@ -124,6 +130,16 @@ class PermissionsActivityTest {
                 withText(
                     "You can learn how $TEST_APP_NAME handles your data in the developer's privacy policy"))
             .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun healthConnectNotAvailable_finishesActivity() {
+        (deviceInfoUtils as FakeDeviceInfoUtils).setHealthConnectAvailable(false)
+
+        val scenario =
+            launchActivityForResult<TrampolineActivity>(getPermissionScreenIntent(permissions))
+
+        assertThat(scenario.result.resultCode).isEqualTo(RESULT_CANCELED)
     }
 
     @Test
@@ -222,7 +238,7 @@ class PermissionsActivityTest {
     private fun getPermissionScreenIntent(permissions: Array<String>): Intent =
         Intent.makeMainActivity(ComponentName(context, PermissionsActivity::class.java))
             .putExtra(EXTRA_REQUEST_PERMISSIONS_NAMES, permissions)
-            .putExtra(Intent.EXTRA_PACKAGE_NAME, TEST_APP_PACKAGE_NAME)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            .putExtra(EXTRA_PACKAGE_NAME, TEST_APP_PACKAGE_NAME)
+            .addFlags(FLAG_ACTIVITY_NEW_TASK)
+            .addFlags(FLAG_ACTIVITY_CLEAR_TASK)
 }

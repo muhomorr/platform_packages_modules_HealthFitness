@@ -31,7 +31,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Used to show permissions for apps that have not declared VIEW_PERMISSION_USAGE but
      still have at least one permission granted -->
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
     <application
         android:name=".HealthConnectApplication"
@@ -41,30 +41,42 @@
         android:theme="@style/Theme.HealthConnect">
 
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <!-- For Open button in App Info. -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.INFO" />
-            </intent-filter>
-            <!-- Deeplink to Home screen -->
-            <intent-filter>
-                <action android:name="android.health.connect.action.HEALTH_HOME_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <!-- Mark the activity as a dynamic setting. -->
+            android:name=".navigation.TrampolineActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true">
 
+            <!-- Deeplink to Home screen -->
+            <intent-filter android:priority="1">
+                <action android:name="android.health.connect.action.HEALTH_HOME_SETTINGS" />
+                <action android:name="android.health.connect.action.MANAGE_HEALTH_DATA" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:name="PermissionControllerEntryPoint"
+            android:targetActivity=".navigation.TrampolineActivity"
+            android:permission="android.permission.GRANT_RUNTIME_PERMISSIONS"
+            android:exported="true">
+
+            <intent-filter android:priority="1">
+                <action android:name="android.health.connect.action.MANAGE_HEALTH_PERMISSIONS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
         </activity>
 
         <activity-alias
             android:name="LegacySettingsEntryPoint"
             android:exported="true"
-            android:targetActivity="MainActivity">
+            android:targetActivity=".navigation.TrampolineActivity">
 
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -82,31 +94,23 @@
                 android:resource="@string/health_connect_summary" />
         </activity-alias>
 
-        <activity android:name=".migration.MigrationActivity"
+        <activity
+            android:name=".migration.MigrationActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.health.connect.action.MIGRATION"/>
+                <action android:name="android.health.connect.action.MIGRATION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".data.DataManagementActivity"
-            android:exported="true">
-            <intent-filter android:priority="1">
-                <action android:name="android.health.connect.action.MANAGE_HEALTH_DATA" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".permissions.shared.SettingsActivity"
-            android:exported="true">
-            <!-- Deeplink to Allowed Apps and App Access screen -->
-            <intent-filter>
-                <action android:name="android.health.connect.action.MANAGE_HEALTH_PERMISSIONS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:exported="false">
         </activity>
 
         <activity
@@ -123,9 +127,9 @@
         <activity
             android:name=".route.RouteRequestActivity"
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.HealthConnect"
+            android:exported="true"
             android:permission="android.permission.health.READ_EXERCISE"
-            android:exported="true">
+            android:theme="@style/Theme.HealthConnect">
             <intent-filter android:priority="1">
                 <action android:name="android.health.connect.action.REQUEST_EXERCISE_ROUTE" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -138,22 +142,23 @@
             android:theme="@style/Theme.HealthConnect" />
 
         <provider
-            android:authorities="${packageName}"
             android:name=".searchindexables.HealthConnectSearchIndexablesProvider"
-            android:multiprocess="false"
-            android:permission="android.permission.READ_SEARCH_INDEXABLES"
+            android:authorities="${packageName}"
+            android:exported="true"
             android:grantUriPermissions="true"
-            android:exported="true">
+            android:multiprocess="false"
+            android:permission="android.permission.READ_SEARCH_INDEXABLES">
             <intent-filter>
                 <action android:name="android.content.action.SEARCH_INDEXABLES_PROVIDER" />
             </intent-filter>
         </provider>
 
-        <receiver android:name=".safetycenter.SafetySourceBroadcastReceiver"
+        <receiver
+            android:name=".safetycenter.SafetySourceBroadcastReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.safetycenter.action.REFRESH_SAFETY_SOURCES"/>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.safetycenter.action.REFRESH_SAFETY_SOURCES" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
     </application>

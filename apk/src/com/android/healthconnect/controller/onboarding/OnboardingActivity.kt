@@ -1,9 +1,28 @@
+/*
+ * Copyright 2024 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
+
 package com.android.healthconnect.controller.onboarding
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.fragment.app.FragmentActivity
 import com.android.healthconnect.controller.R
@@ -22,6 +41,7 @@ class OnboardingActivity : Hilt_OnboardingActivity() {
     companion object {
         @VisibleForTesting const val USER_ACTIVITY_TRACKER = "USER_ACTIVITY_TRACKER"
         @VisibleForTesting const val ONBOARDING_SHOWN_PREF_KEY = "ONBOARDING_SHOWN_PREF_KEY"
+        private const val TARGET_ACTIVITY_INTENT = "ONBOARDING_TARGET_ACTIVITY_INTENT"
 
         fun shouldRedirectToOnboardingActivity(activity: Activity): Boolean {
             val sharedPreference =
@@ -33,17 +53,32 @@ class OnboardingActivity : Hilt_OnboardingActivity() {
             return false
         }
 
-        fun createIntent(context: Context): Intent {
-            return Intent(context, OnboardingActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        fun createIntent(context: Context, targetIntent: Intent? = null): Intent {
+            val flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NO_ANIMATION
+
+            return Intent(context, OnboardingActivity::class.java).apply {
+                addFlags(flags)
+                if (targetIntent != null) {
+                    putExtra(TARGET_ACTIVITY_INTENT, targetIntent)
+                }
+            }
         }
     }
 
     @Inject lateinit var logger: HealthConnectLogger
 
+    private var targetIntent: Intent? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.onboarding_screen)
+
+        if (intent.hasExtra(TARGET_ACTIVITY_INTENT)) {
+            targetIntent =
+                intent.getParcelableExtra(
+                    TARGET_ACTIVITY_INTENT,
+                )
+        }
 
         logger.setPageId(PageName.ONBOARDING_PAGE)
 
@@ -63,7 +98,11 @@ class OnboardingActivity : Hilt_OnboardingActivity() {
             val editor = sharedPreference.edit()
             editor.putBoolean(ONBOARDING_SHOWN_PREF_KEY, true)
             editor.apply()
-            setResult(Activity.RESULT_OK)
+            if (targetIntent == null) {
+                setResult(Activity.RESULT_OK)
+            } else {
+                startActivity(targetIntent)
+            }
             finish()
         }
     }

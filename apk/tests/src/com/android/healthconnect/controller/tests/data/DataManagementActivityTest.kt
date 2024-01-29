@@ -85,42 +85,6 @@ class DataManagementActivityTest {
     }
 
     @Test
-    fun manageDataIntent_onboardingDone_launchesDataManagementActivity() = runTest {
-        whenever(migrationViewModel.getCurrentMigrationUiState()).then {
-            MigrationState.COMPLETE_IDLE
-        }
-        whenever(migrationViewModel.migrationState).then {
-            MutableLiveData(
-                MigrationViewModel.MigrationFragmentState.WithData(MigrationState.COMPLETE_IDLE))
-        }
-
-        val startActivityIntent = Intent(context, DataManagementActivity::class.java)
-
-        launch<DataManagementActivity>(startActivityIntent)
-        onView(withText("Browse data")).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun manageDataIntent_onboardingNotDone_redirectsToOnboarding() = runTest {
-        showOnboarding(context, true)
-        whenever(migrationViewModel.getCurrentMigrationUiState()).then {
-            MigrationState.COMPLETE_IDLE
-        }
-        whenever(migrationViewModel.migrationState).then {
-            MutableLiveData(
-                MigrationViewModel.MigrationFragmentState.WithData(MigrationState.COMPLETE_IDLE))
-        }
-
-        val startActivityIntent = Intent(context, DataManagementActivity::class.java)
-
-        launch<DataManagementActivity>(startActivityIntent)
-
-        onView(withText("Share data with your apps"))
-            .perform(ViewActions.scrollTo())
-            .check(matches(isDisplayed()))
-    }
-
-    @Test
     fun manageDataIntent_migrationInProgress_redirectsToMigrationScreen() = runTest {
         showOnboarding(context, false)
         whenever(migrationViewModel.getCurrentMigrationUiState()).then {

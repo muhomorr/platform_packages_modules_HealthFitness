@@ -42,17 +42,15 @@ class MainActivityTest {
     fun setup() {
         hiltRule.inject()
         context = InstrumentationRegistry.getInstrumentation().context
-
-        showOnboarding(context, show = false)
-    }
-
-    @Test
-    fun homeSettingsIntent_onboardingDone_launchesMainActivity() = runTest {
         whenever(viewModel.getCurrentMigrationUiState()).then { MigrationState.COMPLETE_IDLE }
         whenever(viewModel.migrationState).then {
             MutableLiveData(WithData(MigrationState.COMPLETE_IDLE))
         }
+    }
 
+
+    @Test
+    fun homeSettingsIntent_launchesMainActivity() = runTest {
         val startActivityIntent =
             Intent.makeMainActivity(ComponentName(context, MainActivity::class.java))
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -61,25 +59,6 @@ class MainActivityTest {
 
         onView(withText("Recent access")).check(matches(isDisplayed()))
         onView(withText("Permissions and data")).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun homeSettingsIntent_onboardingNotDone_redirectsToOnboarding() = runTest {
-        showOnboarding(context, true)
-        whenever(viewModel.getCurrentMigrationUiState()).then { MigrationState.COMPLETE_IDLE }
-        whenever(viewModel.migrationState).then {
-            MutableLiveData(WithData(MigrationState.COMPLETE_IDLE))
-        }
-
-        val startActivityIntent =
-            Intent.makeMainActivity(ComponentName(context, MainActivity::class.java))
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-        launchActivityForResult<MainActivity>(startActivityIntent)
-
-        onView(withText("Share data with your apps"))
-            .perform(scrollTo())
-            .check(matches(isDisplayed()))
     }
 
     @Test

@@ -62,6 +62,7 @@ object EmbeddingUtils {
         val twoPaneIntent = buildEmbeddingActivityBaseIntent(activity)
         return twoPaneIntent?.apply {
             putExtras(activity.intent)
+            setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             putExtra(EXTRA_SETTINGS_EMBEDDED_DEEP_LINK_HIGHLIGHT_MENU_KEY, MENU_KEY_HEALTH_CONNECT)
             putExtra(
                 EXTRA_SETTINGS_EMBEDDED_DEEP_LINK_INTENT_URI,
