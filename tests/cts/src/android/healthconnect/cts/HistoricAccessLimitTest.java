@@ -265,13 +265,7 @@ public class HistoricAccessLimitTest {
     }
 
     private String insertStepsRecordViaTestApp(Instant startTime, Instant endTime, long value) {
-        Bundle bundle = new Bundle();
-        bundle.putLongArray(EXTRA_TIMES, new long[] {startTime.toEpochMilli()});
-        bundle.putLongArray(EXTRA_END_TIMES, new long[] {endTime.toEpochMilli()});
-        bundle.putLongArray(EXTRA_RECORD_VALUES, new long[] {value});
-        TestReceiver.reset();
-        sendCommandToTestAppReceiver(mContext, ACTION_INSERT_STEPS_RECORDS, bundle);
-        return TestReceiver.getResult().getStringArrayList(EXTRA_RECORD_IDS).get(0);
+        return TestUtils.insertStepsRecordViaTestApp(mContext, startTime, endTime, value).get(0);
     }
 
     private String insertWeightRecordViaTestApp(Instant startTime, long value) {
