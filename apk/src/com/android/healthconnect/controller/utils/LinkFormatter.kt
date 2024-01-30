@@ -3,9 +3,11 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
+ *
  * ```
  *      http://www.apache.org/licenses/LICENSE-2.0
  * ```
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
@@ -13,11 +15,13 @@
  */
 package com.android.healthconnect.controller.utils
 
+import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.view.ViewCompat
@@ -50,4 +54,20 @@ fun convertTextViewIntoLink(
     textView.movementMethod = LinkMovementMethod.getInstance()
     textView.isLongClickable = false
     ViewCompat.enableAccessibleClickableSpanSupport(textView)
+}
+
+/**
+ * Returns a {@link SpannableString} with the {@code appName} bolded.
+ */
+fun boldAppName(appName: String?, fullText: String): SpannableString {
+    val spannableString = SpannableString(fullText)
+    appName?.let {
+        val start = fullText.indexOf(appName)
+        if (start != -1) {
+            val end = fullText.indexOf(appName) + appName.length
+            spannableString.setSpan(
+                StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
+        }
+    }
+    return spannableString
 }

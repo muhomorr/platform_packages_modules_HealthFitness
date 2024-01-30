@@ -21,6 +21,7 @@ import android.widget.TextView
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.android.healthconnect.controller.R
+import com.android.healthconnect.controller.utils.boldAppName
 import com.android.healthconnect.controller.utils.convertTextViewIntoLink
 
 internal class RequestPermissionHeaderPreference
@@ -57,7 +58,8 @@ constructor(
     }
 
     private fun updateTitle() {
-        title.text = context.getString(R.string.request_permissions_header_title, appName)
+        val text = context.getString(R.string.request_permissions_header_title, appName)
+        title.text = boldAppName(appName, text)
     }
 
     private fun updatePrivacyString() {
