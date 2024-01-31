@@ -96,8 +96,7 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"parcours sportif"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"Écrire le parcours sportif"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"Lire le parcours sportif"</string>
-    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
-    <skip />
+    <string name="exercise_routes_read_content_description" msgid="9001690141308870706">"Lisez des itinéraires d\'exercice"</string>
     <string name="distance_uppercase_label" msgid="1420705424462077174">"Distance"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"distance"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"Lire la distance"</string>
@@ -716,8 +715,7 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Déplacer vers le bas"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Première position"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Dernière position"</string>
-    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
-    <skip />
+    <string name="reorder_button_content_description" msgid="2685032520710743533">"Bouton pour faire glisser et réorganiser <xliff:g id="SELECTED_APP">%s</xliff:g> dans la liste des priorités"</string>
     <string name="remove_button_content_description" msgid="6170490900032612048">"Bouton pour supprimer <xliff:g id="SELECTED_APP">%s</xliff:g> de la liste des priorités"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"Appuyez deux fois et faites glisser pour réorganiser"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"remise en forme, bien-être"</string>
@@ -736,12 +734,9 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"Seules les applis que vous autorisez à accéder à vos parcours sportifs"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"Comment puis-je gérer l\'accès ?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"Vous pouvez gérer l\'accès de cette appli aux parcours sportifs dans les paramètres Santé Connect"</string>
-    <!-- no translation found for request_route_allow (4427372851821847274) -->
-    <skip />
-    <!-- no translation found for request_route_allow_all (314830698958736916) -->
-    <skip />
-    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
-    <skip />
+    <string name="request_route_allow" msgid="4427372851821847274">"Autoriser cet itinéraire"</string>
+    <string name="request_route_allow_all" msgid="314830698958736916">"Autoriser tous les itinéraires"</string>
+    <string name="request_route_dont_allow" msgid="1186236234664957228">"Ne pas autoriser"</string>
     <string name="back_button" msgid="780519527385993407">"Retour"</string>
     <string name="loading" msgid="2526615755685950317">"Chargement…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"Intégration en cours"</string>

@@ -96,8 +96,7 @@
     <string name="exercise_route_lowercase_label" msgid="1691912731748211252">"ruta ng pag-eehersisyo"</string>
     <string name="exercise_route_write_content_description" msgid="257809942953352611">"Sumulat ng ruta ng pag-eehersisyo"</string>
     <string name="exercise_route_read_content_description" msgid="8394028537674463440">"I-read ang ruta ng pag-eehersisyo"</string>
-    <!-- no translation found for exercise_routes_read_content_description (9001690141308870706) -->
-    <skip />
+    <string name="exercise_routes_read_content_description" msgid="9001690141308870706">"Basahin ang mga ruta ng pag-e-ehersisyo"</string>
     <string name="distance_uppercase_label" msgid="1420705424462077174">"Layo"</string>
     <string name="distance_lowercase_label" msgid="2287154001209381379">"layo"</string>
     <string name="distance_read_content_description" msgid="8787235642020285789">"I-read ang layo"</string>
@@ -716,8 +715,7 @@
     <string name="action_drag_label_move_down" msgid="3448000958912947588">"Ilipat pababa"</string>
     <string name="action_drag_label_move_top" msgid="5114033774108663548">"Ilipat sa itaas"</string>
     <string name="action_drag_label_move_bottom" msgid="3117764196696569512">"Ilipat sa ibaba"</string>
-    <!-- no translation found for reorder_button_content_description (2685032520710743533) -->
-    <skip />
+    <string name="reorder_button_content_description" msgid="2685032520710743533">"Button para i-drag ang <xliff:g id="SELECTED_APP">%s</xliff:g> at baguhin ang ayos nito sa priority list"</string>
     <string name="remove_button_content_description" msgid="6170490900032612048">"Button para alisin ang <xliff:g id="SELECTED_APP">%s</xliff:g> sa listahan ng priyoridad"</string>
     <string name="reorder_button_action_description" msgid="5197462036756192214">"I-double tap at i-drag para ibahin ang pagkakaayos"</string>
     <string name="search_keywords_home" msgid="5386515593026555327">"fitness, wellness"</string>
@@ -736,12 +734,9 @@
     <string name="request_route_info_who_can_see_data_summary" msgid="2439434359808367150">"Ang mga app lang na papayagan mong mag-access ng iyong mga ruta ng ehersisyo"</string>
     <string name="request_route_info_access_management_title" msgid="3222594923675464852">"Paano ko mapapamahalaan ang access?"</string>
     <string name="request_route_info_access_management_summary" msgid="2606548838292829495">"Mapapamahalaan mo ang access ng app sa mga ruta ng ehersisyo sa mga setting ng Health Connect"</string>
-    <!-- no translation found for request_route_allow (4427372851821847274) -->
-    <skip />
-    <!-- no translation found for request_route_allow_all (314830698958736916) -->
-    <skip />
-    <!-- no translation found for request_route_dont_allow (1186236234664957228) -->
-    <skip />
+    <string name="request_route_allow" msgid="4427372851821847274">"Payagan ang rutang ito"</string>
+    <string name="request_route_allow_all" msgid="314830698958736916">"Payagan ang lahat ng ruta"</string>
+    <string name="request_route_dont_allow" msgid="1186236234664957228">"Huwag payagan"</string>
     <string name="back_button" msgid="780519527385993407">"Bumalik"</string>
     <string name="loading" msgid="2526615755685950317">"Naglo-load…"</string>
     <string name="migration_in_progress_screen_title" msgid="6564515269988205874">"Isinasagawa ang pag-integrate"</string>
