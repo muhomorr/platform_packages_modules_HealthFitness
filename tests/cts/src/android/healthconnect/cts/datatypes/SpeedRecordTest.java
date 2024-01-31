@@ -20,6 +20,8 @@ import static android.health.connect.datatypes.SpeedRecord.SPEED_AVG;
 import static android.health.connect.datatypes.SpeedRecord.SPEED_MAX;
 import static android.health.connect.datatypes.SpeedRecord.SPEED_MIN;
 import static android.healthconnect.cts.utils.TestUtils.distinctByUuid;
+import static android.healthconnect.cts.utils.TestUtils.insertRecords;
+import static android.healthconnect.cts.utils.TestUtils.readRecords;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -50,6 +52,7 @@ import android.platform.test.annotations.AppModeFull;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.runner.AndroidJUnit4;
+
 
 import org.junit.After;
 import org.junit.Assert;
@@ -586,6 +589,46 @@ public class SpeedRecordTest {
         assertThat(distinctRecords.size()).isEqualTo(distinctRecordCount);
 
         readSpeedRecordUsingIds(distinctRecords);
+    }
+
+    @Test
+    public void insertRecords_sameClientRecordIdAndNewData_readNewData() throws Exception {
+        int recordCount = 10;
+        List<SpeedRecord> records = new ArrayList<>();
+        List<SpeedRecord> newRecords = new ArrayList<>();
+        Instant now = Instant.now();
+        double newSpeed = 20;
+        for (int i = 0; i < recordCount; i++) {
+            double speed = 10;
+            long millisFromStart = 0;
+            Instant startTime = now.minusSeconds(i + 1);
+            Instant endTime = now.minusSeconds(i);
+            String clientRecordId = "client_id_" + i;
+            records.add(
+                    buildRecordForSpeed(
+                            speed, millisFromStart, startTime, endTime, clientRecordId));
+            newRecords.add(
+                    buildRecordForSpeed(
+                            newSpeed, millisFromStart, startTime, endTime, clientRecordId));
+        }
+        List<Record> insertedRecords = insertRecords(records);
+        assertThat(insertedRecords).hasSize(recordCount);
+
+        List<Record> newInsertedRecords = insertRecords(newRecords);
+        assertThat(newInsertedRecords).hasSize(recordCount);
+
+        List<SpeedRecord> readRecords =
+                readRecords(
+                        new ReadRecordsRequestUsingFilters.Builder<>(SpeedRecord.class).build());
+        assertThat(readRecords).hasSize(recordCount);
+        for (SpeedRecord record : readRecords) {
+            assertThat(
+                            record.getSamples().stream()
+                                    .map(sample -> sample.getSpeed().getInMetersPerSecond())
+                                    .distinct()
+                                    .toList())
+                    .containsExactly(newSpeed);
+        }
     }
 
     SpeedRecord getSpeedRecord_update(Record record, String id, String clientRecordId) {

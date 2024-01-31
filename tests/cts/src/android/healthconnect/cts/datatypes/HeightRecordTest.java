@@ -21,6 +21,7 @@ import static android.health.connect.datatypes.HeightRecord.HEIGHT_MAX;
 import static android.health.connect.datatypes.HeightRecord.HEIGHT_MIN;
 import static android.healthconnect.cts.utils.TestUtils.distinctByUuid;
 import static android.healthconnect.cts.utils.TestUtils.insertRecords;
+import static android.healthconnect.cts.utils.TestUtils.readRecords;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -551,6 +552,34 @@ public class HeightRecordTest {
         readHeightRecordUsingIds(distinctRecords);
     }
 
+    @Test
+    public void insertRecords_sameClientRecordIdAndNewData_readNewData() throws Exception {
+        int recordCount = 10;
+        List<HeightRecord> records = new ArrayList<>();
+        List<HeightRecord> newRecords = new ArrayList<>();
+        Instant now = Instant.now();
+        Length newHeight = Length.fromMeters(2.0);
+        for (int i = 0; i < recordCount; i++) {
+            Instant time = now.minusMillis(i);
+            String clientRecordId = "client_id_" + i;
+            records.add(getCompleteHeightRecord(time, clientRecordId, Length.fromMeters(1.0)));
+            newRecords.add(getCompleteHeightRecord(time, clientRecordId, newHeight));
+        }
+        List<Record> insertedRecords = insertRecords(records);
+        assertThat(insertedRecords).hasSize(recordCount);
+
+        List<Record> newInsertedRecords = insertRecords(newRecords);
+        assertThat(newInsertedRecords).hasSize(recordCount);
+
+        List<HeightRecord> readRecords =
+                readRecords(
+                        new ReadRecordsRequestUsingFilters.Builder<>(HeightRecord.class).build());
+        assertThat(readRecords).hasSize(recordCount);
+        for (HeightRecord record : readRecords) {
+            assertThat(record.getHeight()).isEqualTo(newHeight);
+        }
+    }
+
     HeightRecord getHeightRecord_update(Record record, String id, String clientRecordId) {
         Metadata metadata = record.getMetadata();
         Metadata metadataWithId =
@@ -594,6 +623,11 @@ public class HeightRecordTest {
     }
 
     private static HeightRecord getCompleteHeightRecord(Instant time, String clientRecordId) {
+        return getCompleteHeightRecord(time, clientRecordId, Length.fromMeters(1.0));
+    }
+
+    private static HeightRecord getCompleteHeightRecord(
+            Instant time, String clientRecordId, Length height) {
         Device device =
                 new Device.Builder()
                         .setManufacturer("google")
@@ -607,7 +641,7 @@ public class HeightRecordTest {
         testMetadataBuilder.setClientRecordId(clientRecordId);
         testMetadataBuilder.setRecordingMethod(Metadata.RECORDING_METHOD_ACTIVELY_RECORDED);
 
-        return new HeightRecord.Builder(testMetadataBuilder.build(), time, Length.fromMeters(1.0))
+        return new HeightRecord.Builder(testMetadataBuilder.build(), time, height)
                 .setZoneOffset(ZoneOffset.systemDefault().getRules().getOffset(Instant.now()))
                 .build();
     }

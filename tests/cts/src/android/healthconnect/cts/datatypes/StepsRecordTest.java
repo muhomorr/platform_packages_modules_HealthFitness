@@ -22,6 +22,8 @@ import static android.healthconnect.cts.utils.DataFactory.generateMetadata;
 import static android.healthconnect.cts.utils.DataFactory.getCompleteStepsRecord;
 import static android.healthconnect.cts.utils.DataFactory.getUpdatedStepsRecord;
 import static android.healthconnect.cts.utils.TestUtils.distinctByUuid;
+import static android.healthconnect.cts.utils.TestUtils.insertRecords;
+import static android.healthconnect.cts.utils.TestUtils.readRecords;
 import static android.healthconnect.cts.utils.TestUtils.readRecordsWithPagination;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -1505,6 +1507,35 @@ public class StepsRecordTest {
         assertThat(distinctRecords.size()).isEqualTo(distinctRecordCount);
 
         assertStepsRecordUsingIds(distinctRecords);
+    }
+
+    @Test
+    public void insertRecords_sameClientRecordIdAndNewData_readNewData() throws Exception {
+        int recordCount = 10;
+        List<StepsRecord> records = new ArrayList<>();
+        List<StepsRecord> newRecords = new ArrayList<>();
+        Instant now = Instant.now();
+        int newCount = 10;
+        for (int i = 0; i < recordCount; i++) {
+            Instant startTime = now.minusSeconds(i + 1);
+            Instant endTime = now.minusSeconds(i);
+            String clientRecordId = "client_id_" + i;
+            records.add(getCompleteStepsRecord(startTime, endTime, clientRecordId, 10));
+            newRecords.add(getCompleteStepsRecord(startTime, endTime, clientRecordId, newCount));
+        }
+        List<Record> insertedRecords = insertRecords(records);
+        assertThat(insertedRecords).hasSize(recordCount);
+
+        List<Record> newInsertedRecords = insertRecords(newRecords);
+        assertThat(newInsertedRecords).hasSize(recordCount);
+
+        List<StepsRecord> readRecords =
+                readRecords(
+                        new ReadRecordsRequestUsingFilters.Builder<>(StepsRecord.class).build());
+        assertThat(readRecords).hasSize(recordCount);
+        for (StepsRecord record : readRecords) {
+            assertThat(record.getCount()).isEqualTo(newCount);
+        }
     }
 
     private void testAggregateDurationWithLocalTimeForZoneOffset(ZoneOffset offset)
