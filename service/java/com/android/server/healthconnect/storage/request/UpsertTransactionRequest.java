@@ -23,6 +23,7 @@ import static com.android.server.healthconnect.storage.utils.WhereClauses.Logica
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.health.connect.Constants;
 import android.health.connect.datatypes.RecordTypeIdentifier;
 import android.health.connect.internal.datatypes.RecordInternal;
 import android.util.ArrayMap;
@@ -142,12 +143,14 @@ public class UpsertTransactionRequest {
                                         packageName, new ArrayList<>(mRecordTypes), UPSERT));
             }
 
-            Slog.d(
-                    TAG,
-                    "Upserting transaction for "
-                            + packageName
-                            + " with size "
-                            + recordInternals.size());
+            if (Constants.DEBUG) {
+                Slog.d(
+                        TAG,
+                        "Upserting transaction for "
+                                + packageName
+                                + " with size "
+                                + recordInternals.size());
+            }
         }
     }
 
