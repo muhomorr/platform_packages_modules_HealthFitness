@@ -31,6 +31,7 @@ import com.android.modules.utils.testing.ExtendedMockitoRule;
 import com.android.server.healthconnect.HealthConnectDeviceConfigManager;
 import com.android.server.healthconnect.TestUtils;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,6 +64,18 @@ public class RateLimiterTest {
 
     @Before
     public void setUp() {
+        TestUtils.runWithShellPermissionIdentity(
+                () -> {
+                    HealthConnectDeviceConfigManager.initializeInstance(mContext);
+                    HealthConnectDeviceConfigManager.getInitialisedInstance()
+                            .updateRateLimiterValues();
+                },
+                Manifest.permission.READ_DEVICE_CONFIG);
+        RateLimiter.updateEnableRateLimiterFlag(true);
+    }
+
+    @After
+    public void tearDown() {
         TestUtils.runWithShellPermissionIdentity(
                 () -> {
                     HealthConnectDeviceConfigManager.initializeInstance(mContext);
