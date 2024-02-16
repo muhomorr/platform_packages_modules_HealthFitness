@@ -64,11 +64,6 @@ class TrampolineActivity : Hilt_TrampolineActivity() {
         }
 
         val targetIntent = getTargetIntent()
-        if (targetIntent == null) {
-            Log.e(TAG, "Invalid Intent Action, finishing!")
-            finish()
-            return
-        }
 
         // Handles showing Health Connect Onboarding.
         if (shouldRedirectToOnboardingActivity(this)) {
@@ -81,7 +76,7 @@ class TrampolineActivity : Hilt_TrampolineActivity() {
         finish()
     }
 
-    private fun getTargetIntent(): Intent? {
+    private fun getTargetIntent(): Intent {
         return when (intent.action) {
             HealthConnectManager.ACTION_HEALTH_HOME_SETTINGS -> {
                 Intent(this, MainActivity::class.java)
@@ -98,8 +93,10 @@ class TrampolineActivity : Hilt_TrampolineActivity() {
                     }
                 }
             }
+
             else -> {
-                null
+                // Default to open Health Connect MainActivity
+                Intent(this, MainActivity::class.java)
             }
         }
     }
