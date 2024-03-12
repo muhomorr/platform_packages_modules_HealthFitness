@@ -32,6 +32,8 @@
     <!-- Used to show permissions for apps that have not declared VIEW_PERMISSION_USAGE but
      still have at least one permission granted -->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <!-- Used to disable non system apps from showing overlays -->
+    <uses-permission android:name="android.permission.HIDE_OVERLAY_WINDOWS" />
 
     <application
         android:name=".HealthConnectApplication"
